@@ -1,5 +1,5 @@
-import React from 'react';
-import {Box, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import React, {useState} from 'react';
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function Tabs () {
   const [current, setCurrent] = React.useState('one')

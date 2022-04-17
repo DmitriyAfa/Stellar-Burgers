@@ -1,27 +1,12 @@
 import React from 'react';
-import {Box, Tab, CurrencyIcon, Button, ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import {CurrencyIcon, Button, ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import './burger-constructor.scss';
 
 
 function BurgerConstructor(props) {
   const {api} = props;
   
-  // const bun = api.filter(ingridient => ingridient.type === "bun");
-  // // const sauce = api.filter(ingridient => ingridient.type === "sauce");
-  // // const main = api.filter(ingridient => ingridient.type === "main");
-  // const Example = ({api}) =>{
-  //     return (
-  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-  //         <ConstructorElement
-  //           type="top"
-  //           isLocked={true}
-  //           text="Краторная булка N-200i (верх)"
-  //           price={200}
-  //           thumbnail={api.image_mobile}
-  //         />
-  //       </div>
-  //     )
-  // }
   return(
     <section className='burger-constructor'>
       <ul className='mt-25 ml-4'>
@@ -117,6 +102,10 @@ function BurgerConstructor(props) {
   );
 
 }
+
+BurgerConstructor.propTypes = {
+  api: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
 export default BurgerConstructor; 
 
