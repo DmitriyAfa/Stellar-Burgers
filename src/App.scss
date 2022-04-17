@@ -1,0 +1,11 @@
+.app{
+  &-main{
+    display: grid; 
+    grid-template-columns: 22.4% 600px 40px 600px 380px; 
+    grid-template-rows: 912px 40px; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      ". BurgerIngridients . . ."
+      ". . . . ."; 
+  }
+}
