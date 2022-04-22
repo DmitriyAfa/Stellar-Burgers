@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import Detail from './parts/detail';
 import {CurrencyIcon, Button, ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import './burger-constructor.scss';
-
+import IngridientDetails from '../ingridient-details/ingridient-details';
+import OrderDetails from '../order-details/order-details';
+import ingridientPropTypes from '../../utils/constants';
 
 function BurgerConstructor(props) {
-  const {api} = props;
+  const {ingridients} = props;
+
+  const [modalActive, setModalActive] = useState(false);
+
+  function setModalActiveTrue(){
+    setModalActive(true);
+  };
+
+  function setModalActiveFalse(){
+    setModalActive(false);
+  };
   
   return(
     <section className='burger-constructor'>
@@ -20,64 +33,7 @@ function BurgerConstructor(props) {
           />
           </li>
           <li>
-            <ul className='burger-constructor__scroll-bar'>
-              <li>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-              <li className='mt-4'>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-              <li className='mt-4'>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-              <li className='mt-4'>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-              <li className='mt-4'>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-              <li className='mt-4'>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-              <li className='mt-4'>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={50}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-                />
-              </li>
-            </ul>
+            <Detail ingridients={ingridients} />
           </li>
           <li className='ml-8 mt-4'>
           <ConstructorElement
@@ -94,17 +50,18 @@ function BurgerConstructor(props) {
           <p className='text text_type_digits-medium'>610</p>
           <CurrencyIcon type="primary" />
         </span>
-        <span className='burger-constructor__bottom-button'><Button type="primary" size="small">
+        <span onClick={setModalActiveTrue} className='burger-constructor__bottom-button'><Button type="primary" size="small">
         Оформить заказ
       </Button></span>
       </span>
+       <OrderDetails active={modalActive} setActive={setModalActiveFalse}/>
     </section>
   );
 
 }
 
 BurgerConstructor.propTypes = {
-  api: PropTypes.arrayOf(PropTypes.object).isRequired
+  ingridients: PropTypes.arrayOf(ingridientPropTypes.isRequired).isRequired
 };
 
 export default BurgerConstructor; 

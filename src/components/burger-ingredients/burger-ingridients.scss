@@ -5,7 +5,8 @@
   grid-row-start: 1;
   grid-row-end: 2;
 
-  // scrollbar
+  &__scrollbar{
+      // scrollbar
   overflow: auto;
   overflow-x: hidden; /* прокрутка по горизонтали */
   overflow-y: scroll; /* прокрутка по вертикали */
@@ -22,6 +23,7 @@
     background: #8585AD;
     border: 3px solid #2F2F37;
     border-radius: 6px;
+  }
   }
 
 
@@ -56,17 +58,8 @@
     &-img{
       object-fit: cover;
       object-position: 0 0;
-      // max-width: 100%;
-      // // width: 47%;
-      // height: 100%;
     }
 
-    // p{
-    //   text-align: center;
-    // }
-    // h4{
-    //   text-align: center;
-    // }
   }
   
 }

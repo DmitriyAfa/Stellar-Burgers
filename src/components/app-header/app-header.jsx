@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import './app-header.scss';
+import PropTypes from 'prop-types';
 function AppHeader() {
 
   const AppHeaderButton = ({typeButton, children, text}) => {
@@ -12,6 +13,12 @@ function AppHeader() {
         <span className="mr-2">{children}</span> {text}
       </button>
     </>);
+  }
+
+  AppHeaderButton.propTypes = {
+    typeButton: PropTypes.string.isRequired,
+    children: PropTypes.any.isRequired,
+    text: PropTypes.string.isRequired
   }
 
   const NavLink = () =>{
@@ -37,7 +44,7 @@ function AppHeader() {
 
   return(
     <header className='app-header'>
-      <NavLink text='Текст' />
+      <NavLink />
       <Logo />
       <AppHeaderButton typeButton='' text='Личный кабинет'>
           <ProfileIcon type="secondary" />

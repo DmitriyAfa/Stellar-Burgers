@@ -1,24 +1,22 @@
 .modal{
+
   position: fixed;
-  opacity: 0.6;
-  background: #1C1C21;
-  top: 0;
-  left: 0;
+  top: 20px;
+  left: 27%;
   z-index: 20;
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh; */
+  /* width: 100vw; */
   display: flex;
   justify-content: center;
-
   transform: scale(0);
+  z-index: 21;
 
 &_active{
   transform: scale(1);
 }
 
-
 &__content{
-  position: absolute;
+  // position: absolute;
   width: 720px;
   display: flex;
   flex-direction: column;
@@ -27,7 +25,6 @@
   border-radius: 40px;
   background: #1C1C21;
   opacity: 1;
-  z-index: 21;
   top: 20px;
 }
 
