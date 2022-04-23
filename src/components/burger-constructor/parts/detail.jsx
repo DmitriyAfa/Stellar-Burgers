@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from 'prop-types';
 import {CurrencyIcon, Counter, DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
-import '../burger-constructor.scss';
-import IngridientDetails from "../../ingridient-details/ingridient-details";
+import styles from '../burger-constructor.module.css';
 import ingridientPropTypes from '../../../utils/constants';
 
  function MakeDetail ({ingridient}) {
@@ -25,14 +24,23 @@ import ingridientPropTypes from '../../../utils/constants';
 
 
 function Detail({ingridients}){
-  const arr = ingridients.map((ingridients) => {
+
+  const ingridientsWithoutBun = [];
+
+  ingridients.map(ingridient => {
+    if (ingridient.type !== "bun") {
+      ingridientsWithoutBun.push(ingridient)
+    }
+  })
+
+  const arr = ingridientsWithoutBun.map((ingridientsWithoutBun) => {
     return(
-      <MakeDetail key={ingridients._id} ingridient={ingridients} />
+      <MakeDetail key={ingridientsWithoutBun._id} ingridient={ingridientsWithoutBun} />
     );
   })
 
   return(
-    <ul className='burger-constructor__scroll-bar'>
+    <ul className={styles.scrollBar}>
         {arr}
     </ul>
   );

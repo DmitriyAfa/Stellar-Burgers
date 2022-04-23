@@ -5,7 +5,7 @@ function Tabs () {
   const [current, setCurrent] = useState('one')
   return (
     <div className='burger-ingridients__tabs mt-5' style={{ display: 'flex' }}>
-      <Tab value="<one>" active={current === 'one'} onClick={setCurrent}>
+      <Tab value="one" active={current === 'one'} onClick={setCurrent}>
         Булки
       </Tab>
       <Tab value="two" active={current === 'two'} onClick={setCurrent}>

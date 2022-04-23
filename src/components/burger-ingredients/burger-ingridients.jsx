@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@ya.praktikum/react-developer-burger-ui-components';
-import './burger-ingridients.scss';
+import styles from './burger-ingridients.module.css';
 import Tabs from './parts/tabs';
 import Ingridient from './parts/ingridient';
 import ingridientPropTypes from '../../utils/constants';
@@ -16,10 +16,10 @@ function BurgerIngridients(props) {
   const main = ingridients.filter(ingridient => ingridient.type === "main");
 
   return(
-    <section className="burger-ingridients mt-10"> 
+    <section className={`mt-10 ${styles.burgerIngridients}`}> 
     <h2 className='text text_type_main-large'>Соберите бургер</h2>
     <Tabs />
-    <div className='burger-ingridients__scrollbar'>
+    <div className={styles.scrollBar}>
       <Ingridient head='Булки' ingridients={bun} />
       <Ingridient head='Соусы' ingridients={sauce} />
       <Ingridient head='Ингридиенты' ingridients={main} />

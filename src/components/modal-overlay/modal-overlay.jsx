@@ -1,5 +1,5 @@
 import React from 'react';
-import './modal-overlay.scss';
+import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
 
@@ -7,7 +7,7 @@ function ModalOverlay({ active}) {
 
   return (
     <>
-    <section id={'modal-overlay'} className={`modal-overlay ${active ? "modal-overlay_active" : ""}`}>
+    <section className={`${styles.modalOverlay} ${active ? styles.active : ""}`}>
     </section>
     </>
   );
@@ -18,4 +18,3 @@ ModalOverlay.propTypes = {
 }
 
 export default ModalOverlay;
-

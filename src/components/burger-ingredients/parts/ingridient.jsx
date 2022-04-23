@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from 'prop-types';
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
-import '../burger-ingridients.scss';
+import styles from '../burger-ingridients.module.css';
 import IngridientDetails from "../../ingridient-details/ingridient-details";
 import ingridientPropTypes from '../../../utils/constants';
 
@@ -28,7 +28,7 @@ import ingridientPropTypes from '../../../utils/constants';
       calories={ingridient.calories}
        />
     <Counter count={1} size="default" />
-    <img onClick={setModalActiveTrue} className='mr-4 ml-4 burger-ingridients__main-img' src={ingridient.image} alt={ingridient.name} />
+    <img onClick={setModalActiveTrue} className={`mr-4 ml-4 ${styles.mainImg}`} src={ingridient.image} alt={ingridient.name} />
     <span className='mt-1' style={{flexDirection: 'row'}}><h3 className="text text_type_digits-default">{ingridient.price}</h3> <span style={{marginLeft: '10px'}}><CurrencyIcon type="primary" /></span></span>
     <h4 className='mt-2 text text_type_main-default'>{ingridient.name}</h4>
   </li>
@@ -48,7 +48,7 @@ function Ingridient({head, ingridients}){
   })
 
   return(
-    <div className='burger-ingridients__main'>
+    <div className={styles.main}>
       <h3 className='text text_type_main-medium mt-10'>{head}</h3>
       <ul className='mt-6'>
         {arr}

@@ -1,7 +1,6 @@
 import React from "react";
-import './ingridient-details.scss';
+import styles from './ingridient-details.module.css';
 import Modal from "../modal/modal";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 
 
 
@@ -10,7 +9,7 @@ function IngridientDetails({active, setActive, name, image, proteins, fat, carbo
   return(
     <>
     <Modal active={active} setActive={setActive} header={'Детали ингредиента'}>
-        <div className=" mb-15 ingridient-details__main">
+        <div className={`mb-15 ${styles.main}`}>
           <img src={image} alt="" />
           <h4 className='mt-2 text text_type_main-medium'>{name}</h4>
           <ul className="mt-8">

@@ -1,15 +1,15 @@
 import React from 'react';
 import {Box, Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import './app-header.scss';
+import styles from './app-header.module.css';
 import PropTypes from 'prop-types';
 function AppHeader() {
 
   const AppHeaderButton = ({typeButton, children, text}) => {
-    let typeOfButton = typeButton === 'active' ? '' : 'app-header__button_inactive';
+    let typeOfButton = typeButton === 'active' ? '' : styles.inactive ;
     
     return(
     <>
-      <button className={`app-header__button text text_type_main-default mt-4 mb-4 pl-5 pr-5 pb-4 pt-4 ${typeOfButton}`}>
+      <button className={`${styles.button} text text_type_main-default mt-4 mb-4 pl-5 pr-5 pb-4 pt-4 ${typeOfButton}`}>
         <span className="mr-2">{children}</span> {text}
       </button>
     </>);
@@ -24,7 +24,7 @@ function AppHeader() {
   const NavLink = () =>{
     
     return(
-      <nav className='app-header__nav'>
+      <nav className={styles.nav}>
       <ul className=''>
         <li>
           <AppHeaderButton typeButton='active' text='Конструктор'>
@@ -43,7 +43,7 @@ function AppHeader() {
 
 
   return(
-    <header className='app-header'>
+    <header className={`${styles.appHeader}`}>
       <NavLink />
       <Logo />
       <AppHeaderButton typeButton='' text='Личный кабинет'>

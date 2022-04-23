@@ -1,6 +1,6 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+import './index.module.css';
 import App from './components/app/app';
 
 const rootElement = document.getElementById('root');

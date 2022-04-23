@@ -11,12 +11,13 @@
   transform: scale(0);
   z-index: 21;
 
-&_active{
+}
+
+.active{
   transform: scale(1);
 }
 
-&__content{
-  // position: absolute;
+.content{
   width: 720px;
   display: flex;
   flex-direction: column;
@@ -28,48 +29,54 @@
   top: 20px;
 }
 
-&__header{
+.header{
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   width: 640px;
 
-  button{
-    background: none;
-    border: none;
-    outline: none;
-  }
+  background: none;
+  border: none;
+  outline: none;
 }
 
-&__main{
+.header button{
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.main {
   display: flex;
   flex-direction: column;
   width: 520px;
-
-  h4{
-    text-align: center;
-  }
-
-  ul{
-    display: flex;
-    padding: 0;
-    li{
-      &:first-child{
-        min-width: 120px;
-      }
-      min-width: 112px;
-      height: 44px;
-      h4{
-        color: #8585AD;
-      }
-      p{
-        color: #8585AD;
-        text-align: center;
-        line-height: 1.5;
-      }
-    }
-  } 
-  
 }
+
+.main h4{
+  text-align: center;
+}
+
+.main ul{
+  display: flex;
+  padding: 0;
+}
+
+.main ul li:first-child {
+  min-width: 120px;
+}
+
+.main ul li {
+  min-width: 112px;
+  height: 44px;
+}
+
+.main ul li h4{
+  color: #8585AD;
+}
+
+.main ul li p{
+  color: #8585AD;
+  text-align: center;
+  line-height: 1.5;
 }

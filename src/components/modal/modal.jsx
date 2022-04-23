@@ -1,6 +1,6 @@
-import React, {useRef, useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import './modal.scss';
+import styles from './modal.module.css';
 import {CloseIcon} from  '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -19,13 +19,13 @@ const Modal = ({children, active, setActive, header}) => {
       }
     })
   }, [])
- 
+
 
   return ReactDOM.createPortal(
     <>
-    <section  className={`modal ${active ? "modal_active" : ""}`}>
-      <div className="modal__content">
-      <div className="mt-10 mr-10 ml-10 ingridient-details__header">
+    <section  className={`${styles.modal} ${active ? styles.active : ""}`}>
+      <div className={styles.content}>
+      <div className={`mt-10 mr-10 ml-10 ${styles.header}`}>
           <h2 className='text text_type_main-large'>{header ? header : ''}</h2>
           <button onClick={() => setActive(false)}><CloseIcon type="primary" /></button>
       </div>
