@@ -1,20 +1,26 @@
 .modal{
 
   position: fixed;
-  top: 20px;
-  left: 27%;
   z-index: 20;
-  /* height: 100vh; */
-  /* width: 100vw; */
   display: flex;
   justify-content: center;
   transform: scale(0);
   z-index: 21;
 
+  left:50%;
+  top:50%;
+
+}
+
+.modal:before {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  content: '';
 }
 
 .active{
-  transform: scale(1);
+  transform:translate(-50%,-50%);
 }
 
 .content{

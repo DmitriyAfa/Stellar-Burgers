@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 const ingridientPropTypes = PropTypes.shape({
   calories: PropTypes.number.isRequired,
   carbohydrates: PropTypes.number.isRequired,
@@ -11,7 +11,7 @@ const ingridientPropTypes = PropTypes.shape({
   proteins: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
-  _id: PropTypes.string.isRequired
+  _id: PropTypes.string.isRequired,
 });
 
 export default ingridientPropTypes;
