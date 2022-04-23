@@ -20,6 +20,10 @@ const Modal = ({children, active, setActive, header}) => {
     })
   }, [])
 
+  function closeModal() {
+    setActive(false)
+  }
+
 
   return ReactDOM.createPortal(
     <>
@@ -32,7 +36,7 @@ const Modal = ({children, active, setActive, header}) => {
         {children}
       </div>
     </section>
-    <ModalOverlay active={active} />
+    <ModalOverlay closeModal={closeModal} active={active} />
     </>, modalRoot
   );
 }

@@ -3,18 +3,19 @@ import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
 
-function ModalOverlay({ active}) {
+function ModalOverlay({closeModal, active}) {
 
   return (
     <>
-    <section className={`${styles.modalOverlay} ${active ? styles.active : ""}`}>
+    <section onClick={closeModal} className={`${styles.modalOverlay} ${active ? styles.active : ""}`}>
     </section>
     </>
   );
 }
 
 ModalOverlay.propTypes = {
-  active: PropTypes.bool.isRequired
+  active: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired
 }
 
 export default ModalOverlay;
