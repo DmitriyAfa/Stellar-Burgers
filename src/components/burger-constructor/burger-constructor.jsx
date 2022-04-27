@@ -10,18 +10,18 @@ import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import ingridientPropTypes from "../../utils/constants";
 
+import Modal from "../modal/modal";
+
 function BurgerConstructor(props) {
   const { ingridients } = props;
 
   const [modalActive, setModalActive] = useState(false);
 
   function setModalActiveTrue() {
-    console.log("setModalActiveTrue");
     setModalActive(true);
   }
 
   function setModalActiveFalse() {
-    console.log("setModalActiveFalse");
     setModalActive(false);
   }
 
@@ -61,7 +61,13 @@ function BurgerConstructor(props) {
           </Button>
         </span>
       </span>
-      <OrderDetails active={modalActive} setActive={setModalActiveFalse} />
+      <Modal
+        active={modalActive}
+        setActive={setModalActiveFalse}
+        header={false}
+      >
+        <OrderDetails />
+      </Modal>
     </section>
   );
 }
