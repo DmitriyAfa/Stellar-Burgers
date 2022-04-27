@@ -16,7 +16,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    // "isolatedModules": true, // изменил чтобы удалить index.tsx
     "noEmit": true,
     "jsx": "react-jsx"
   },
