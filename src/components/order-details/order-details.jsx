@@ -4,11 +4,12 @@ import Modal from "../modal/modal";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
-function OrderDetails() {
+function OrderDetails(props) {
+  const { number } = props;
   return (
     <div className={styles.orderDetails}>
       <p className={`${styles.head} mt-30 text text_type_digits-large`}>
-        034536
+        {number}
       </p>
       <p className="mt-8 text text_type_main-medium">Идентификатор заказа</p>
       <div className={`mt-15 ${styles.divIcon}`}>
@@ -26,9 +27,8 @@ function OrderDetails() {
   );
 }
 
-// OrderDetails.propTypes = {
-//   active: PropTypes.bool.isRequired,
-//   setActive: PropTypes.func.isRequired,
-// };
+OrderDetails.propTypes = {
+  number: PropTypes.number.isRequired,
+};
 
 export default OrderDetails;

@@ -4,6 +4,8 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngridients from "../burger-ingredients/burger-ingridients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
+import { IngridientsContext } from "../../context/ingridientsContext";
+
 const url = "https://norma.nomoreparties.space/api/ingredients ";
 
 function App() {
@@ -22,13 +24,13 @@ function App() {
   }, []);
 
   return (
-    <>
+    <IngridientsContext.Provider value={{ ingridients, setIngridients }}>
       <AppHeader />
       <main className={styles.app}>
-        <BurgerIngridients ingridients={ingridients} />
+        {/* <BurgerIngridients ingridients={ingridients} /> */}
         <BurgerConstructor ingridients={ingridients} />
       </main>
-    </>
+    </IngridientsContext.Provider>
   );
 }
 
