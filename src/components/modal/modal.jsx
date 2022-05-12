@@ -1,15 +1,25 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
+import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
+import { CLOSE_MODAL_OF_ORDER_DETAILS } from "../../services/actions/burger-constructor";
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = ({ children, active, setActive, header }) => {
-  // active - отвечает за то видна компонента или нет.
-  // setActive - функция которая изменяет состояние setActive
+const Modal = ({ children, header }) => {
+  const dispatch = useDispatch();
 
+  const closeModal = () => {
+    dispatch({
+      type: CLOSE_MODAL,
+    });
+    dispatch({
+      type: CLOSE_MODAL_OF_ORDER_DETAILS,
+    });
+  };
   useEffect(() => {
     const closeByEscape = (e) => {
       if (e.key === "Escape") {
@@ -20,13 +30,9 @@ const Modal = ({ children, active, setActive, header }) => {
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
 
-  function closeModal() {
-    setActive(false);
-  }
-
   return ReactDOM.createPortal(
     <>
-      <section className={`${styles.modal} ${active ? styles.active : ""}`}>
+      <section className={`${styles.modal} ${styles.active}`}>
         <div className={styles.content}>
           <div className={`mt-10 mr-10 ml-10 ${styles.header}`}>
             <h2 className="text text_type_main-large">
@@ -39,7 +45,7 @@ const Modal = ({ children, active, setActive, header }) => {
           {children}
         </div>
       </section>
-      <ModalOverlay closeModal={closeModal} active={active} />
+      <ModalOverlay />
     </>,
     modalRoot
   );
@@ -47,8 +53,6 @@ const Modal = ({ children, active, setActive, header }) => {
 
 Modal.propTypes = {
   children: PropTypes.any.isRequired,
-  active: PropTypes.bool.isRequired,
-  setActive: PropTypes.func.isRequired,
   header: PropTypes.any.isRequired,
 };
 

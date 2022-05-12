@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
   DragIcon,
@@ -6,69 +6,162 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.css";
 import ingridientPropTypes from "../../../utils/constants";
-import { IngridientsContext } from "../../../context/ingridientsContext";
-import { TotalPriceContext } from "../../../context/totalPriceContext";
-import { PostBodyBurgerConstructor } from "../../../context/totalPriceContext";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop, useDrag } from "react-dnd";
+import {
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
+  DELETE_INGREDIENT_ACTION,
+  GET_ID,
+  SORT_CARD,
+  GET_PRICE,
+} from "../../../services/actions/burger-constructor";
+import {
+  INCREASE,
+  DECREASE,
+} from "../../../services/actions/burger-ingredients";
 
-function MakeDetail({ ingridient }) {
+function MakeDetail({ ingredient, id, moveCard, index }) {
+  const dispatch = useDispatch();
+
+  const deleteIngredient = () => {
+    dispatch({
+      type: DECREASE,
+      payload: ingredient._id,
+    });
+    dispatch({
+      type: DELETE_INGREDIENT,
+      payload: ingredient._id,
+    });
+    dispatch({
+      type: DELETE_INGREDIENT_ACTION,
+    });
+    dispatch({
+      type: GET_ID,
+    });
+    dispatch({
+      type: GET_PRICE,
+    });
+  };
+
+  const ref = useRef(null);
+
+  const [, drop] = useDrop({
+    accept: "card",
+    hover: (item, monitor) => {
+      if (!ref.current) {
+        return;
+      }
+
+      const dragIndex = item.id;
+
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingReact = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingReact.bottom - hoverBoundingReact.top) / 2; // координата середины карточки
+
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingReact.top;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      moveCard(dragIndex, hoverIndex);
+      item.id = hoverIndex;
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    type: "card",
+    item: { id },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const opacity = isDragging ? 0 : 1;
+  drag(drop(ref));
+
   return (
-    <li className="ml-4 mr-6 mb-4">
+    <li ref={ref} style={{ opacity: opacity }} className="ml-4 mr-6 mb-4">
       <DragIcon type="primary" />
       <ConstructorElement
-        text={ingridient.name}
-        price={ingridient.price}
-        thumbnail={ingridient.image}
+        text={ingredient.name}
+        price={ingredient.price}
+        thumbnail={ingredient.image}
+        handleClose={deleteIngredient}
       />
     </li>
   );
 }
 
 MakeDetail.propTypes = {
-  ingridient: ingridientPropTypes.isRequired,
+  ingredient: ingridientPropTypes.isRequired,
+  id: PropTypes.number.isRequired,
+  moveCard: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
-function ScrollBurgerConstructor(props) {
-  const { ingridients } = useContext(IngridientsContext);
-  const ingridientsWithoutBun = [];
+function ScrollBurgerConstructor() {
+  const dispatch = useDispatch();
 
-  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
-  const { postBodyBurgerConstructor, setPostBodyBurgerConstructor } =
-    useContext(PostBodyBurgerConstructor);
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.constructorIngredients
+  );
 
-  ingridients.map((ingridient) => {
-    if (ingridient.type !== "bun") {
-      return ingridientsWithoutBun.push(ingridient);
-    }
-  });
-
-  useEffect(() => {
-    let total = 0;
-    let ids = [];
-    ingridients.map((item) => {
-      if (item.type !== "bun") {
-        total += item.price;
-        ids.push(item._id);
+  const [, drop] = useDrop({
+    accept: "ingredient",
+    drop(ingredient) {
+      if (ingredient.ingredient.type !== "bun") {
+        dispatch({
+          type: ADD_INGREDIENT,
+          ...ingredient,
+        });
+        dispatch({
+          type: INCREASE,
+          payload: ingredient.ingredient._id,
+        });
+        dispatch({
+          type: GET_PRICE,
+        });
       }
-    });
-    ids.unshift(props.bunID);
-    setPostBodyBurgerConstructor({ ingridients: ids });
-    setTotalPrice(totalPrice + total);
-  }, [ingridients, setTotalPrice]);
-
-  const arr = ingridientsWithoutBun.map((ingridientsWithoutBun) => {
-    return (
-      <MakeDetail
-        key={ingridientsWithoutBun._id}
-        ingridient={ingridientsWithoutBun}
-      />
-    );
+    },
   });
 
-  return <ul className={styles.scrollBar}>{arr}</ul>;
-}
+  const moveCard = (dragIndex, hoverIndex) => {
+    const dragCard = ingredients[dragIndex];
 
-// Detail.propTypes = {
-//   ingridients: PropTypes.arrayOf(ingridientPropTypes.isRequired).isRequired,
-// };
+    const newCards = [...ingredients];
+    newCards.splice(dragIndex, 1);
+    newCards.splice(hoverIndex, 0, dragCard);
+
+    dispatch({
+      type: SORT_CARD,
+      payload: newCards,
+    });
+  };
+
+  return (
+    <ul ref={drop} className={styles.scrollBar}>
+      {ingredients &&
+        ingredients.map((ingredient, i) => (
+          <MakeDetail
+            key={ingredient._id + i}
+            ingredient={ingredient}
+            id={i}
+            index={i}
+            moveCard={moveCard}
+          />
+        ))}
+    </ul>
+  );
+}
 
 export default ScrollBurgerConstructor;
