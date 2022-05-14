@@ -18,8 +18,6 @@ function BurgerConstructor() {
     (state) => state.burgerIngredients.orderDetailsIsActive
   );
 
-  const ingrs = useSelector((state) => state.burgerIngredients.ingredients);
-
   const onClose = () => {
     dispatch(closeModalOfOrderDetails());
     dispatch(clearOrderDetails());

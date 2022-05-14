@@ -104,12 +104,12 @@ function MakeDetail({ ingredient, id, moveCard, index }) {
   );
 }
 
-// MakeDetail.propTypes = {
-//   ingredient: ingridientPropTypes.isRequired,
-//   id: PropTypes.number.isRequired,
-//   moveCard: PropTypes.func.isRequired,
-//   index: PropTypes.number.isRequired,
-// };
+MakeDetail.propTypes = {
+  ingredient: ingridientPropTypes.isRequired,
+  id: PropTypes.number.isRequired,
+  moveCard: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 function ScrollBurgerConstructor() {
   const dispatch = useDispatch();
