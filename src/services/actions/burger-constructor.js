@@ -1,4 +1,5 @@
 import { baseUrl } from "../baseUrl";
+import { checkResponse } from "../checkResponse";
 export const ADD_BUN = "ADD_BUN";
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
@@ -18,6 +19,7 @@ export const CLOSE_MODAL_OF_ORDER_DETAILS = "CLOSE_MODAL_OF_ORDER_DETAILS";
 export const OPEN_MODAL_OF_ORDER_DETAILS = "OPEN_MODAL_OF_ORDER_DETAILS";
 
 export const SORT_CARD = "SORT_CARD";
+export const CLEAR_ORDER_DETAILS = "CLEAR_ORDER_DETAILS";
 
 export const getOrderNumber = (bodyPOST) => {
   return function (dispatch) {
@@ -30,17 +32,13 @@ export const getOrderNumber = (bodyPOST) => {
         ingredients: bodyPOST,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        Promise.reject(`Ошибка ${res.status}`);
-      })
+      .then(checkResponse)
       .then((data) =>
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,
           number: data,
         })
-      );
+      )
+      .catch((e) => console.log(e));
   };
 };

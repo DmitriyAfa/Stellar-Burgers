@@ -1,13 +1,11 @@
 import React from "react";
 import styles from "./order-details.module.css";
-import Modal from "../modal/modal";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 function OrderDetails() {
   const number = useSelector((state) => state.burgerIngredients.order.number);
   return (
-    <Modal header={false}>
+    <>
       <div className={styles.orderDetails}>
         <p className={`${styles.head} mt-30 text text_type_digits-large`}>
           {number}
@@ -25,7 +23,7 @@ function OrderDetails() {
           Дождитесь готовности на орбитальной станции
         </p>
       </div>
-    </Modal>
+    </>
   );
 }
 

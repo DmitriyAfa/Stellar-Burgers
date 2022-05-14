@@ -5,15 +5,16 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { INCREASE } from "../../../services/actions/burger-ingredients";
-import {
-  ADD_BUN,
-  MAKE_BUN_QTY_ZERO,
-  GET_BUN_ID,
-} from "../../../services/actions/burger-constructor";
+import { GET_BUN_ID } from "../../../services/actions/burger-constructor";
 import {
   GET_ID,
   GET_PRICE,
 } from "../../../services/actions/burger-constructor";
+
+import {
+  addBun,
+  makeBunQtyZero,
+} from "../../../services/actions/actions-creator";
 
 function Buns() {
   const dispatch = useDispatch();
@@ -23,13 +24,8 @@ function Buns() {
     accept: "ingredient",
     drop(ingredient) {
       if (ingredient.ingredient.type === "bun") {
-        dispatch({
-          type: ADD_BUN,
-          ...ingredient,
-        });
-        dispatch({
-          type: MAKE_BUN_QTY_ZERO,
-        });
+        dispatch(addBun(ingredient));
+        dispatch(makeBunQtyZero());
         dispatch({
           type: INCREASE,
           payload: ingredient.ingredient._id,

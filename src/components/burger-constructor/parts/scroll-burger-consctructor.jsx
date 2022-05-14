@@ -20,9 +20,11 @@ import {
   INCREASE,
   DECREASE,
 } from "../../../services/actions/burger-ingredients";
+import { v4 as uuidv4 } from "uuid";
 
 function MakeDetail({ ingredient, id, moveCard, index }) {
   const dispatch = useDispatch();
+  // console.log(ingredient);
 
   const deleteIngredient = () => {
     dispatch({
@@ -102,12 +104,12 @@ function MakeDetail({ ingredient, id, moveCard, index }) {
   );
 }
 
-MakeDetail.propTypes = {
-  ingredient: ingridientPropTypes.isRequired,
-  id: PropTypes.number.isRequired,
-  moveCard: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-};
+// MakeDetail.propTypes = {
+//   ingredient: ingridientPropTypes.isRequired,
+//   id: PropTypes.number.isRequired,
+//   moveCard: PropTypes.func.isRequired,
+//   index: PropTypes.number.isRequired,
+// };
 
 function ScrollBurgerConstructor() {
   const dispatch = useDispatch();
@@ -123,6 +125,7 @@ function ScrollBurgerConstructor() {
         dispatch({
           type: ADD_INGREDIENT,
           ...ingredient,
+          payload: uuidv4(),
         });
         dispatch({
           type: INCREASE,
@@ -131,6 +134,7 @@ function ScrollBurgerConstructor() {
         dispatch({
           type: GET_PRICE,
         });
+        console.log(ingredient);
       }
     },
   });
@@ -141,7 +145,7 @@ function ScrollBurgerConstructor() {
     const newCards = [...ingredients];
     newCards.splice(dragIndex, 1);
     newCards.splice(hoverIndex, 0, dragCard);
-
+    console.log(newCards);
     dispatch({
       type: SORT_CARD,
       payload: newCards,
@@ -153,8 +157,8 @@ function ScrollBurgerConstructor() {
       {ingredients &&
         ingredients.map((ingredient, i) => (
           <MakeDetail
-            key={ingredient._id + i}
-            ingredient={ingredient}
+            key={ingredient.id}
+            ingredient={ingredient.ingr}
             id={i}
             index={i}
             moveCard={moveCard}

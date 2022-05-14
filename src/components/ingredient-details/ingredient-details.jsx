@@ -1,17 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import styles from "./ingridient-details.module.css";
-import Modal from "../modal/modal";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { GET_INGREDIENT } from "../../services/actions/burger-ingredients";
 
 function IngredientDetails() {
   const ingredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
-  // console.log(ingredient);
   return (
-    <Modal header={"Детали ингредиента"}>
+    <>
       <div className={`mb-15 ${styles.main}`}>
         <img src={ingredient.image} alt={ingredient.name} />
         <h4 className="mt-2 text text_type_main-medium">{ingredient.name}</h4>
@@ -40,19 +36,8 @@ function IngredientDetails() {
           </li>
         </ul>
       </div>
-    </Modal>
+    </>
   );
 }
-
-// IngredientDetails.propTypes = {
-//   active: PropTypes.bool.isRequired,
-//   setActive: PropTypes.func.isRequired,
-//   name: PropTypes.string.isRequired,
-//   image: PropTypes.string.isRequired,
-//   proteins: PropTypes.number.isRequired,
-//   fat: PropTypes.number.isRequired,
-//   carbohydrates: PropTypes.number.isRequired,
-//   calories: PropTypes.number.isRequired,
-// };
 
 export default IngredientDetails;

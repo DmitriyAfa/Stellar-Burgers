@@ -1,24 +1,14 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
-import { CLOSE_MODAL_OF_ORDER_DETAILS } from "../../services/actions/burger-constructor";
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = ({ children, header }) => {
-  const dispatch = useDispatch();
-
+const Modal = ({ children, header, onClose }) => {
   const closeModal = () => {
-    dispatch({
-      type: CLOSE_MODAL,
-    });
-    dispatch({
-      type: CLOSE_MODAL_OF_ORDER_DETAILS,
-    });
+    onClose();
   };
   useEffect(() => {
     const closeByEscape = (e) => {
@@ -45,7 +35,7 @@ const Modal = ({ children, header }) => {
           {children}
         </div>
       </section>
-      <ModalOverlay />
+      <ModalOverlay onClose={onClose} />
     </>,
     modalRoot
   );
@@ -54,6 +44,7 @@ const Modal = ({ children, header }) => {
 Modal.propTypes = {
   children: PropTypes.any.isRequired,
   header: PropTypes.any.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

@@ -1,19 +1,10 @@
 import React from "react";
 import styles from "./modal-overlay.module.css";
-import { useDispatch } from "react-redux";
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
-import { CLOSE_MODAL_OF_ORDER_DETAILS } from "../../services/actions/burger-constructor";
+import PropTypes from "prop-types";
 
-function ModalOverlay() {
-  const dispatch = useDispatch();
-
+const ModalOverlay = ({ onClose }) => {
   const closeModal = () => {
-    dispatch({
-      type: CLOSE_MODAL,
-    });
-    dispatch({
-      type: CLOSE_MODAL_OF_ORDER_DETAILS,
-    });
+    onClose();
   };
 
   return (
@@ -22,6 +13,10 @@ function ModalOverlay() {
       className={`${styles.modalOverlay} ${styles.active}`}
     ></section>
   );
-}
+};
+
+ModalOverlay.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 export default ModalOverlay;

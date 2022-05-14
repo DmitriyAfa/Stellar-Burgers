@@ -19,16 +19,23 @@ function Order() {
   );
 
   const price = useSelector((state) => state.burgerIngredients.price);
+
+  const bunIshere = useSelector((state) => state.burgerIngredients.bun._id);
+
   const getId = () => {
-    dispatch({
-      type: GET_ID,
-    });
+    if (bunIshere) {
+      dispatch({
+        type: GET_ID,
+      });
+    }
   };
   const openModal = () => {
-    dispatch(getOrderNumber(ingredients));
-    dispatch({
-      type: OPEN_MODAL_OF_ORDER_DETAILS,
-    });
+    if (bunIshere) {
+      dispatch(getOrderNumber(ingredients));
+      dispatch({
+        type: OPEN_MODAL_OF_ORDER_DETAILS,
+      });
+    }
   };
 
   return (

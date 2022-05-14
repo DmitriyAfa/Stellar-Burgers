@@ -1,8 +1,5 @@
-// import { initialState } from "../initialState";
 import {
-  GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED,
   GET_INGREDIENT,
   OPEN_MODAL,
   CLOSE_MODAL,
@@ -22,17 +19,31 @@ import {
   CLOSE_MODAL_OF_ORDER_DETAILS,
   OPEN_MODAL_OF_ORDER_DETAILS,
   SORT_CARD,
+  CLEAR_ORDER_DETAILS,
 } from "../actions/burger-constructor";
+import { v4 as uuidv4 } from "uuid";
 
 export const initialState = {
-  ingredients: [],
+  ingredients: false,
   ingredientsRequest: false,
   ingredientsFailed: false,
 
   currentIngredient: false,
-  qty: 0,
 
-  bun: false,
+  bun: {
+    _id: false,
+    name: "Выберите булку",
+    type: "bun",
+    proteins: 80,
+    fat: 24,
+    carbohydrates: 53,
+    calories: 420,
+    price: 0.001,
+    image: "https://code.s3.yandex.net/react/code/bun-02.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+    __v: 0,
+  },
   bunId: [],
   constructorIngredients: [],
   deleteConstructorIngredients: [],
@@ -43,22 +54,46 @@ export const initialState = {
   },
   price: 0,
   orderDetailsIsActive: false,
-
-  currentConstructorIngredient: false,
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_ORDER_DETAILS: {
+      return {
+        ...state,
+        ingredients: state.ingredients.map((ingredient) => {
+          return {
+            ingredient: ingredient.ingredient,
+            qty: 0,
+          };
+        }),
+        bun: {
+          _id: false,
+          name: "Выберите булку",
+          type: "bun",
+          proteins: 80,
+          fat: 24,
+          carbohydrates: 53,
+          calories: 420,
+          price: 0.001,
+          image: "https://code.s3.yandex.net/react/code/bun-02.png",
+          image_mobile:
+            "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+          image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+          __v: 0,
+        },
+        order: {
+          ingredients: false,
+          number: null,
+        },
+        constructorIngredients: [],
+        price: 0,
+      };
+    }
     case SORT_CARD: {
       return {
         ...state,
         constructorIngredients: action.payload,
-      };
-    }
-    case GET_INGREDIENTS_REQUEST: {
-      return {
-        ...state,
-        ingredientsRequest: true,
       };
     }
     case GET_INGREDIENTS_SUCCESS: {
@@ -74,10 +109,6 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         ingredientsRequest: false,
       };
     }
-    case GET_INGREDIENTS_FAILED: {
-      return { ...state, ingredientsFailed: true, ingredientsRequest: false };
-    }
-
     case GET_ORDER_NUMBER_SUCCESS: {
       return {
         ...state,
@@ -122,7 +153,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         deleteConstructorIngredients: state.constructorIngredients.map(
           (ingredient, i) => {
             const ind = state.constructorIngredients.findIndex(
-              (ingredient) => ingredient._id === action.payload
+              (ingredient) => ingredient.ingr._id === action.payload
             );
             if (i !== ind) {
               return ingredient;
@@ -162,7 +193,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         constructorIngredients: [
           ...state.constructorIngredients,
-          action.ingredient,
+          { ingr: action.ingredient, id: action.payload },
         ],
       };
     }
@@ -203,12 +234,12 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         price: state.bun
           ? state.constructorIngredients.reduce(
-              (prev, next) => prev + next.price,
+              (prev, next) => prev + next.ingr.price,
               0
             ) +
             state.bun.price * 2
           : state.constructorIngredients.reduce(
-              (prev, next) => prev + next.price,
+              (prev, next) => prev + next.ingr.price,
               0
             ),
       };

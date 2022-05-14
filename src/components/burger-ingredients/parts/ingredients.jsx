@@ -75,7 +75,7 @@ function Ingredients({ head, ingredients }) {
 
 Ingredients.propTypes = {
   head: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(ingridientPropTypes.isRequired).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
 export default Ingredients;
