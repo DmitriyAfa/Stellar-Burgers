@@ -6,6 +6,7 @@ function IngredientDetails() {
   const ingredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
+  sessionStorage.setItem("currentIngredient", JSON.stringify(ingredient));
   return (
     <>
       <div className={`mb-15 ${styles.main}`}>

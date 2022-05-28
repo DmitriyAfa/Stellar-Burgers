@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingridients.module.css";
 import Tabs from "./parts/tabs";
@@ -24,7 +25,7 @@ function BurgerIngredients() {
     ingredients &&
     ingredients.filter((ingredient) => ingredient.ingredient.type === "main");
 
-  const modalIsActive = useSelector(
+  const currentIngredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
 
@@ -70,7 +71,7 @@ function BurgerIngredients() {
         {ingredients && <Ingredients head="Соусы" ingredients={sauce} />}
         {ingredients && <Ingredients head="Начинки" ingredients={main} />}
       </div>
-      {modalIsActive && (
+      {currentIngredient && (
         <Modal header={"Детали ингредиента"} onClose={onClose}>
           <IngredientDetails />
         </Modal>

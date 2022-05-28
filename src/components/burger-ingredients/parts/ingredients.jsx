@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import {
   CurrencyIcon,
@@ -9,15 +9,22 @@ import ingridientPropTypes from "../../../utils/constants";
 import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { GET_INGREDIENT } from "../../../services/actions/burger-ingredients";
+import { useParams, useHistory } from "react-router-dom";
 
-function MakeIngredient({ ingredient, count }) {
+export function MakeIngredient({ ingredient, count }) {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const goToForgotPassword = useCallback(() => {
+    history.push({ pathname: `/ingredients/:${ingredient._id}` });
+  }, [history]);
 
   const getIngredient = () => {
     dispatch({
       type: GET_INGREDIENT,
       payload: ingredient,
     });
+    goToForgotPassword();
   };
 
   const [{ isDrag }, dragRef] = useDrag({

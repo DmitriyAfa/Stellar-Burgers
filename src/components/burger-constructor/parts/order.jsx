@@ -1,4 +1,6 @@
-import React from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useAuth } from "../../../services/auth";
+import { Redirect, useLocation } from "react-router-dom";
 import styles from "../burger-constructor.module.css";
 import {
   CurrencyIcon,
@@ -14,6 +16,10 @@ import {
 function Order() {
   const dispatch = useDispatch();
 
+  let auth = useAuth();
+
+  const [isAuth, setIsAuth] = useState(true);
+
   const ingredients = useSelector(
     (state) => state.burgerIngredients.order.ingredients
   );
@@ -22,6 +28,18 @@ function Order() {
 
   const bunIshere = useSelector((state) => state.burgerIngredients.bun._id);
 
+  // const req = async () => {
+  //   const data = await auth.getUser().then(async (res) => res);
+  //   console.log(data);
+  //   if (data === undefined) {
+  //     setIsAuth(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   req();
+  // }, []);
+
   const getId = () => {
     if (bunIshere) {
       dispatch({
@@ -29,14 +47,38 @@ function Order() {
       });
     }
   };
-  const openModal = () => {
-    if (bunIshere) {
-      dispatch(getOrderNumber(ingredients));
-      dispatch({
-        type: OPEN_MODAL_OF_ORDER_DETAILS,
-      });
-    }
+  const openModal = async () => {
+    const request = await auth.getUser().then(async (res) => {
+      console.log(res);
+      if (res !== undefined) {
+        if (bunIshere) {
+          dispatch(getOrderNumber(ingredients));
+          dispatch({
+            type: OPEN_MODAL_OF_ORDER_DETAILS,
+          });
+        }
+      } else {
+        setIsAuth(false);
+      }
+    });
+    // console.log(request);
+    // if (bunIshere && isAuth) {
+    //   dispatch(getOrderNumber(ingredients));
+    //   dispatch({
+    //     type: OPEN_MODAL_OF_ORDER_DETAILS,
+    //   });
+    // }
   };
+
+  if (isAuth === false) {
+    return (
+      <Redirect
+        // Если объект state не является undefined, вернём пользователя назад.
+        // to={{ pathname: state?.from || "/" }}
+        to={{ pathname: "/login" }}
+      />
+    );
+  }
 
   return (
     <span className={`mt-10 ${styles.bottom}`}>

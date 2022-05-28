@@ -1,0 +1,40 @@
+.main{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  /* display: grid; 
+  grid-template-columns: 10% 39% 2% 39% 10%;
+  grid-template-rows: 912px 40px; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    ". BurgerIngridients . BurgerConstructor ."
+    ". ................. . ................. .";  */
+}
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-top: 180px;
+  width: 480px;
+}
+.title{
+  text-align: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+}
+.button{
+  text-align: center;
+  color: #8585AD;
+}
+.link{
+  font-family: 'Jet Brains Mono';
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: normal;
+  padding: 0 0 0 4px;
+  color: #4c4cff;;
+}
+.link:hover{
+  opacity: 0.9;
+}

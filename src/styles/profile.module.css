@@ -1,0 +1,67 @@
+.main{
+  display: flex;
+  width: 100%;
+}
+.left{
+  display: flex;
+  flex-direction: column;
+  margin-top: 120px;
+  width: 360px;
+  margin: 120px 50px 0 117px;
+}
+
+.leftBottom{
+  
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 0px 0px 0 25px;
+  color: #8585AD;
+
+opacity: 0.4;
+}
+.right{
+  display: flex;
+  flex-direction: column ;
+  margin-top: 120px;
+  width: 480px;
+}
+.title{
+  text-align: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+}
+.button{
+  color: #8585AD;
+}
+.link:hover{
+  opacity: 0.9;
+}
+
+.button :global(.button_button_size_small__30sB8){
+  font-family: 'Jet Brains Mono';
+  color: #8585AD;
+  text-align:  left;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.9;
+}
+.buttonActive :global(.button_button_size_small__30sB8){
+  color: white;
+}
+
+.rightBottom{
+  text-align: right;
+  
+}
+
+.color :global(button){
+  color: #4c4cff !important;
+}
+.rightBottom :global(button){
+  margin-left: 28px;
+  color: white;
+}
+

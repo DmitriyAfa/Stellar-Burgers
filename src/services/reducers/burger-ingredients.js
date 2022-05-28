@@ -21,7 +21,11 @@ import {
   SORT_CARD,
   CLEAR_ORDER_DETAILS,
 } from "../actions/burger-constructor";
-import { v4 as uuidv4 } from "uuid";
+
+import { RESET_PASSWORD_SUCCESS } from "../actions/forgot-password-page";
+import { GET_NEW_PASSWORD_SUCCESS } from "../actions/reset-password";
+import { REGISTRATION_SUCCESS } from "../actions/registration";
+import { GET_TOKENS, LOGIN_SUCCESS } from "../actions/login";
 
 export const initialState = {
   ingredients: false,
@@ -54,6 +58,14 @@ export const initialState = {
   },
   price: 0,
   orderDetailsIsActive: false,
+
+  // sprint 4. Pages.
+
+  passwordReset: { success: false, message: "" },
+  isCreatePassword: { success: false, message: "" },
+  registration: { success: false },
+  user: { success: false },
+  tokens: { success: false },
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -254,6 +266,39 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         orderDetailsIsActive: false,
+      };
+    }
+
+    // Sprint 4. Pages.
+
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        passwordReset: action.payload,
+      };
+    }
+    case GET_NEW_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isCreatePassword: action.payload,
+      };
+    }
+    case REGISTRATION_SUCCESS: {
+      return {
+        ...state,
+        registration: action.payload ? action.payload : state.registration,
+      };
+    }
+    case LOGIN_SUCCESS: {
+      return {
+        ...state,
+        user: action.payload ? action.payload : state.user,
+      };
+    }
+    case GET_TOKENS: {
+      return {
+        ...state,
+        tokens: action.payload ? action.payload : state.tokens,
       };
     }
     default: {
