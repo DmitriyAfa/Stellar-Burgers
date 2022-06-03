@@ -1,8 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../../services/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Redirect, Link } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
 import AppHeader from "../../components/app-header/app-header";
@@ -11,64 +8,40 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { registration } from "../../services/actions/registration";
+
+import { useActions } from "../../utils/useAction";
 
 function RegistrationPage() {
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const { registration } = useActions();
 
-  let auth = useAuth();
-
-  const { state } = useLocation();
-
-  const registr = useSelector((state) => state.burgerIngredients.registration);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setValue] = useState({ name: "", email: "", password: "" });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const req = async () => {
-    await auth.getUser().then(async (res) => {
-      const data = await res;
-      if (data.success) {
-        setValue({ ...form, name: data.user.name, email: data.user.email });
-      }
-    });
+  const submit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const res = await registration(form);
+    if (res) {
+      setIsLoading(false);
+    }
   };
 
-  useEffect(() => {
-    req();
-  }, []);
+  console.log();
 
-  const goToLogin = useCallback(() => {
-    history.replace({ pathname: "/login" });
-  }, [history]);
-
-  const goRegistration = () => {
-    dispatch(registration(form));
-  };
-
-  if (registr.success) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/login",
-        }}
-      />
-    );
+  if (localStorage.getItem("accessToken")) {
+    return <Redirect to={"/profile"} />;
   }
 
-  if (auth.user) {
-    return <Redirect to={{ pathname: state?.from || "/" }} />;
-  }
   return (
     <>
       <AppHeader constructor="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.wrapper}>
-          <form className={styles.form}>
+          <form onSubmit={submit} className={styles.form}>
             <p className={`${styles.title} text text_type_main-medium`}>
               Регистрация
             </p>
@@ -98,22 +71,22 @@ function RegistrationPage() {
                 onChange={onChange}
               />
             </div>
-          </form>
-          <div className={`${styles.button} mt-6`}>
-            <Button onClick={goRegistration} type="primary" size="medium">
-              Зарегестрироваться
-            </Button>
-          </div>
-          <form>
-            <div
-              className={`${styles.button} text text_type_main-default mt-20`}
-            >
-              Уже зарегестрированы?
-              <Button onClick={goToLogin} type="secondary" size="medium">
-                Войти
-              </Button>
+            <div className={`${styles.button} mt-6`}>
+              {isLoading ? (
+                "Ожидание ответа сервера"
+              ) : (
+                <Button type="primary" size="medium">
+                  Зарегестрироваться
+                </Button>
+              )}
             </div>
           </form>
+          <div className={`${styles.button} text text_type_main-default mt-20`}>
+            Уже зарегестрированы?
+            <Link to="/login" className={styles.link}>
+              Войти
+            </Link>
+          </div>
         </div>
       </main>
     </>

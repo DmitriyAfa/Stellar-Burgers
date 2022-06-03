@@ -1,28 +1,18 @@
-import { useState, useCallback, useEffect } from "react";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../services/auth";
+import { useState } from "react";
+import { useHistory, useLocation, Link, Redirect } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
 import AppHeader from "../../components/app-header/app-header";
 import {
   Input,
-  PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { savePassword } from "../../services/actions/reset-password";
-//У компонента PasswordInput остутствует placeholder, поэтому выбран input с типом "password"
+import { useActions } from "../../utils/useAction";
 
 function ResetPassword() {
   const history = useHistory();
-  const dispatch = useDispatch();
-
-  let auth = useAuth();
-  const { state } = useLocation();
-
-  const answer = useSelector(
-    (state) => state.burgerIngredients.isCreatePassword
-  );
+  const { resetPassword } = useActions();
+  const location = useLocation();
 
   const [form, setValue] = useState({ password: "", token: "" });
 
@@ -30,37 +20,17 @@ function ResetPassword() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const req = async () => {
-    await auth.getUser().then(async (res) => {
-      const data = await res;
-      if (data.success) {
-        setValue({ ...form, name: data.user.name, email: data.user.email });
-      }
-    });
+  const submit = async (e) => {
+    e.preventDefault();
+    const res = await resetPassword(form);
+
+    if (res) {
+      history.push("/login", { from: location });
+    }
   };
 
-  useEffect(() => {
-    req();
-  }, []);
-
-  const goToLogin = useCallback(() => {
-    history.replace({ pathname: "/login" });
-  }, [history]);
-
-  const savePass = () => {
-    dispatch(savePassword(form));
-  };
-  console.log(answer);
-  // {success: true, message: "Password successfully reset"}
-
-  if (auth.user) {
-    return (
-      // Переадресовываем авторизованного пользователя на главную страницу
-      <Redirect
-        // Если объект state не является undefined, вернём пользователя назад.
-        to={{ pathname: state?.from || "/" }}
-      />
-    );
+  if (localStorage.getItem("accessToken")) {
+    return <Redirect to={"/profile"} />;
   }
 
   return (
@@ -92,19 +62,17 @@ function ResetPassword() {
               />
             </div>
             <div className={`${styles.button} mt-6`}>
-              <Button onClick={savePass} type="primary" size="medium">
+              <Button onClick={submit} type="primary" size="medium">
                 Сохранить
               </Button>
             </div>
-            <div
-              className={`${styles.button} text text_type_main-default mt-20`}
-            >
-              Восстановили пароль?
-              <Button onClick={goToLogin} type="secondary" size="medium">
-                Войти
-              </Button>
-            </div>
           </form>
+          <div className={`${styles.button} text text_type_main-default mt-20`}>
+            Восстановили пароль?
+            <Link to="/login" className={styles.link}>
+              войти
+            </Link>
+          </div>
         </div>
       </main>
     </>

@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BurgerPage from "../../pages/burger/burger";
 import LoginPage from "../../pages/login/login";
@@ -11,15 +17,33 @@ import IngredientPage from "../../pages/ingredient/ingredient";
 import { NotFound404 } from "../../pages/not-found/not-found";
 import { ProtectedRoute } from "../protected-route";
 import { ProvideAuth } from "../../services/auth";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 
 function App() {
+  const dispatch = useDispatch();
   const currentIngredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
 
+  const history = useHistory();
+  const location = useLocation();
+  let background = location.state ? location.state.background : location.state;
+
+  if (history.action !== "PUSH") {
+    background = undefined;
+  }
+
+  const closeModal = () => {
+    // background = undefined;
+    dispatch({ type: CLOSE_MODAL });
+    history.push("/");
+  };
+
   return (
     <ProvideAuth>
-      <Router>
+      <BrowserRouter>
         <Switch>
           <Route path="/" exact>
             <BurgerPage />
@@ -46,7 +70,14 @@ function App() {
             <NotFound404 />
           </Route>
         </Switch>
-      </Router>
+      </BrowserRouter>
+      {/* {background && (
+        <Route path={"/ingredients/:id"}>
+          <Modal header={"Детали ингредиента"} onClose={closeModal}>
+            <IngredientDetails />
+          </Modal>
+        </Route>
+      )} */}
     </ProvideAuth>
   );
 }

@@ -1,77 +1,55 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useAuth } from "../../services/auth";
-import { useParams, useHistory, useLocation } from "react-router-dom";
-import styles from "../../styles/profile.module.css";
+import { useHistory, Redirect, Link } from "react-router-dom";
+import styles from "./profile.module.css";
 import "../../styles/styles.css"; // Для стилизации компонентов из Яндекс библиотеки приходится использовать не моудльные стили, иначе стилизация не работает.
 import AppHeader from "../../components/app-header/app-header";
 import {
   Input,
-  PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {
-  authUser,
-  updateAuthorization,
-  refreshTokenFunc,
-  logout,
-} from "../../services/actions/profile";
+
+import { useActions } from "../../utils/useAction";
 
 function ProfilePage() {
-  const history = useHistory();
-  const auth = useAuth();
+  const { user } = useSelector((state) => state.user);
 
-  const goToOrders = useCallback(() => {
-    history.replace({ pathname: "/profile/orders" });
-  }, [history]);
-  // const goToId = useCallback(() => {
-  //   history.replace({ pathname: "/profile/orders/:id" });
-  // }, [history]);
+  const { getUser, changeAuthUser, logout } = useActions();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setValue] = useState({ name: "", email: "", password: "" });
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const req = async () => {
-    await auth.getUser().then(async (res) => {
-      const data = await res;
-      if (data.success) {
-        setValue({ ...form, name: data.user.name, email: data.user.email });
-      }
-    });
+  const logOut = async () => {
+    const res = await logout();
   };
 
-  useEffect(() => {
-    req();
-  }, []);
-
-  const update = async (e) => {
-    e.preventDefault();
-    const accessToken = localStorage.getItem("accessToken");
-    const data = await updateAuthorization(
-      form.email,
-      form.name,
-      accessToken
-    ).then((data) => data);
-
-    if (data.success) {
-      setValue({ ...form, name: data.user.name, email: data.user.email });
-    } else {
-      const refreshToken = localStorage.getItem("refreshToken");
-      const tokens = await refreshTokenFunc(refreshToken);
-      if (tokens.success) {
-        localStorage.setItem("accessToken", tokens.accessToken);
-        localStorage.setItem("refreshToken", tokens.refreshToken);
-      }
+  const getUserFunc = async () => {
+    const res = await getUser();
+    console.log(res);
+    if (res.success) {
+      setValue({ ...form, name: res.user.name, email: res.user.email });
     }
   };
 
-  const out = async (e) => {
+  useEffect(() => {
+    getUserFunc();
+  }, []);
+
+  const backForm = (e) => {
     e.preventDefault();
-    const refreshToken = localStorage.getItem("refreshToken");
-    const data = await auth.signOut(refreshToken).then((data) => data);
-    if (data) {
-      setValue({ ...form, name: "", email: "" });
+    setValue({ ...form, name: user.name, email: user.email, password: "" });
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const res = await changeAuthUser(form);
+    if (res) {
+      setIsLoading(false);
     }
   };
 
@@ -80,25 +58,21 @@ function ProfilePage() {
       <AppHeader constructor="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.left}>
-          <div className={`${styles.button} ${styles.buttonActive}`}>
-            <Button
-              // onClick={goToForgotPassword}
-              type="secondary"
-              size="small"
-            >
-              Профиль
-            </Button>
-          </div>
-          <div className={styles.button}>
-            <Button onClick={goToOrders} type="secondary" size="small">
-              История заказов
-            </Button>
-          </div>
-          <div className={styles.button}>
-            <Button onClick={out} type="secondary" size="small">
-              Выход
-            </Button>
-          </div>
+          <Link
+            to="/login"
+            className={`${styles.link} ${styles.button} ${styles.linkActive}`}
+          >
+            войти
+          </Link>
+          <Link
+            to="/profile/orders"
+            className={`${styles.link} ${styles.button}`}
+          >
+            История заказов
+          </Link>
+          <Button onClick={logOut} type="secondary" size="large">
+            Выход
+          </Button>
           <div className={`text ${styles.leftBottom} text_type_main-default`}>
             В этом разделе вы можете <br /> изменить свои персональные данные
           </div>
@@ -137,19 +111,20 @@ function ProfilePage() {
             </div>
           </form>
           <div className={`${styles.rightBottom} mt-6`}>
-            <span className={styles.color}>
-              <Button
-                // onClick={goToForgotPassword}
-
-                type="secondary"
-                size="medium"
-              >
-                Отмена
-              </Button>
-            </span>
-            <Button onClick={update} type="primary" size="medium">
-              Сохранить
-            </Button>
+            {isLoading ? (
+              "Ожидание ответа сервера"
+            ) : (
+              <>
+                <span className={styles.color}>
+                  <Button onClick={backForm} type="secondary" size="medium">
+                    Отмена
+                  </Button>
+                </span>
+                <Button onClick={submit} type="primary" size="medium">
+                  Сохранить
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </main>

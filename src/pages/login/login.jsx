@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useAuth } from "../../services/auth";
 import { Redirect, useLocation } from "react-router-dom";
 import styles from "../../styles/login.module.css";
@@ -11,57 +11,30 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { useActions } from "../../utils/useAction";
+
 function LoginPage() {
   const history = useHistory();
+  const { login } = useActions();
 
-  let auth = useAuth();
-  // console.log(auth.user);
-
-  const { state } = useLocation();
-
-  const goToRegister = useCallback(() => {
-    history.replace({ pathname: "/register" });
-  }, [history]);
-  const goToForgotPassword = useCallback(() => {
-    history.replace({ pathname: "/forgot-password" });
-  }, [history]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setValue] = useState({ email: "", password: "" });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const req = async () => {
-    await auth.getUser().then(async (res) => {
-      const data = await res;
-      if (data.success) {
-        setValue({ ...form, name: data.user.name, email: data.user.email });
-      }
-    });
+  const submit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const res = await login(form);
+    if (res) {
+      setIsLoading(false);
+    }
   };
 
-  useEffect(() => {
-    req();
-  }, []);
-
-  const login = useCallback(
-    (e) => {
-      e.preventDefault();
-      auth.signin(form);
-    },
-    [auth, form]
-  );
-
-  console.log(auth.user);
-  if (auth.user) {
-    return (
-      <Redirect
-        // Если объект state не является undefined, вернём пользователя назад.
-        // to={{ pathname: state?.from || "/" }}
-        to={{ pathname: "/" }}
-      />
-    );
+  if (localStorage.getItem("accessToken")) {
+    return <Redirect to={history?.location?.state?.from || "/"} />;
   }
 
   return (
@@ -69,7 +42,7 @@ function LoginPage() {
       <AppHeader constructor="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.wrapper}>
-          <form className={styles.form}>
+          <form onSubmit={submit} className={styles.form}>
             <p className={`${styles.title} text text_type_main-medium`}>Вход</p>
             <div className={` mt-6`}>
               <Input
@@ -89,31 +62,28 @@ function LoginPage() {
               />
             </div>
             <div className={`${styles.button} mt-6`}>
-              <Button onClick={login} type="primary" size="medium">
-                Войти
-              </Button>
-            </div>
-            <div
-              className={`${styles.button} text text_type_main-default mt-20`}
-            >
-              Вы - новый пользователь?
-              <Button onClick={goToRegister} type="secondary" size="medium">
-                Зарегестрироваться
-              </Button>
-            </div>
-            <div
-              className={`${styles.button} text text_type_main-default mt-4`}
-            >
-              Забыли пароль?
-              <Button
-                onClick={goToForgotPassword}
-                type="secondary"
-                size="medium"
-              >
-                Восстановить пароль
-              </Button>
+              {isLoading ? (
+                "Ожидание ответа сервера"
+              ) : (
+                <Button type="primary" size="medium">
+                  Войти
+                </Button>
+              )}
             </div>
           </form>
+
+          <div className={`${styles.button} text text_type_main-default mt-20`}>
+            Вы - новый пользователь?
+            <Link to="/register" className={styles.link}>
+              Зарегистрироваться
+            </Link>
+          </div>
+          <div className={`${styles.button} text text_type_main-default mt-4`}>
+            Забыли пароль?
+            <Link to="/forgot-password" className={styles.link}>
+              Восстановить пароль
+            </Link>
+          </div>
         </div>
       </main>
     </>

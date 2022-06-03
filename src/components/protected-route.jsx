@@ -1,46 +1,23 @@
-import { useAuth } from "../services/auth";
 import { Redirect, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { refreshTokenFunc } from "../services/actions/profile";
+import PropTypes from "prop-types";
 
-export function ProtectedRoute({ children, ...rest }) {
-  let { getUser, ...auth } = useAuth();
-  const [isUserLoaded, setUserLoaded] = useState(false);
-
-  const init = async () => {
-    const data = await getUser();
-    // console.log(data);
-    // if (data === undefined) {
-    //   const refreshToken = localStorage.getItem("refreshToken");
-    //   const refreshData = await refreshTokenFunc(refreshToken);
-    //   if (refreshData.success) {
-    //     localStorage.setItem("accessToken", refreshData.accessToken);
-    //     localStorage.setItem("refreshToken", refreshData.refreshToken);
-    //     getUser();
-    //   }
-    // }
-    setUserLoaded(true);
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
-
-  if (!isUserLoaded) {
-    return null;
-  }
+export function ProtectedRoute({ children, path }) {
+  const accessToken = localStorage.getItem("accessToken");
 
   return (
     <Route
-      {...rest}
+      path={path}
+      exact
       render={({ location }) =>
-        auth.user ? (
+        accessToken ? (
           children
         ) : (
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: location },
+              state: {
+                from: location,
+              },
             }}
           />
         )
@@ -48,3 +25,8 @@ export function ProtectedRoute({ children, ...rest }) {
     />
   );
 }
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  path: PropTypes.string.isRequired,
+};

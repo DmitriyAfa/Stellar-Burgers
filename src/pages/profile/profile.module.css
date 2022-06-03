@@ -10,6 +10,16 @@
   margin: 120px 50px 0 117px;
 }
 
+.left :global(.button_button_size_large__x03t1){
+  font-family: 'Jet Brains Mono';
+  color: #8585AD;
+  text-align: left;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.9;
+  padding: 0;
+}
+
 .leftBottom{
   
   height: 100%;
@@ -36,19 +46,19 @@ opacity: 0.4;
 .button{
   color: #8585AD;
 }
+.link{
+  font-family: 'Jet Brains Mono';
+    color: #8585AD;
+    text-align: left;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.9;
+}
 .link:hover{
   opacity: 0.9;
 }
 
-.button :global(.button_button_size_small__30sB8){
-  font-family: 'Jet Brains Mono';
-  color: #8585AD;
-  text-align:  left;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1.9;
-}
-.buttonActive :global(.button_button_size_small__30sB8){
+.linkActive {
   color: white;
 }
 
