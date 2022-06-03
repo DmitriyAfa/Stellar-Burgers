@@ -8,6 +8,7 @@ function IngredientPage() {
   const ingredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
+  console.log(ingredient);
   return (
     <>
       <AppHeader constructor="active" lenta="" profile="" />

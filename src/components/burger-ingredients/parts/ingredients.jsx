@@ -16,7 +16,10 @@ export function MakeIngredient({ ingredient, count }) {
   const history = useHistory();
 
   const goToForgotPassword = useCallback(() => {
-    history.push({ pathname: `/ingredients/:id` });
+    history.push({
+      pathname: `/ingredients/${ingredient._id}`,
+      state: { modal: true },
+    });
   }, [history]);
 
   const goLink = () => {};
