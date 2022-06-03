@@ -1,6 +1,7 @@
 import React, { StrictMode } from "react";
 import "./index.module.css";
 import App from "./components/app/app";
+import { BrowserRouter } from "react-router-dom";
 
 //REDUX
 import { Provider } from "react-redux";
@@ -13,7 +14,9 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </StrictMode>
 );

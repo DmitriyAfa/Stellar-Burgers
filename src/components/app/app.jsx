@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BurgerPage from "../../pages/burger/burger";
 import LoginPage from "../../pages/login/login";
@@ -16,7 +10,7 @@ import ProfilePage from "../../pages/profile/profile";
 import IngredientPage from "../../pages/ingredient/ingredient";
 import { NotFound404 } from "../../pages/not-found/not-found";
 import { ProtectedRoute } from "../protected-route";
-import { ProvideAuth } from "../../services/auth";
+// import { ProvideAuth } from "../../services/auth";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
@@ -26,59 +20,54 @@ function App() {
   const currentIngredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
+  console.log(currentIngredient);
 
   const history = useHistory();
   const location = useLocation();
-  let background = location.state ? location.state.background : location.state;
 
-  if (history.action !== "PUSH") {
-    background = undefined;
-  }
+  let background = location.state && location.state.background;
 
   const closeModal = () => {
-    // background = undefined;
-    dispatch({ type: CLOSE_MODAL });
-    history.push("/");
+    // dispatch({ type: CLOSE_MODAL });
+    // history.push("/");
   };
-
+  // console.log(location);
   return (
-    <ProvideAuth>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact>
-            <BurgerPage />
-          </Route>
-          <Route path="/login" exact>
-            <LoginPage />
-          </Route>
-          <Route path="/register" exact>
-            <RegistrationPage />
-          </Route>
-          <Route path="/forgot-password" exact>
-            <ForgotPassword />
-          </Route>
-          <Route path="/reset-password" exact>
-            <ResetPassword />
-          </Route>
-          <ProtectedRoute path="/profile">
-            <ProfilePage />
-          </ProtectedRoute>
-          <Route path={`/ingredients/:${currentIngredient._id}`} exact>
-            <IngredientPage />
-          </Route>
-          <Route>
-            <NotFound404 />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-      {/* {background && (
-        <Route path={"/ingredients/:id"}>
+    <>
+      <Switch location={background || location}>
+        <Route path="/" exact>
+          <BurgerPage />
+        </Route>
+        <Route path="/login" exact>
+          <LoginPage />
+        </Route>
+        <Route path="/register" exact>
+          <RegistrationPage />
+        </Route>
+        <Route path="/forgot-password" exact>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact>
+          <ResetPassword />
+        </Route>
+        <ProtectedRoute path="/profile">
+          <ProfilePage />
+        </ProtectedRoute>
+        <Route path={`/ingredients/:id`} exact>
+          <IngredientPage />
+        </Route>
+        <Route>
+          <NotFound404 />
+        </Route>
+      </Switch>
+      {currentIngredient && (
+        <Route path={`/ingredients/:id`} exact>
           <Modal header={"Детали ингредиента"} onClose={closeModal}>
             <IngredientDetails />
           </Modal>
         </Route>
-      )} */}
-    </ProvideAuth>
+      )}
+    </>
   );
 }
 

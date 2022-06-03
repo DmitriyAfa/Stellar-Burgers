@@ -15,16 +15,16 @@ export function MakeIngredient({ ingredient, count }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const goToForgotPassword = useCallback(() => {
-    history.push({ pathname: `/ingredients/:${ingredient._id}` });
-  }, [history]);
+  // const goToForgotPassword = useCallback(() => {
+  //   history.push({ pathname: `/ingredients/:${ingredient._id}` });
+  // }, [history]);
 
   const getIngredient = () => {
     dispatch({
       type: GET_INGREDIENT,
       payload: ingredient,
     });
-    goToForgotPassword();
+    // goToForgotPassword();
   };
 
   const [{ isDrag }, dragRef] = useDrag({
