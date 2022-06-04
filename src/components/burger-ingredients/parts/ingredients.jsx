@@ -9,27 +9,27 @@ import ingridientPropTypes from "../../../utils/constants";
 import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { GET_INGREDIENT } from "../../../services/actions/burger-ingredients";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 
 export function MakeIngredient({ ingredient, count }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
-  const goToForgotPassword = useCallback(() => {
+  const addHistory = useCallback(() => {
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
-      state: { modal: true },
+      state: { background: location },
     });
+    sessionStorage.setItem("currentIngredient", ingredient);
   }, [history]);
-
-  const goLink = () => {};
 
   const getIngredient = () => {
     dispatch({
       type: GET_INGREDIENT,
       payload: ingredient,
     });
-    goToForgotPassword();
+    addHistory();
   };
 
   const [{ isDrag }, dragRef] = useDrag({

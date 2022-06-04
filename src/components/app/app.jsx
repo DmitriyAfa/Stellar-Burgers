@@ -28,10 +28,10 @@ function App() {
   let background = location.state && location.state.background;
 
   const closeModal = () => {
-    // dispatch({ type: CLOSE_MODAL });
-    // history.push("/");
+    dispatch({ type: CLOSE_MODAL });
+    history.push(background);
   };
-  // console.log(location);
+  console.log(background);
   return (
     <>
       <Switch location={background || location}>
@@ -53,14 +53,14 @@ function App() {
         <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        <Route path={`/ingredients/:id`} exact>
+        <Route path={`/ingredients/:${currentIngredient._id}`} exact>
           <IngredientPage />
         </Route>
         <Route>
           <NotFound404 />
         </Route>
       </Switch>
-      {currentIngredient && (
+      {background && (
         <Route path={`/ingredients/:id`} exact>
           <Modal header={"Детали ингредиента"} onClose={closeModal}>
             <IngredientDetails />

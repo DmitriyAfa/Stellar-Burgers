@@ -1,14 +1,13 @@
-import { useSelector } from "react-redux";
 import styles from "./ingredient.module.css";
 import AppHeader from "../../components/app-header/app-header";
 
 function IngredientPage() {
-  // const ingredient = JSON.parse(sessionStorage.getItem("currentIngredient"));
+  const ingredient = JSON.parse(sessionStorage.getItem("currentIngredient"));
   // console.log(ingredient);
-  const ingredient = useSelector(
-    (state) => state.burgerIngredients.currentIngredient
-  );
-  console.log(ingredient);
+  // const ingredient = useSelector(
+  //   (state) => state.burgerIngredients.currentIngredient
+  // );
+  // console.log(ingredient);
   return (
     <>
       <AppHeader constructor="active" lenta="" profile="" />
