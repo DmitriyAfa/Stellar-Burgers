@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BurgerPage from "../../pages/burger/burger";
@@ -14,13 +14,16 @@ import { ProtectedRoute } from "../protected-route";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
-
+import { getIngredients } from "../../services/actions/burger-ingredients";
 function App() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   const currentIngredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
-  console.log(currentIngredient);
 
   const history = useHistory();
   const location = useLocation();
@@ -54,7 +57,8 @@ function App() {
           <ProfilePage />
         </ProtectedRoute>
         <Route path={`/ingredients/:${currentIngredient._id}`} exact>
-          <IngredientPage />
+          {/* <IngredientPage /> */}
+          <IngredientDetails />
         </Route>
         <Route>
           <NotFound404 />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory, useLocation, Link, Redirect } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
@@ -11,8 +11,10 @@ import { useActions } from "../../utils/useAction";
 
 function ResetPassword() {
   const history = useHistory();
-  const { resetPassword } = useActions();
+  const { resetPassword, getUser } = useActions();
   const location = useLocation();
+
+  let background = (location.state && location.state.from) || location;
 
   const [form, setValue] = useState({ password: "", token: "" });
 
@@ -29,10 +31,9 @@ function ResetPassword() {
     }
   };
 
-  if (localStorage.getItem("accessToken")) {
+  if (background.pathname !== "/forgot-password") {
     return <Redirect to={"/profile"} />;
   }
-
   return (
     <>
       <AppHeader constructor="" lenta="" profile="active" />

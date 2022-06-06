@@ -43,15 +43,15 @@ export const userActionsCreator = {
       return false;
     });
   },
-  logout: async () => {
+  logout: () => (dispatch) => {
     const refreshToken = {
       token: localStorage.getItem("refreshToken"),
     };
-    return await post("auth/logout", refreshToken).then(async (data) => {
-      const res = await data;
-      if (res.success) {
+    return post("auth/logout", refreshToken).then((data) => {
+      if (data.success) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        dispatch({ type: "EPMTY" });
         return true;
       }
       return false;

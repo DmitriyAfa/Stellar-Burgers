@@ -25,10 +25,12 @@ function Order() {
 
   const bunIshere = useSelector((state) => state.burgerIngredients.bun._id);
 
-  const addOrder = () => {
-    if (bunIshere && !user) {
+  const addOrder = (e) => {
+    e.preventDefault();
+    if (!user) {
       history.push("/login");
-    } else {
+    }
+    if (bunIshere) {
       dispatch({
         type: GET_ID,
       });
@@ -38,6 +40,9 @@ function Order() {
       });
     }
   };
+
+  // На данный момент нужно вместо булки-заглушки добавить булку из ингредиентов (слева)  в конструктор (справа) и тогда отправка формы будет работать корректно
+  // На данный момент используется булка заглушка в конструкторе для наглядности и по совету ревьюера. К сожалению на компонент Button нельзя навешать обработчик onClick и воспользоваться preventDefault() для создания напоминания об добавлении булки. Если это сделать страница перезагружается.
 
   return (
     <span className={`mt-10 ${styles.bottom}`}>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../services/auth";
-import { useHistory, Redirect, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import styles from "./profile.module.css";
 import "../../styles/styles.css"; // Для стилизации компонентов из Яндекс библиотеки приходится использовать не моудльные стили, иначе стилизация не работает.
 import AppHeader from "../../components/app-header/app-header";
@@ -13,6 +13,7 @@ import {
 import { useActions } from "../../utils/useAction";
 
 function ProfilePage() {
+  const history = useHistory();
   const { user } = useSelector((state) => state.user);
 
   const { getUser, changeAuthUser, logout } = useActions();
@@ -25,6 +26,9 @@ function ProfilePage() {
 
   const logOut = async () => {
     const res = await logout();
+    if (res) {
+      history.push("/login");
+    }
   };
 
   const getUserFunc = async () => {

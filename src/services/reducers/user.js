@@ -15,8 +15,6 @@ export function userReducer(state = initialState, action) {
       return { ...state, passwordReset: action.payload };
     case GET_USER:
       return { ...state, user: action.payload };
-    // case SET_USERAUTH:
-    //   return { ...state, isAuth: true };
     default:
       return state;
   }

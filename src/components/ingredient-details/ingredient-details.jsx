@@ -1,12 +1,14 @@
-import React from "react";
 import styles from "./ingridient-details.module.css";
 import { useSelector } from "react-redux";
+import { useHistory, useLocation, Link } from "react-router-dom";
 
 function IngredientDetails() {
+  const location = useLocation();
   const ingredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
   sessionStorage.setItem("currentIngredient", JSON.stringify(ingredient));
+  console.log(location);
   return (
     <>
       <div className={`mb-15 ${styles.main}`}>

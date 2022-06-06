@@ -30,7 +30,11 @@ function AppHeader({ constructor, lenta, profile }) {
   };
 
   const goToProfile = useCallback(() => {
-    history.replace({ pathname: "/profile" });
+    history.push({ pathname: "/profile" });
+  }, [history]);
+
+  const goToMain = useCallback(() => {
+    history.push({ pathname: "/" });
   }, [history]);
   return (
     <header className={`${styles.appHeader}`}>
@@ -38,13 +42,13 @@ function AppHeader({ constructor, lenta, profile }) {
         <form>
           <ul className="">
             {constructor == "active" ? (
-              <li>
+              <li onClick={goToMain}>
                 <AppHeaderButton typeButton="active" text="Конструктор">
                   <BurgerIcon type="primary" />
                 </AppHeaderButton>
               </li>
             ) : (
-              <li>
+              <li onClick={goToMain}>
                 <AppHeaderButton typeButton="" text="Конструктор">
                   <BurgerIcon type="secondary" />
                 </AppHeaderButton>

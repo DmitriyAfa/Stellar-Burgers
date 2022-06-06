@@ -9,7 +9,7 @@ import ingridientPropTypes from "../../../utils/constants";
 import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { GET_INGREDIENT } from "../../../services/actions/burger-ingredients";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 
 export function MakeIngredient({ ingredient, count }) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export function MakeIngredient({ ingredient, count }) {
       pathname: `/ingredients/${ingredient._id}`,
       state: { background: location },
     });
-    sessionStorage.setItem("currentIngredient", ingredient);
+    // sessionStorage.setItem("currentIngredient", ingredient);
   }, [history]);
 
   const getIngredient = () => {
@@ -29,7 +29,7 @@ export function MakeIngredient({ ingredient, count }) {
       type: GET_INGREDIENT,
       payload: ingredient,
     });
-    addHistory();
+    // addHistory();
   };
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -43,19 +43,31 @@ export function MakeIngredient({ ingredient, count }) {
   return (
     !isDrag && (
       <li ref={dragRef} onClick={getIngredient} className="ml-4 mr-6">
-        {count > 0 && <Counter count={count} size="default" />}
-        <img
-          className={`mr-4 ml-4 ${styles.mainImg}`}
-          src={ingredient.image}
-          alt={ingredient.name}
-        />
-        <span className="mt-1" style={{ flexDirection: "row" }}>
-          <h3 className="text text_type_digits-default">{ingredient.price}</h3>{" "}
-          <span style={{ marginLeft: "10px" }}>
-            <CurrencyIcon type="primary" />
+        <Link
+          className={styles.burgerItemlink}
+          to={{
+            pathname: `/ingredients/${ingredient._id}`,
+            state: { background: location },
+          }}
+        >
+          {count > 0 && <Counter count={count} size="default" />}
+          <img
+            className={`mr-4 ml-4 ${styles.mainImg}`}
+            src={ingredient.image}
+            alt={ingredient.name}
+          />
+          <span className="mt-1" style={{ flexDirection: "row" }}>
+            <h3 className="text text_type_digits-default">
+              {ingredient.price}
+            </h3>{" "}
+            <span style={{ marginLeft: "10px" }}>
+              <CurrencyIcon type="primary" />
+            </span>
           </span>
-        </span>
-        <h4 className="mt-2 text text_type_main-default">{ingredient.name}</h4>
+          <h4 className="mt-2 text text_type_main-default">
+            {ingredient.name}
+          </h4>
+        </Link>
       </li>
     )
   );
