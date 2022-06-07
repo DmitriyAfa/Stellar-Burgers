@@ -1,5 +1,7 @@
 import {
   GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_FAILED,
   GET_INGREDIENT,
   OPEN_MODAL,
   CLOSE_MODAL,
@@ -99,6 +101,13 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         constructorIngredients: action.payload,
       };
     }
+    case GET_INGREDIENTS_REQUEST: {
+      return {
+        ...state,
+        ingredientsFailed: false,
+        ingredientsRequest: true,
+      };
+    }
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
@@ -109,6 +118,13 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
             qty: 0,
           };
         }),
+        ingredientsRequest: false,
+      };
+    }
+    case GET_INGREDIENTS_FAILED: {
+      return {
+        ...state,
+        ingredientsFailed: true,
         ingredientsRequest: false,
       };
     }

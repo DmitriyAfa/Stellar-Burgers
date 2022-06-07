@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BurgerPage from "../../pages/burger/burger";
@@ -7,23 +7,32 @@ import RegistrationPage from "../../pages/registration/registration";
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
-import IngredientPage from "../../pages/ingredient/ingredient";
 import { NotFound404 } from "../../pages/not-found/not-found";
 import { ProtectedRoute } from "../protected-route";
-// import { ProvideAuth } from "../../services/auth";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
-import { getIngredients } from "../../services/actions/burger-ingredients";
+
+import { useActions } from "../../utils/useAction";
+import AppHeader from "../app-header/app-header";
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
+  const { getIngredientsRequest } = useActions();
+
+  const getIngredients = useCallback(async () => {
+    return await getIngredientsRequest();
   }, [dispatch]);
+
+  useEffect(() => {
+    getIngredients();
+  }, [getIngredients]);
 
   const currentIngredient = useSelector(
     (state) => state.burgerIngredients.currentIngredient
   );
+  // const ingredients = useSelector(
+  //   (state) => state.burgerIngredients.ingredients
+  // );
 
   const history = useHistory();
   const location = useLocation();
@@ -34,7 +43,7 @@ function App() {
     dispatch({ type: CLOSE_MODAL });
     history.push(background);
   };
-  console.log(background);
+  // console.log(ingredients);
   return (
     <>
       <Switch location={background || location}>
@@ -57,15 +66,26 @@ function App() {
           <ProfilePage />
         </ProtectedRoute>
         <Route path={`/ingredients/:${currentIngredient._id}`} exact>
-          {/* <IngredientPage /> */}
-          <IngredientDetails />
+          <AppHeader constructor="" lenta="" profile="" />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "120px",
+            }}
+          >
+            <div style={{ textAlign: "center" }}>
+              <h2 className="text text_type_main-large">Детали ингредиента</h2>
+              <IngredientDetails />
+            </div>
+          </div>
         </Route>
         <Route>
           <NotFound404 />
         </Route>
       </Switch>
       {background && (
-        <Route path={`/ingredients/:id`} exact>
+        <Route path={`/ingredients/:id`}>
           <Modal header={"Детали ингредиента"} onClose={closeModal}>
             <IngredientDetails />
           </Modal>

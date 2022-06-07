@@ -1,5 +1,5 @@
-import { baseUrl } from "../baseUrl";
-import { checkResponse } from "../checkResponse";
+import { request } from "../api";
+
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
@@ -11,16 +11,18 @@ export const CLOSE_MODAL = "CLOSE_MODAL";
 export const INCREASE = "INCREASE";
 export const DECREASE = "DECREASE";
 
-export const getIngredients = () => {
-  return function (dispatch) {
-    fetch(`${baseUrl}ingredients`)
-      .then(checkResponse)
-      .then((data) =>
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          ingredients: data.data,
-        })
-      )
+export const IngredientsActionCreator = {
+  getIngredientsRequest: () => (dispatch) => {
+    request("ingredients")
+      .then((data) => {
+        if (data.success) {
+          dispatch({ type: GET_INGREDIENTS_SUCCESS, ingredients: data.data });
+          dispatch({ type: GET_INGREDIENTS_REQUEST });
+          return true;
+        }
+        dispatch({ type: GET_INGREDIENTS_FAILED });
+        return false;
+      })
       .catch((e) => console.log(e));
-  };
+  },
 };

@@ -1,6 +1,9 @@
-import { RESET_FORGOT_PASSWORD } from "../actions/user";
-import { RESET_PASSWORD } from "../actions/user";
-import { GET_USER } from "../actions/user";
+import {
+  RESET_FORGOT_PASSWORD,
+  RESET_PASSWORD,
+  GET_USER,
+  RESET_USER,
+} from "../actions/user";
 
 const initialState = {
   passwordReset: { success: false },
@@ -15,6 +18,8 @@ export function userReducer(state = initialState, action) {
       return { ...state, passwordReset: action.payload };
     case GET_USER:
       return { ...state, user: action.payload };
+    case RESET_USER:
+      return { ...state, user: null };
     default:
       return state;
   }

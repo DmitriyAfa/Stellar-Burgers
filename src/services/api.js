@@ -1,17 +1,18 @@
 import { baseUrl } from "./baseUrl";
 
 const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  Promise.reject(`Ошибка ${res.status}`);
+  return res.json();
 };
 
 const checkResGET = (res) => {
   return res.json();
 };
 
-export const post = async (addUrl, body) => {
+export const request = async (addUrl) => {
+    const url = `${baseUrl}${addUrl}`;
+    return await fetch(url).then(checkResponse);
+  },
+  post = async (addUrl, body) => {
     const url = `${baseUrl}${addUrl}`;
 
     return await fetch(url, {

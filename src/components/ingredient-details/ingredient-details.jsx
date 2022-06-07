@@ -1,14 +1,33 @@
 import styles from "./ingridient-details.module.css";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation, Link } from "react-router-dom";
+import { useHistory, useLocation, Link, useParams } from "react-router-dom";
 
 function IngredientDetails() {
   const location = useLocation();
-  const ingredient = useSelector(
-    (state) => state.burgerIngredients.currentIngredient
+
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.ingredients
   );
-  sessionStorage.setItem("currentIngredient", JSON.stringify(ingredient));
-  console.log(location);
+
+  let ingredient = {
+    id: "",
+    image: "",
+    name: "",
+    calories: "",
+    fat: "",
+    carbohydrates: "",
+  };
+
+  if (ingredients) {
+    const id = location.pathname.split("/");
+    const ingr = ingredients.find(
+      (ingredient) => ingredient.ingredient._id === id[2]
+    );
+    ingredient = ingr.ingredient;
+  } else {
+    return <h1>Перезагрузите страницу</h1>;
+  }
+
   return (
     <>
       <div className={`mb-15 ${styles.main}`}>

@@ -71,11 +71,6 @@ function BurgerIngredients() {
         {ingredients && <Ingredients head="Соусы" ingredients={sauce} />}
         {ingredients && <Ingredients head="Начинки" ingredients={main} />}
       </div>
-      {/* {currentIngredient && (
-        <Modal header={"Детали ингредиента"} onClose={onClose}>
-          <IngredientDetails />
-        </Modal>
-      )} */}
     </section>
   );
 }
