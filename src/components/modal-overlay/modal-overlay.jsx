@@ -2,18 +2,21 @@ import React from "react";
 import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
 
-function ModalOverlay({ closeModal, active }) {
+const ModalOverlay = ({ onClose }) => {
+  const closeModal = () => {
+    onClose();
+  };
+
   return (
     <section
       onClick={closeModal}
-      className={`${styles.modalOverlay} ${active ? styles.active : ""}`}
+      className={`${styles.modalOverlay} ${styles.active}`}
     ></section>
   );
-}
+};
 
 ModalOverlay.propTypes = {
-  active: PropTypes.bool.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default ModalOverlay;

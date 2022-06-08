@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useCallback } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
@@ -7,7 +8,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import PropTypes from "prop-types";
-function AppHeader() {
+function AppHeader({ constructor, lenta, profile }) {
+  const history = useHistory();
+
   const AppHeaderButton = ({ typeButton, children, text }) => {
     let typeOfButton = typeButton === "active" ? "" : styles.inactive;
 
@@ -26,34 +29,70 @@ function AppHeader() {
     text: PropTypes.string.isRequired,
   };
 
-  const NavLink = () => {
-    return (
-      <nav className={styles.nav}>
-        <ul className="">
-          <li>
-            <AppHeaderButton typeButton="active" text="Конструктор">
-              <BurgerIcon type="primary" />
-            </AppHeaderButton>
-          </li>
-          <li>
-            <AppHeaderButton typeButton="" text="Лента заказов">
-              <ListIcon type="secondary" />
-            </AppHeaderButton>
-          </li>
-        </ul>
-      </nav>
-    );
-  };
+  const goToProfile = useCallback(() => {
+    history.push({ pathname: "/profile" });
+  }, [history]);
 
+  const goToMain = useCallback(() => {
+    history.push({ pathname: "/" });
+  }, [history]);
   return (
     <header className={`${styles.appHeader}`}>
-      <NavLink />
+      <nav className={styles.nav}>
+        <form>
+          <ul className="">
+            {constructor == "active" ? (
+              <li onClick={goToMain}>
+                <AppHeaderButton typeButton="active" text="Конструктор">
+                  <BurgerIcon type="primary" />
+                </AppHeaderButton>
+              </li>
+            ) : (
+              <li onClick={goToMain}>
+                <AppHeaderButton typeButton="" text="Конструктор">
+                  <BurgerIcon type="secondary" />
+                </AppHeaderButton>
+              </li>
+            )}
+            {lenta === "active" ? (
+              <li>
+                <AppHeaderButton typeButton="active" text="Лента заказов">
+                  <ListIcon type="primary" />
+                </AppHeaderButton>
+              </li>
+            ) : (
+              <li>
+                <AppHeaderButton typeButton="" text="Лента заказов">
+                  <ListIcon type="secondary" />
+                </AppHeaderButton>
+              </li>
+            )}
+          </ul>
+        </form>
+      </nav>
+
       <Logo />
-      <AppHeaderButton typeButton="" text="Личный кабинет">
-        <ProfileIcon type="secondary" />
-      </AppHeaderButton>
+
+      <form>
+        {profile === "active" ? (
+          <AppHeaderButton typeButton="active" text="Личный кабинет">
+            <ProfileIcon type="primary" />
+          </AppHeaderButton>
+        ) : (
+          <span onClick={goToProfile}>
+            <AppHeaderButton typeButton="" text="Личный кабинет">
+              <ProfileIcon type="secondary" />
+            </AppHeaderButton>
+          </span>
+        )}
+      </form>
     </header>
   );
 }
-
+// AppHeader.defaultProps = { constructor: "", lenta: "", profile: "" };
+AppHeader.propTypes = {
+  constructor: PropTypes.string.isRequired,
+  lenta: PropTypes.string.isRequired,
+  profile: PropTypes.string.isRequired,
+};
 export default AppHeader;
