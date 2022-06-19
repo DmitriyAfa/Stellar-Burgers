@@ -12,8 +12,6 @@ import { ProtectedRoute } from "../protected-route";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
-import { ILocationStateBackground, ILocationState,  ILocation } from "../../utils/types/location.types";
-
 import { useActions } from "../../utils/useAction";
 import AppHeader from "../app-header/app-header";
 function App() {
@@ -34,7 +32,7 @@ function App() {
 
 
   const history = useHistory();
-  const location: ILocation = useLocation();
+  const location = useLocation<{background: Location}>();
 
   let background: any = location.state && location.state.background;
   //ILocationStateBackground | undefined
