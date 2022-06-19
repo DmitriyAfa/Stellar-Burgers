@@ -4,6 +4,7 @@ export const RESET_FORGOT_PASSWORD = "RESET_FORGOT_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
 export const GET_USER = "GET_USER";
 export const RESET_USER = "RESET_USER";
+export const RESET_ISLOGGEDIN = "RESET_ISLOGGEDIN";
 
 export const userActionsCreator = {
   forgotPassword: (form: any) => (dispatch: any) => {
@@ -73,6 +74,7 @@ export const userActionsCreator = {
       .then(async (data) => {
         if (data.success) {
           dispatch({ type: GET_USER, payload: data.user });
+          dispatch({type: RESET_ISLOGGEDIN})
           return data;
         } else if (data.message === "jwt expired") {
           const res = await userActionsCreator.refreshTokenFunc();

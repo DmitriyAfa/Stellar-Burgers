@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useLocation, Link, Redirect } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
@@ -8,23 +8,25 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useActions } from "../../utils/useAction";
-import { ILocation, ILocationState } from "../../utils/types/location.types";
+import { ILocation, ILocationState, ILocationStateBackground } from "../../utils/types/location.types";
 
 function ResetPassword() {
   const history = useHistory();
-  const { resetPassword, getUser } = useActions();
-  const location: any  = useLocation();
+  const { resetPassword } = useActions();
+  const location: ILocation  = useLocation();
 
-  let background = (location.state && location.state.from) || location;
+  console.log(location)
+  let background: ILocationState | ILocation  = (location.state && location.state.from) || location;
 
   console.log(background)
   const [form, setValue] = useState({ password: "", token: "" });
 
-  const onChange = (e: any) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e: React.SyntheticEvent): void => {
+    let target = e.target as HTMLInputElement;
+    setValue({ ...form, [target.name]: target.value });
   };
 
-  const submit = async (e: any) => {
+  const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const res: any = await resetPassword(form);
 
@@ -38,7 +40,6 @@ function ResetPassword() {
   }
   return (
     <>
-      <AppHeader constr="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.wrapper}>
           <form className={styles.form}>

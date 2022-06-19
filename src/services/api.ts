@@ -1,12 +1,6 @@
 import { baseUrl } from "./baseUrl";
+import { checkResponse } from "./checkResponse";
 
-const checkResponse = (res: any) => {
-  return res.json();
-};
-
-const checkResGET = (res: any) => {
-  return res.json();
-};
 
 export const request = async (addUrl: string) => {
     const url = `${baseUrl}${addUrl}`;
@@ -38,7 +32,7 @@ export const request = async (addUrl: string) => {
         "Content-Type": "application/json",
         authorization: accessToken,
       },
-    }).then(checkResGET);
+    }).then(checkResponse);
   },
   patch = async (addUrl: string, body: any) => {
     const url = `${baseUrl}${addUrl}`;

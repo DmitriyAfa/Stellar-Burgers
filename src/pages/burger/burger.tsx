@@ -8,7 +8,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 function BurgerPage() {
   return (
     <>
-      <AppHeader constr="active" lenta="" profile="" />
       <main className={styles.main}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />

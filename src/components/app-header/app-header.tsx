@@ -35,7 +35,6 @@ const  AppHeader = ({ constr, lenta, profile } : IAppHeader) => {
   return (
     <header className={`${styles.appHeader}`}>
       <nav className={styles.nav}>
-        <form>
           <ul className="">
             {constr == "active" ? (
               <li onClick={goToMain}>
@@ -64,12 +63,11 @@ const  AppHeader = ({ constr, lenta, profile } : IAppHeader) => {
               </li>
             )}
           </ul>
-        </form>
       </nav>
 
       <Logo />
 
-      <form>
+
         {profile === "active" ? (
           <AppHeaderButton typeButton="active" text="Личный кабинет">
             <ProfileIcon type="primary" />
@@ -81,7 +79,6 @@ const  AppHeader = ({ constr, lenta, profile } : IAppHeader) => {
             </AppHeaderButton>
           </span>
         )}
-      </form>
     </header>
   );
 }

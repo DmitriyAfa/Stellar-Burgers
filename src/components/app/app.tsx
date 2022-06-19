@@ -46,6 +46,7 @@ function App() {
   // console.log(history);
   return (
     <>
+      <AppHeader constr="active" lenta="" profile="" />
       <Switch location={background || location}>
         <Route path="/" exact>
           <BurgerPage />

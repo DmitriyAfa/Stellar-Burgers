@@ -24,8 +24,7 @@ function Order() {
 
   const bunIshere = useSelector((state: any) => state.burgerIngredients.bun._id);
 
-  const addOrder = (e: any) => {
-    console.log(e);
+  const addOrder = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (!user) {
       history.push("/login");

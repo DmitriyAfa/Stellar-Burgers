@@ -1,7 +1,8 @@
 import styles from "./ingridient-details.module.css";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation, Link, useParams } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import {IIngredient} from '../../utils/types/ingredient.types';
+
 function IngredientDetails() {
   const location = useLocation();
 

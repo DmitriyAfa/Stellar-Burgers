@@ -1,27 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory, useLocation, Link, Redirect } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
-import AppHeader from "../../components/app-header/app-header";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 
 import { useActions } from "../../utils/useAction";
 
 function ForgotPassword() {
   const history = useHistory();
-  const { forgotPassword } = useActions();
+  const { forgotPassword, getUser } = useActions();
   const location = useLocation();
+  const isLoggedIn = useSelector(
+    (state: any) => state.user.isLoggedIn
+  );
 
   const [form, setValue] = useState<{[email: string]: string}>({ email: "" });
 
-  const onChange = (e: any) => {
-    setValue({ [e.target.name]: e.target.value });
+  const onChange = (e: React.SyntheticEvent): void => {
+    let target = e.target as HTMLInputElement;
+    setValue({ [target.name]: target.value });
   };
 
-  const submit = async (e: any) => {
+  const getUserFunc = async () => {
+    const res: any = await getUser();
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getUserFunc();
+  }, []);
+
+  const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const res: any = await forgotPassword(form);
 
@@ -30,13 +43,12 @@ function ForgotPassword() {
     }
   };
 
-  if (localStorage.getItem("accessToken")) {
+  if (isLoggedIn) {
     return <Redirect to={"/profile"} />;
   }
 
   return (
     <>
-      <AppHeader constr="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.wrapper}>
           <form className={styles.form} onSubmit={submit}>

@@ -1,11 +1,9 @@
 import React, { useCallback } from "react";
-import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-ingridients.module.css";
-import ingridientPropTypes from "../../../utils/constants";
 import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { GET_INGREDIENT } from "../../../services/actions/burger-ingredients";
@@ -92,10 +90,5 @@ function Ingredients({ head, ingredients }: {head: string, ingredients: Array<{q
     </div>
   );
 }
-
-Ingredients.propTypes = {
-  head: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-};
 
 export default Ingredients;

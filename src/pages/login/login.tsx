@@ -1,29 +1,42 @@
-import { useState, useCallback, useEffect } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
-import { Redirect, useLocation } from "react-router-dom";
+import { useState,  useEffect } from "react";
+import {  useHistory, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css"; // Для стилизации компонентов из Яндекс библиотеки приходится использовать не моудльные стили, иначе стилизация не работает.
-import AppHeader from "../../components/app-header/app-header";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 
 import { useActions } from "../../utils/useAction";
 
 function LoginPage() {
   const history: any = useHistory();
-  const { login } = useActions();
+  const { login, getUser } = useActions();
+  const isLoggedIn = useSelector(
+    (state: any) => state.user.isLoggedIn
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [form, setValue] = useState({ email: "", password: "" });
 
-  const onChange = (e: any) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const getUserFunc = async () => {
+    const res: any = await getUser();
+    console.log(res);
   };
 
-  const submit = async (e: any) => {
+  useEffect(() => {
+    getUserFunc();
+  }, []);
+
+  const onChange = (e: React.SyntheticEvent): void => {
+    let target = e.target as HTMLInputElement;
+    setValue({ ...form, [target.name]: target.value });
+  };
+
+  const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const res: any = await login(form);
@@ -31,14 +44,14 @@ function LoginPage() {
       setIsLoading(false);
     }
   };
+
   
-  if (localStorage.getItem("accessToken")) {
+  if (isLoggedIn) {
     return <Redirect to={history?.location?.state?.from || "/"} />;
   }
 
   return (
     <>
-      <AppHeader constr="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.wrapper}>
           <form onSubmit={submit} className={styles.form}>

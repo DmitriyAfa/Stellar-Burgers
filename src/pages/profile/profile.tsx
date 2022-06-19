@@ -19,8 +19,9 @@ function ProfilePage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [form, setValue] = useState({ name: "", email: "", password: "" });
-  const onChange = (e: any) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e: React.SyntheticEvent): void => {
+    let target = e.target as HTMLInputElement;
+    setValue({ ...form, [target.name]: target.value });
   };
 
   const logOut = async () => {
@@ -42,12 +43,12 @@ function ProfilePage() {
     getUserFunc();
   }, []);
 
-  const backForm = (e: any) => {
+  const backForm = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     setValue({ ...form, name: user.name, email: user.email, password: "" });
   };
 
-  const submit = async (e:any) => {
+  const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const res: any = await changeAuthUser(form);
@@ -58,7 +59,6 @@ function ProfilePage() {
 
   return (
     <>
-      <AppHeader constr="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.left}>
           <Link

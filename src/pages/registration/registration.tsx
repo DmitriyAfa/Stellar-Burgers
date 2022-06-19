@@ -17,11 +17,12 @@ function RegistrationPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [form, setValue] = useState({ name: "", email: "", password: "" });
 
-  const onChange = (e: any) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e: React.SyntheticEvent): void => {
+    let target = e.target as HTMLInputElement;
+    setValue({ ...form, [target.name]: target.value });
   };
 
-  const submit = async (e: any) => {
+  const submit = async (e:  React.SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const res: any = await registration(form);
@@ -30,15 +31,12 @@ function RegistrationPage() {
     }
   };
 
-  console.log();
-
   if (localStorage.getItem("accessToken")) {
     return <Redirect to={"/profile"} />;
   }
 
   return (
     <>
-      <AppHeader constr="" lenta="" profile="active" />
       <main className={styles.main}>
         <div className={styles.wrapper}>
           <form onSubmit={submit} className={styles.form}>

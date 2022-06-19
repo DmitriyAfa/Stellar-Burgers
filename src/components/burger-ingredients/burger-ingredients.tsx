@@ -1,18 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import {  useRef, useState } from "react";
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingridients.module.css";
 import Tabs from "./parts/tabs";
 import Ingredients from "./parts/ingredients";
 // redux
-import { useDispatch, useSelector } from "react-redux";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
+import { useSelector } from "react-redux";
 import {IIngredient} from '../../utils/types/ingredient.types';
 
 function BurgerIngredients() {
-  const dispatch = useDispatch();
 
   const { ingredients } = useSelector((state: any) => state.burgerIngredients);
 
@@ -25,16 +20,6 @@ function BurgerIngredients() {
   const main =
     ingredients &&
     ingredients.filter((ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient.type === "main");
-
-  const currentIngredient = useSelector(
-    (state: any) => state.burgerIngredients.currentIngredient
-  );
-
-  const onClose = () => {
-    dispatch({
-      type: CLOSE_MODAL,
-    });
-  };
 
   const [activeTab, setActiveTab] = useState("one");
 

@@ -25,7 +25,6 @@ import { IMakeDetail } from "../types";
 import {IIngredient} from '../../../utils/types/ingredient.types'
 function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
   const dispatch = useDispatch();
-  // console.log(ingredient);
 
   const deleteIngredient = () => {
     dispatch({
