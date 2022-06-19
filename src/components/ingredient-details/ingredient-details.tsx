@@ -1,11 +1,12 @@
 import styles from "./ingridient-details.module.css";
 import { useSelector } from "react-redux";
-import {  useLocation } from "react-router-dom";
+import {  useLocation, useParams } from "react-router-dom";
 import {IIngredient} from '../../utils/types/ingredient.types';
 
 function IngredientDetails() {
   const location = useLocation();
-
+  const params = useParams<{id?: string}>();
+  console.log(params)
   const ingredients = useSelector(
     (state: any) => state.burgerIngredients.ingredients
   );
@@ -21,9 +22,8 @@ function IngredientDetails() {
   };
 
   if (ingredients) {
-    const id = location.pathname.split("/");
     const ingr = ingredients.find(
-      (ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient._id === id[2]
+      (ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient._id === params.id
     );
     ingredient = ingr.ingredient;
   } else {
