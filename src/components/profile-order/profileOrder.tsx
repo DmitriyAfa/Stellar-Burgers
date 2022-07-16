@@ -17,9 +17,9 @@ export const ProfileOrder = () => {
   const isProfileOrdersPage = useRouteMatch('/profile/orders');
   
   useEffect(() => {
-    const accessToken: any = localStorage.getItem("accessToken");
-    console.log('accessToken ', accessToken.slice(7, accessToken.length))
-    const url = `${wsUrlToken}${accessToken.slice(7, accessToken.length)}`;
+    const accessToken = localStorage.getItem("accessToken");
+    console.log('accessToken ', accessToken!.slice(7, accessToken!.length))
+    const url = `${wsUrlToken}${accessToken!.slice(7, accessToken!.length)}`;
     wsConnectionStart(url);
   }, []);
   useEffect(() => {

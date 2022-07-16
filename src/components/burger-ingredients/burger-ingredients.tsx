@@ -3,13 +3,14 @@ import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingridients.module.css";
 import Tabs from "./parts/tabs";
 import Ingredients from "./parts/ingredients";
-import { useSelector } from "react-redux";
-import {IIngredient} from '../../utils/types/ingredient.types';
+import {IIngredient, IIngr} from '../../utils/types/ingredient.types';
+import { useTypedSelector } from "../../utils/useTypedSelector";
+import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
 
 function BurgerIngredients() {
 
-  //!!!
-  const { ingredients } = useSelector((state: any) => state.burgerIngredients);
+  // не получается применить типизацию т.к ругается на length и filter в buns sauce main
+  const { ingredients }: any = useTypedSelector((state) => state.burgerIngredients);
   // Поменял условие первого аргумента ingredients на ingredients.length > 0
   const buns =
     ingredients.length > 0 &&
@@ -23,7 +24,7 @@ function BurgerIngredients() {
 
   const [activeTab, setActiveTab] = useState("one");
 
-  // !!! Изменить тип
+ // не позволяет типизировать как HTMLDivElement, начинает ругаться на  clientHeight даже с использлованием !перед точками (scrollBarRef!.current!.childNodes[1]!.clientHeight)
   const scrollBarRef = useRef<any>(null);
 
   const onScrollHandler = () => {

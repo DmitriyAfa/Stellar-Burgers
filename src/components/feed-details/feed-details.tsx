@@ -10,6 +10,9 @@ import OrderDetails from "../order-details/order-details";
 import { useActions } from "../../utils/useAction";
 import { wsUrl } from "../../services/baseUrl";
 import {getDate} from '../../utils/getDate';
+import { IIngr } from "../../utils/types/ingredient.types";
+import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
+import { IOrder } from "../../services/reducers/feed";
 
 export const FeedDetails = () => {
   const {wsConnectionStart, wsConnectionStop} = useActions();
@@ -18,7 +21,7 @@ export const FeedDetails = () => {
   const isProfileOrdersPage = useRouteMatch('/profile/orders');
   const isFeed = isFeedPage || isProfileOrdersPage;
   const {orders, feedDetails} = useTypedSelector((state) => state.feed)
-  const {ingredients} = useTypedSelector((state: any) => state.burgerIngredients)
+  const {ingredients} = useTypedSelector((state): TStateBurgerIngredients => state.burgerIngredients)
 
   
   useEffect(() => {
@@ -33,7 +36,7 @@ export const FeedDetails = () => {
 
   // На отдельной странице не отображался компонет т.к. при переходе на новую вкладку вручную state обновляется и нужно найти order по id текущей страници
   
-  const order: any = useMemo(() => {
+  const order = useMemo(() => {
 
     if (orders.length > 0) {
       return orders.find((order) => id === order._id);
@@ -44,23 +47,23 @@ export const FeedDetails = () => {
   const findIngredeints  = useMemo(() => {
     if(order && ingredients){
       // создадим массив на основе ингредиентов в ордере ( id) с помощью метода map создадим новый массив  в который отфильтруем ингредиенты из состояния ingredients
-      const arr: any = order.ingredients.map((id: any) => {
-        return ingredients.find((ingredient: any) => id  === ingredient.ingredient._id)
+      const arr = order.ingredients.map((id: string) => {
+        return ingredients.find((ingredient: IIngr) => id  === ingredient.ingredient._id)
       })
 
       // пройдемся по каждому эл-ту массива
       for(let i = 0; i < arr.length; i++){
         //если это последний элемент в списке добавим ему значение 1
         if(i === arr.length -1 ){
-          arr[i].qty = 1;
+          arr[i]!.qty = 1;
         }
         // и сравним его с другими элементами
         for(let j = i + 1; j < arr.length; j++){
           // увеличи ингредиент на 1
-          arr[i].qty = 1;
+          arr[i]!.qty = 1;
           // если в массиве уже есть ингредиент с подобным id, то увеличим qty
-          if(arr[i].ingredient._id === arr[j].ingredient._id){
-            arr[i].qty = arr[i].qty + 1;
+          if(arr[i]!.ingredient._id === arr[j]!.ingredient._id){
+            arr[i]!.qty = arr[i]!.qty + 1;
             //  и удалим данный эл-т из массива
             arr.splice(j, 1)
           }
@@ -72,8 +75,8 @@ export const FeedDetails = () => {
 
   const totalPrice = useMemo(() => {
     if (findIngredeints && findIngredeints.length) {
-      return findIngredeints.reduce((agg: number, next: any) => {
-       return agg += next.qty * next.ingredient.price
+      return findIngredeints.reduce((agg , next) => {
+       return agg += next!.qty * next!.ingredient.price
       }, 0)
     }
   }, [findIngredeints, ingredients]);
@@ -102,21 +105,21 @@ export const FeedDetails = () => {
           className={`mb-10 ${styles.scrollBar}`}
         >
           {findIngredeints &&
-            findIngredeints.map((ingredient: any, idx: any) => (
+            findIngredeints.map((ingredient, index) => (
               <div
-                className={`${styles.ingredientCard} mb-4`}
-                key={`${idx}_${ingredient.ingredient._id}`}
+                className={`mb-4 ${styles.ingredientCard}`}
+                key={`${index}_${ingredient!.ingredient._id}`}
               >
                 {/* <div className={`${styles.img} mr-4`}> */}
-                  <img className={`${styles.img} mr-4`} src={ingredient.ingredient.image_mobile} alt="" />
+                  <img className={`${styles.img} mr-4`} src={ingredient!.ingredient.image_mobile} alt="" />
                 {/* </div> */}
                 <div className={`text text_type_main-default mr-6 ${styles.name}`}>
-                  {ingredient.ingredient.name}
+                  {ingredient!.ingredient.name}
                 </div>
                 <div
                   className={`${styles.cost}`}
                 >
-                  <p className="mr-4 text text_type_digits-default">{`${ingredient.qty} x ${ingredient.ingredient.price}`}</p>
+                  <p className="mr-4 text text_type_digits-default">{`${ingredient!.qty} x ${ingredient!.ingredient.price}`}</p>
                   <CurrencyIcon type="primary" />
                 </div>
               </div>

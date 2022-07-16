@@ -13,3 +13,7 @@ export interface IIngredient {
     _id: string;
 }
 
+export interface IIngr {
+  qty: number;
+  ingredient: IIngredient;
+}

@@ -69,12 +69,12 @@ function App() {
         <Route path="/reset-password" exact>
           <ResetPassword />
         </Route>
-        <ProtectedRoute  path="/profile">
+        <ProtectedRoute exact  path="/profile">
           <ProfilePage text={`В этом разделе вы можете изменить свои персональные данные`} >
             <ProfileForm />
           </ProfilePage>
         </ProtectedRoute>
-        <ProtectedRoute path="/profile/orders">
+        <ProtectedRoute exact path="/profile/orders">
           <ProfilePage text={`В этом разделе вы можете просмотреть свою историю заказов`} >
             <ProfileOrder />
           </ProfilePage>

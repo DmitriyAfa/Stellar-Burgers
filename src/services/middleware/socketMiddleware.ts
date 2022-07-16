@@ -12,6 +12,7 @@ type TwsActions = {
 
 export const socketMiddleware = (wsActions: TwsActions): Middleware =>
   (store: MiddlewareAPI) => {
+    
     let socket: WebSocket | null = null;
 
     return (next) => (action) => {
@@ -41,13 +42,16 @@ export const socketMiddleware = (wsActions: TwsActions): Middleware =>
         };
 
         socket.onmessage = (event) => {
+
           const { data } = event;
           if (data?.includes('ping')) {
             if (socket !== null) {
               socket.send('pong');
             }
           }
+
           const { success, orders, total, totalToday } = JSON.parse(data);
+
           if (success) {
             dispatch({
               type: wsActions.WS_GET_MESSAGE,
@@ -58,20 +62,19 @@ export const socketMiddleware = (wsActions: TwsActions): Middleware =>
               },
             });
           }
+
         };
 
-        socket.onclose = (event) => {
+        socket.onclose = (e) => {
           dispatch({
             type: wsActions.WS_CONNECTION_CLOSED,
-            payload: event,
+            payload: e,
           });
         };
-
         if (type === wsActions.WS_SEND_MESSAGE) {
           socket.send(JSON.stringify(payload));
         }
       }
-
       next(action);
     };
   };

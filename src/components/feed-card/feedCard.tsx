@@ -8,9 +8,10 @@ import { IOrder } from "../../services/reducers/feed";
 import { useTypedSelector } from "../../utils/useTypedSelector";
 import { getStatus } from "../../utils/getStatus";
 import {getDate} from '../../utils/getDate';
+import { IIngr } from "../../utils/types/ingredient.types";
+import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
 
-
-const FeedCard: any = ({ order }: any) => {
+const FeedCard: FC<{order: IOrder}> = ({ order }) => {
   const location = useLocation();
   const history = useHistory();
   const {openModal, getFeedDetails} = useActions();
@@ -20,15 +21,15 @@ const FeedCard: any = ({ order }: any) => {
   // если не совпадают вернет null
   const isProfileOrders = useRouteMatch('/profile/orders');
   const isOrderPage = isProfileOrders && isProfileOrders.isExact;
-  const { ingredients }: any = useTypedSelector(
-    (state) => state.burgerIngredients
+  const { ingredients }  = useTypedSelector(
+    (state): TStateBurgerIngredients => state.burgerIngredients
   );
 
   // # Создадим карточку с заказом
   
   // Получим картинки путем сравнения id ингредиентов из ордера с id ингредиентов из состояния burgerIngredients
   const getImages = (id: string): string | undefined => {
-    let ingr = ingredients.find((x: any) => x.ingredient._id === id);
+    let ingr = ingredients.find((i: IIngr) => i.ingredient._id === id);
     if (ingr) {
       return ingr.ingredient.image;
     }
@@ -40,12 +41,12 @@ const FeedCard: any = ({ order }: any) => {
     if (ingredients.length === 0) {
       return 0;
     }
-    order.ingredients.forEach((id: any) => {
+    order.ingredients.forEach((id: string) => {
       let price: number;
       if (ingredients && ingredients.length > 0) {
         // !!!! в дальрнейшем можно поменять структуру ingredients, заменив qty на __V ?
-        const ingr = ingredients.find((ingredient: any) => ingredient.ingredient._id === id)
-        price = ingr.ingredient.price;
+        const ingr = ingredients.find((ingredient: IIngr) => ingredient.ingredient._id === id)
+        price = ingr!.ingredient.price;
 
         if (price) {
           allPrice += price;
@@ -85,6 +86,7 @@ const FeedCard: any = ({ order }: any) => {
   if (!ingredients.length) {
     return null;
   }
+  
   return (
     <div
       className={`p-6 mr-2 mb-4 ${styles.card}`}
@@ -115,7 +117,7 @@ const FeedCard: any = ({ order }: any) => {
       <div className={styles.bottom}>
         <div className={`${styles.ingredients} pr-6`}>
           {order.ingredients &&
-            order.ingredients.map((ingredient: any, index: any) =>
+            order.ingredients.map((ingredient: string, index: number) =>
               index <= 5 ? (
                 <div
                   className={styles.ingredient}

@@ -3,11 +3,13 @@ import styles from "./ingridient-details.module.css";
 import { useSelector } from "react-redux";
 import {useParams } from "react-router-dom";
 import {IIngredient} from '../../utils/types/ingredient.types';
+import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function IngredientDetails() {
 
   const params = useParams<{id?: string}>();
-  const ingredients = useSelector(
+  const ingredients = useTypedSelector(
     (state: any) => state.burgerIngredients.ingredients
   );
 

@@ -1,7 +1,8 @@
 import { useMemo, FC } from "react";
 import styles from "./feed-info.module.css";
+import { IOrder } from "../../services/reducers/feed";
 
-export const FeedInfo = ({ orders, total, totalToday }) => {
+export const FeedInfo = ({ orders, total, totalToday }: {orders: IOrder[], total: number, totalToday: number}) => {
   // найдем готовые заказы, воспользуемся useMemo что бы функция вызывалась при первом рендере, а
   // в последующем только если массив orders измениться (если получим новые данные от WebSocket соединения в компоненте feeds)
   const getDoneOrders = useMemo(() => {
@@ -35,7 +36,6 @@ export const FeedInfo = ({ orders, total, totalToday }) => {
       <div className={`mb-15 ${styles.top}`}>
         <div className={`${styles.ready}`}>
           <p className={`mb-6 text text_type_main-medium`}> Готовы:</p>
-          {/* <div className={`${styles.orders}`}> */}
           {getDoneOrders && getDoneOrders.length > 9 ? (
             <div className={`${styles.orders}`}>
               <ul
@@ -62,7 +62,7 @@ export const FeedInfo = ({ orders, total, totalToday }) => {
               <ul
                 className={`text text_type_digits-default text_color_inactive ${styles.ul}`}
               >
-                {getDoneOrders.map((order, i) => {
+                {getDoneOrders!.map((order, i) => {
                   if (i <= 9) {
                     return <li key={order.number}>{order.number}</li>;
                   }
@@ -70,7 +70,6 @@ export const FeedInfo = ({ orders, total, totalToday }) => {
               </ul>
             </div>
           )}
-          {/* </div> */}
         </div>
         <div className={`${styles.todo}`}>
           <p className={`mb-6 text text_type_main-medium`}> В работе:</p>
@@ -100,7 +99,7 @@ export const FeedInfo = ({ orders, total, totalToday }) => {
               <ul
                 className={`text text_type_digits-default text_color_inactive ${styles.ul}`}
               >
-                {getPendingOrders.map((order, i) => {
+                {getPendingOrders!.map((order, i) => {
                   if (i <= 9) {
                     return <li key={order.number}>{order.number}</li>;
                   }

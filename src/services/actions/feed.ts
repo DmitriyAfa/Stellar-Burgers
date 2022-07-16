@@ -10,7 +10,6 @@ export enum EwsActions {
   WS_CONNECTION_CLOSED =  'WS_CONNECTION_CLOSED',
   WS_GET_MESSAGE = 'WS_GET_MESSAGE',
   WS_SEND_MESSAGE = 'WS_SEND_MESSAGE',
-  WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE',
   GET_FEED_DETAILS = 'GET_FEED_DETAILS',
 }
 
@@ -78,10 +77,6 @@ export const FeedActionCreator = {
   wsSendMessage: (message: string) =>  ({
     type: EwsActions.WS_SEND_MESSAGE,
     payload: message
-  }),
-  wsUserNameUpdate: (name: string) =>  ({
-    type: EwsActions.WS_USER_NAME_UPDATE,
-    payload: name
   }),
   getFeedDetails: (order: IOrder) => (dispatch: Store['dispatch']) => {
     dispatch({

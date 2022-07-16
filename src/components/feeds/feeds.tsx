@@ -6,10 +6,11 @@ import {FeedInfo} from "../feed-info/feed-info";
 import { useTypedSelector } from "../../utils/useTypedSelector";
 import { useActions } from "../../utils/useAction";
 import { wsUrl } from "../../services/baseUrl";
+import { IOrder } from "../../services/reducers/feed";
 
 function Feeds() {
   const {wsConnectionStart, wsConnectionStop} = useActions();
-  const { orders, total, totalToday } = useTypedSelector((state: any) => state.feed);
+  const { orders, total, totalToday } = useTypedSelector((state) => state.feed);
 
   useEffect(() => {
     wsConnectionStart(wsUrl);
@@ -33,7 +34,7 @@ function Feeds() {
         className={styles.scrollBar}
       >
       {orders &&
-        orders.map((order: any, id: any): any => {
+        orders.map((order: IOrder, id: number) => {
           return (
             <FeedCard order={order} key={`${order._id}${id}`} />
            )
