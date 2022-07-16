@@ -18,8 +18,8 @@ const FeedCard: any = ({ order }: any) => {
   // хуком useRouteMatch который сопоставляет текущий URL с заданным аргументом который является путём для проверки
   // если совпадают вернет объект в котором есть ключ isExact значение которого true, если совпал весь адрес (без завершающих символов)
   // если не совпадают вернет null
-  const profileOrders = useRouteMatch('/profile/orders');
-  const isOrderPage = profileOrders && profileOrders.isExact;
+  const isProfileOrders = useRouteMatch('/profile/orders');
+  const isOrderPage = isProfileOrders && isProfileOrders.isExact;
   const { ingredients }: any = useTypedSelector(
     (state) => state.burgerIngredients
   );

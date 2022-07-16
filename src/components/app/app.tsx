@@ -21,12 +21,9 @@ import { ProfileForm } from "../profile-form/profileForm";
 import { ProfileOrder } from "../profile-order/profileOrder";
 
 function App() {
-  
   const history = useHistory();
   const location = useLocation<{background: Location}>();
-
   const {feedDetails} = useTypedSelector((state) => state.feed)
-
   const { getIngredientsRequest, closeModal, getUser } = useActions();
 
   // Воспроизводим метод жизненного цикла componentDidMount 
@@ -36,10 +33,6 @@ function App() {
     getIngredientsRequest();
     getUser();
   }, []);
-
-
-
-  const { ingredients } = useSelector((state: any) => state.burgerIngredients);
 
   let background: any = location.state && location.state.background;
   //ILocationStateBackground | undefined
@@ -81,7 +74,7 @@ function App() {
             <ProfileForm />
           </ProfilePage>
         </ProtectedRoute>
-        <ProtectedRoute  path="/profile/orders">
+        <ProtectedRoute path="/profile/orders">
           <ProfilePage text={`В этом разделе вы можете просмотреть свою историю заказов`} >
             <ProfileOrder />
           </ProfilePage>

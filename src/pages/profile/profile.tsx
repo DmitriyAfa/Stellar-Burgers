@@ -42,12 +42,15 @@ function ProfilePage({children, text}: {children?: React.ReactNode, text: React.
           >
             войти
           </Link>
-          <Link
+          {/* <Link
             to="/profile/orders"
             className={`${styles.link} ${styles.button}`}
           >
             История заказов
-          </Link>
+          </Link> */}
+          <Button onClick={() => history.push("/profile/orders")} type="secondary" size="large">
+                    История заказов
+          </Button>
           <Button onClick={logOut} type="secondary" size="large">
             Выход
           </Button>
