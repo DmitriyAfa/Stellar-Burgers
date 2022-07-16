@@ -8,14 +8,11 @@ export function ProtectedRoute({ children, path }: {children: React.ReactNode, p
   const isLoggedIn = useSelector(
     (state: any) => state.user.isLoggedIn
   );
-  const getUserFunc = async () => {
-    const res: any = await getUser();
-    console.log(res);
-  };
 
   useEffect(() => {
-    getUserFunc();
+    getUser();
   }, []);
+
   return (
     <Route
       path={path}

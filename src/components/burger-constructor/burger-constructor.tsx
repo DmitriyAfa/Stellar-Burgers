@@ -1,26 +1,23 @@
-import React from "react";
-import { useDispatch } from "react-redux";
 import styles from "./burger-constructor.module.css";
 import Buns from "./parts/buns";
 import Order from "./parts/order";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useSelector } from "react-redux";
+import { useActions } from "../../utils/useAction";
+import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
 
-import {
-  closeModalOfOrderDetails,
-  clearOrderDetails,
-} from "../../services/actions/actions-creator";
 
 function BurgerConstructor() {
-  const dispatch = useDispatch();
   const modalIsActive = useSelector(
-    (state: any) => state.burgerIngredients.orderDetailsIsActive
+    (state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.orderDetailsIsActive
   );
-
+  
+  const {closeModalOfOrderDetails, clearOrderDetails} = useActions();
+  
   const onClose = () => {
-    dispatch(closeModalOfOrderDetails());
-    dispatch(clearOrderDetails());
+    closeModalOfOrderDetails();
+    clearOrderDetails()
   };
   return (
     <>

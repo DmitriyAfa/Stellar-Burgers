@@ -15,7 +15,6 @@ export function NotFound404() {
     <>
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          {/* <Breadcrumbs /> */}
           <div className={styles.content}>
             <h1>Oops! 404 Error</h1>
             <p>The page you requested does not exist</p>

@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Switch, Route, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import {  useSelector } from "react-redux";
 import BurgerPage from "../../pages/burger/burger";
 import LoginPage from "../../pages/login/login";
 import RegistrationPage from "../../pages/registration/registration";
@@ -11,35 +11,50 @@ import { NotFound404 } from "../../pages/not-found/not-found";
 import { ProtectedRoute } from "../protected-route";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 import { useActions } from "../../utils/useAction";
 import AppHeader from "../app-header/app-header";
+import FeedPage from "../../pages/feed/feed";
+import Feeds from "../feeds/feeds";
+import { useTypedSelector } from "../../utils/useTypedSelector";
+import { FeedDetails } from "../feed-details/feed-details";
+import { ProfileForm } from "../profile-form/profileForm";
+import { ProfileOrder } from "../profile-order/profileOrder";
+
 function App() {
-  const dispatch = useDispatch();
-  const { getIngredientsRequest } = useActions();
-
-  const getIngredients = useCallback(async () => {
-    return await getIngredientsRequest();
-  }, [dispatch]);
-
-  useEffect(() => {
-    getIngredients();
-  }, [getIngredients]);
-
-  const currentIngredient = useSelector(
-    (state: any) => state.burgerIngredients.currentIngredient
-  );
-
-
+  
   const history = useHistory();
   const location = useLocation<{background: Location}>();
+
+  const {feedDetails} = useTypedSelector((state) => state.feed)
+
+  const { getIngredientsRequest, closeModal, getUser } = useActions();
+
+  // Воспроизводим метод жизненного цикла componentDidMount 
+  //При первом монтировании компонента отправим запросы на сервер
+  //Получим ингредиенты и залогинен ли user
+  useEffect(() => {
+    getIngredientsRequest();
+    getUser();
+  }, []);
+
+
+
+  const { ingredients } = useSelector((state: any) => state.burgerIngredients);
 
   let background: any = location.state && location.state.background;
   //ILocationStateBackground | undefined
 
-  const closeModal = () => {
-    dispatch({ type: CLOSE_MODAL });
+  const closeModalIngredient = () => {
+    closeModal();
     history.push(background);
+  };
+  const closeModalFeed= () => {
+    closeModal();
+    history.push('/feed');
+  };
+  const closeModalProfile = () => {
+    closeModal();
+    history.push('/profile/orders');
   };
   // console.log(history);
   return (
@@ -61,11 +76,17 @@ function App() {
         <Route path="/reset-password" exact>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile">
-          <ProfilePage />
+        <ProtectedRoute  path="/profile">
+          <ProfilePage text={`В этом разделе вы можете изменить свои персональные данные`} >
+            <ProfileForm />
+          </ProfilePage>
         </ProtectedRoute>
-        <Route path={`/ingredients/:${currentIngredient._id}`} exact>
-          <AppHeader constr="" lenta="" profile="" />
+        <ProtectedRoute  path="/profile/orders">
+          <ProfilePage text={`В этом разделе вы можете просмотреть свою историю заказов`} >
+            <ProfileOrder />
+          </ProfilePage>
+        </ProtectedRoute>
+        <Route path={`/ingredients/:id`} exact>
           <div
             style={{
               display: "flex",
@@ -79,16 +100,53 @@ function App() {
             </div>
           </div>
         </Route>
+        <Route exact path="/feed">
+          <FeedPage />
+        </Route>
+        <Route exact  path="/feed/:id">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "120px",
+            }}
+          >
+            <FeedDetails />
+          </div>
+        </Route>
+        <Route exact  path="/profile/orders/:id">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "120px",
+            }}
+          >
+            <FeedDetails />
+          </div>
+        </Route>
         <Route>
           <NotFound404 />
         </Route>
       </Switch>
       {background && (
+        <>
         <Route path={`/ingredients/:id`}>
-          <Modal header={"Детали ингредиента"} onClose={closeModal}>
+          <Modal header={"Детали ингредиента"} onClose={closeModalIngredient}>
             <IngredientDetails />
           </Modal>
         </Route>
+        <Route exact path="/feed/:id">
+          <Modal header={feedDetails ? feedDetails.number : ''} onClose={closeModalFeed}>
+            <FeedDetails />
+          </Modal>
+        </Route>
+        <Route exact path="/profile/orders/:id">
+          <Modal header={feedDetails ? feedDetails.number : ''} onClose={closeModalProfile}>
+            <FeedDetails />
+          </Modal>
+        </Route>
+        </>
       )}
     </>
   );

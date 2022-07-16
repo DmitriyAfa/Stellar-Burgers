@@ -1,0 +1,89 @@
+.card {
+  display: block;
+  background: #1c1c21;
+  border-radius: 40px;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+  0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+.ingredients {
+  display: flex;
+  align-items: center;
+}
+.ingredient {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  min-width: 64px;
+  height: 64px;
+}
+.ingredient:not(:first-child) {
+  margin-left: -15px;
+}
+.ingredient:before {
+  content: '';
+  position: absolute;
+  background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+  width: 100%;
+  height: 100%;
+}
+.ingredient img {
+  position: absolute;
+  height: 100%;
+  background-color: black;
+  background-clip: padding-box;
+  border: solid 2px transparent;
+  border-radius: 50%;
+  object-fit: cover;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+}
+
+.ingredient:nth-child(1) {
+  z-index: 10;
+}
+.ingredient:nth-child(2) {
+  z-index: 9;
+}
+.ingredient:nth-child(3) {
+  z-index: 8;
+}
+.ingredient:nth-child(4) {
+  z-index: 7;
+}
+.ingredient:nth-child(5) {
+  z-index: 6;
+}
+.ingredient:nth-child(6) {
+  z-index: 5;
+}
+.price {
+  display: flex;
+  align-items: center;
+}
+.price span {
+  margin-right: 8px;
+}
+.count {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  left: 0;
+  right: 0;
+}

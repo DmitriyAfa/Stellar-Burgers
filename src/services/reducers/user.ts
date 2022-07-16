@@ -5,14 +5,21 @@ import {
   RESET_USER,
   RESET_ISLOGGEDIN
 } from "../actions/user";
+import { TUserActions } from "../actions/user";
 
-const initialState = {
+export type TUserState = {
+  passwordReset: {success: boolean};
+  user: null | {email: string, name: string};
+  isLoggedIn: boolean;
+}
+
+const initialState: TUserState = {
   passwordReset: { success: false },
   user: null,
   isLoggedIn: false,
 };
 
-export function userReducer(state = initialState, action: any) {
+export function userReducer(state: TUserState = initialState, action: TUserActions) {
   switch (action.type) {
     case RESET_FORGOT_PASSWORD:
       return { ...state, passwordReset: action.payload };

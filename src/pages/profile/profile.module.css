@@ -7,10 +7,11 @@
   flex-direction: column;
   margin-top: 120px;
   width: 360px;
+  height: 310px;
   margin: 120px 50px 0 117px;
 }
 
-.left :global(.button_button_size_large__x03t1){
+.left :global(.button_button_size_large__Yj1BJ){
   font-family: 'Jet Brains Mono';
   color: #8585AD;
   text-align: left;

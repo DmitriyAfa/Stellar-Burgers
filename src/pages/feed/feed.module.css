@@ -1,0 +1,9 @@
+/* .main{
+  display: grid; 
+  grid-template-columns: 10% 39% 2% 39% 10%;
+  grid-template-rows: 912px 40px; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    ". BurgerIngridients . BurgerConstructor ."
+    ". ................. . ................. ."; 
+} */

@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation, Link, Redirect } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
-import AppHeader from "../../components/app-header/app-header";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useActions } from "../../utils/useAction";
-import { ILocation, ILocationState, ILocationStateBackground } from "../../utils/types/location.types";
+import { ILocation, ILocationState } from "../../utils/types/location.types";
+import {IResetPasswordForm} from './types';
 
 function ResetPassword() {
   const history = useHistory();
   const { resetPassword } = useActions();
   const location: ILocation  = useLocation();
 
-  console.log(location)
+
   let background: ILocationState | ILocation  = (location.state && location.state.from) || location;
 
-  console.log(background)
-  const [form, setValue] = useState({ password: "", token: "" });
+
+  const [form, setValue] = useState<IResetPasswordForm>({ password: "", token: "" });
 
   const onChange = (e: React.SyntheticEvent): void => {
     let target = e.target as HTMLInputElement;
@@ -28,7 +28,7 @@ function ResetPassword() {
 
   const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const res: any = await resetPassword(form);
+    const res: Function = await resetPassword(form);
 
     if (res) {
       history.push("/login", { from: location });

@@ -1,0 +1,36 @@
+.main{
+  display: grid; 
+  grid-template-columns: 10% 39% 2% 39% 10%;
+  grid-template-rows: 912px 40px; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    ". BurgerIngridients . BurgerConstructor ."
+    ". ................. . ................. ."; 
+}
+
+.feeds{
+  display: grid;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.scrollBar{
+  min-height: 830px;
+overflow: auto;
+overflow-x: hidden;
+overflow-y: scroll; 
+}
+
+.scrollBar::-webkit-scrollbar{
+  width: 12px;
+}
+.scrollBar::-webkit-scrollbar-track{
+  background: #2F2F37;
+}
+.scrollBar::-webkit-scrollbar-thumb{
+  background: #8585AD;
+  border: 3px solid #2F2F37;
+  border-radius: 6px;
+}

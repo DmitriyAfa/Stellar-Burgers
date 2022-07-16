@@ -12,7 +12,8 @@ export const request = async (addUrl: string) => {
     return await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        Accept: 'application/json',
+      'Content-Type': 'application/json',
       },
       mode: "cors",
       cache: "no-cache",
@@ -29,7 +30,8 @@ export const request = async (addUrl: string) => {
       cache: "no-cache",
       credentials: "same-origin",
       headers: {
-        "Content-Type": "application/json",
+        Accept: 'application/json', 
+      'Content-Type': 'application/json',
         authorization: accessToken,
       },
     }).then(checkResponse);

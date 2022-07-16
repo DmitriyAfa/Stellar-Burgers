@@ -3,26 +3,27 @@ import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingridients.module.css";
 import Tabs from "./parts/tabs";
 import Ingredients from "./parts/ingredients";
-// redux
 import { useSelector } from "react-redux";
 import {IIngredient} from '../../utils/types/ingredient.types';
 
 function BurgerIngredients() {
 
+  //!!!
   const { ingredients } = useSelector((state: any) => state.burgerIngredients);
-
+  // Поменял условие первого аргумента ingredients на ingredients.length > 0
   const buns =
-    ingredients &&
+    ingredients.length > 0 &&
     ingredients.filter((ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient.type === "bun");
   const sauce =
-    ingredients &&
+    ingredients.length > 0 &&
     ingredients.filter((ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient.type === "sauce");
   const main =
-    ingredients &&
+    ingredients.length > 0 &&
     ingredients.filter((ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient.type === "main");
 
   const [activeTab, setActiveTab] = useState("one");
 
+  // !!! Изменить тип
   const scrollBarRef = useRef<any>(null);
 
   const onScrollHandler = () => {
@@ -53,9 +54,9 @@ function BurgerIngredients() {
         onScroll={onScrollHandler}
         className={styles.scrollBar}
       >
-        {ingredients && <Ingredients head="Булки" ingredients={buns} />}
-        {ingredients && <Ingredients head="Соусы" ingredients={sauce} />}
-        {ingredients && <Ingredients head="Начинки" ingredients={main} />}
+        {ingredients.length > 0 && <Ingredients head="Булки" ingredients={buns} />}
+        {ingredients.length > 0 && <Ingredients head="Соусы" ingredients={sauce} />}
+        {ingredients.length > 0 && <Ingredients head="Начинки" ingredients={main} />}
       </div>
     </section>
   );
