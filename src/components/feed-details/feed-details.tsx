@@ -15,7 +15,7 @@ export const FeedDetails = () => {
   const {id} = useParams<{id?: string}>();
   const {orders} = useTypedSelector((state) => state.feed)
   const {ingredients} = useTypedSelector((state) => state.burgerIngredients) 
-
+  
 
   // открытие соединения сокетов при первом рендере страницы
   useEffect(() => {
