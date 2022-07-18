@@ -7,6 +7,7 @@ import { match, useRouteMatch } from "react-router";
 const modalRoot: any = document.getElementById("react-modals");
 
 const Modal = ({ children, header, onClose, isFeed }: {children: React.ReactNode, header: string | number | boolean | undefined, onClose: Function, isFeed: match | null}) => {
+  // Использую данные в App
   // const isFeedPage = useRouteMatch('/feed');
   // const isProfileOrdersPage = useRouteMatch('/profile/orders');
   // const isFeed = isFeedPage || isProfileOrdersPage;

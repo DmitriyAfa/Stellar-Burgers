@@ -4,13 +4,13 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.css";
-import { useSelector } from "react-redux";
 import { useDrop, useDrag, XYCoord } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { IMakeDetail } from "../types";
 import {IIngredient, IIngr} from '../../../utils/types/ingredient.types'
 import { useActions } from "../../../utils/useAction";
 import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
+import { useTypedSelector } from "../../../utils/useTypedSelector";
 
 function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
   const {decrease, deleteIngredient, deleteIngredientAction, getId, getPrice} = useActions();
@@ -84,7 +84,7 @@ function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
 
 function ScrollBurgerConstructor() {
 
-  const ingredients = useSelector(
+  const ingredients = useTypedSelector(
     (state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.constructorIngredients
   );
  const {increase,  addIngredient,  getPrice, sortCard} = useActions();

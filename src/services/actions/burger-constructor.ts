@@ -1,4 +1,4 @@
-import { Store } from "redux";
+
 import { IIngredient, IIngr } from "../../utils/types/ingredient.types";
 import { baseUrl } from "../baseUrl";
 import { checkResponse } from "../checkResponse";
@@ -104,12 +104,11 @@ export const BurgerConstructorActionCreator = {
         }),
       })
         .then(checkResponse)
-        .then((data) => {
+        .then((data) => 
           dispatch({
             type: GET_ORDER_NUMBER_SUCCESS,
             number: data,
           })
-          console.log("getOrderNumber ", data)}
         )
         .catch((e) => console.log(e));
     };

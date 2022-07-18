@@ -4,22 +4,22 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { useActions } from "../../../utils/useAction";
 import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
 import { TUserState } from "../../../services/reducers/user";
 import { TStore } from "../../../utils/types/types";
-import { IIngr } from "../../../utils/types/ingredient.types";
+import { useTypedSelector } from "../../../utils/useTypedSelector";
+
 function Order() {
   const history = useHistory();
-  const {ingredients} = useSelector(
+  const {ingredients} = useTypedSelector(
     (state: TStore) => state.burgerIngredients.order
   );
-  const isLoggedIn = useSelector(
+  const isLoggedIn = useTypedSelector(
     (state: {user: TUserState}) => state.user.isLoggedIn
   );
-  const price = useSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.price);
-  const bunIshere = useSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.bun._id);
+  const price = useTypedSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.price);
+  const bunIshere = useTypedSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.bun._id);
   const { getId, openModalOfOrderDetails, getOrderNumber } = useActions();
 
   //Получаем идентификатор заказа

@@ -1,6 +1,5 @@
 import  { useEffect } from "react";
 import { useHistory, Link, useLocation } from "react-router-dom";
-import AppHeader from "../../components/app-header/app-header";
 import styles from "./not-found.module.css";
 
 export function NotFound404() {

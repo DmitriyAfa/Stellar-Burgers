@@ -1,5 +1,5 @@
-import { useState, useCallback, FC } from "react";
-import { useParams, useHistory, useRouteMatch } from "react-router-dom";
+import {  useCallback, FC } from "react";
+import {  useHistory } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,

@@ -1,4 +1,3 @@
-import { Store } from "redux";
 import { post, get, patch } from "../api";
 import {IRegistrationForm, IResetPasswordForm, ILoginForm} from '../../pages/index'
 import { TDispatch } from "../store";

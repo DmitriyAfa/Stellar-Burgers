@@ -6,17 +6,18 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+
 
 
 import { useActions } from "../../utils/useAction";
 import { TUserState } from "../../services/reducers/user";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function ForgotPassword() {
   const history = useHistory();
   const { forgotPassword, getUser } = useActions();
   const location = useLocation();
-  const isLoggedIn = useSelector(
+  const isLoggedIn = useTypedSelector(
     (state: {user: TUserState}) => state.user.isLoggedIn
   );
 

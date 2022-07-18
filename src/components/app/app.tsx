@@ -1,6 +1,5 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { Switch, Route, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import {  useSelector } from "react-redux";
 import BurgerPage from "../../pages/burger/burger";
 import LoginPage from "../../pages/login/login";
 import RegistrationPage from "../../pages/registration/registration";
@@ -14,7 +13,6 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useActions } from "../../utils/useAction";
 import AppHeader from "../app-header/app-header";
 import FeedPage from "../../pages/feed/feed";
-import Feeds from "../feeds/feeds";
 import { useTypedSelector } from "../../utils/useTypedSelector";
 import { FeedDetails } from "../feed-details/feed-details";
 import { ProfileForm } from "../profile-form/profileForm";

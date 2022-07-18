@@ -46,7 +46,7 @@ const FeedCard: FC<{order: IOrder}> = ({ order }) => {
       if (ingredients && ingredients.length > 0) {
         // !!!! в дальрнейшем можно поменять структуру ingredients, заменив qty на __V ?
         const ingr = ingredients.find((ingredient: IIngr) => ingredient.ingredient._id === id)
-        price = ingr!.ingredient.price;
+        price = ingr !== undefined ? ingr!.ingredient.price : 0;
 
         if (price) {
           allPrice += price;

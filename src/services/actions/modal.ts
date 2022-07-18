@@ -1,4 +1,3 @@
-import { Store } from "redux";
 import { IIngredient } from "../../utils/types/ingredient.types";
 import { TDispatch } from "../store";
 

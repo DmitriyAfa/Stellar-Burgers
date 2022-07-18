@@ -1,4 +1,3 @@
-import { Store } from "redux";
 import { IOrders } from "../../utils/types/types";
 import { IOrder } from "../reducers/feed";
 import { TDispatch } from "../store";

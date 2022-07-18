@@ -1,13 +1,13 @@
 import ScrollBurgerConstructor from "./scroll-burger-consctructor";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useActions } from "../../../utils/useAction";
 import { IIngr} from '../../../utils/types/ingredient.types';
 import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
+import { useTypedSelector } from "../../../utils/useTypedSelector";
 
 function Buns() {
-  const bun = useSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.bun);
+  const bun = useTypedSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.bun);
   const {addBun, makeBunQtyZero, increase, getBunId, getId, getPrice  } = useActions();
 
   const [, drop] = useDrop({

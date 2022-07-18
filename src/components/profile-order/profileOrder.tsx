@@ -18,7 +18,6 @@ export const ProfileOrder = () => {
   
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log('accessToken ', accessToken!.slice(7, accessToken!.length))
     const url = `${wsUrlToken}${accessToken!.slice(7, accessToken!.length)}`;
     wsConnectionStart(url);
   }, []);

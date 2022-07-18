@@ -3,13 +3,13 @@ import Buns from "./parts/buns";
 import Order from "./parts/order";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useSelector } from "react-redux";
 import { useActions } from "../../utils/useAction";
 import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 
 function BurgerConstructor() {
-  const modalIsActive = useSelector(
+  const modalIsActive = useTypedSelector(
     (state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.orderDetailsIsActive
   );
   

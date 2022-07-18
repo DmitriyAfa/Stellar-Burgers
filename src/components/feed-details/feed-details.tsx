@@ -1,26 +1,19 @@
 import { useEffect, useMemo } from "react";
 import styles from "./feed-details.module.css";
-import { useSelector } from "react-redux";
 import { useTypedSelector } from "../../utils/useTypedSelector";
 import {useParams, useRouteMatch } from "react-router-dom";
-import {IIngredient} from '../../utils/types/ingredient.types';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getStatus } from "../../utils/getStatus";
-import OrderDetails from "../order-details/order-details";
 import { useActions } from "../../utils/useAction";
 import { wsUrl } from "../../services/baseUrl";
 import {getDate} from '../../utils/getDate';
 import { IIngr } from "../../utils/types/ingredient.types";
 import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
-import { IOrder } from "../../services/reducers/feed";
 
 export const FeedDetails = () => {
   const {wsConnectionStart, wsConnectionStop} = useActions();
   const {id} = useParams<{id?: string}>();
-  const isFeedPage = useRouteMatch('/feed');
-  const isProfileOrdersPage = useRouteMatch('/profile/orders');
-  const isFeed = isFeedPage || isProfileOrdersPage;
-  const {orders, feedDetails} = useTypedSelector((state) => state.feed)
+  const {orders} = useTypedSelector((state) => state.feed)
   const {ingredients} = useTypedSelector((state): TStateBurgerIngredients => state.burgerIngredients)
 
   // открытие соединения сокетов при первом рендере страницы

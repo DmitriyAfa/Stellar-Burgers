@@ -8,16 +8,16 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { ILoginForm } from "./types";
 
 import { useActions } from "../../utils/useAction";
 import { TUserState } from "../../services/reducers/user";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function LoginPage() {
   const history: any = useHistory();
   const { login, getUser } = useActions();
-  const isLoggedIn = useSelector(
+  const isLoggedIn = useTypedSelector(
     (state: {user: TUserState}) => state.user.isLoggedIn
   );
 

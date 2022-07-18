@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useActions } from "../utils/useAction";
 import { useTypedSelector } from "../utils/useTypedSelector";
 
