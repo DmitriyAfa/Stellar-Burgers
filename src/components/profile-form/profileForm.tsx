@@ -9,7 +9,7 @@ import { useTypedSelector } from "../../utils/useTypedSelector";
 import styles from './profileForm.module.css';
 
 export const ProfileForm = () => {
-  const { user } = useTypedSelector((state: any) => state.user);
+  const { user } = useTypedSelector((state) => state.user);
   const { getUser, changeAuthUser, logout } = useActions();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ export const ProfileForm = () => {
 
   const backForm = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    setValue({ ...form, name: user.name, email: user.email, password: "" });
+    setValue({ ...form, name: user!.name, email: user!.email, password: "" });
   };
 
   const submit = async (e: React.SyntheticEvent) => {

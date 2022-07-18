@@ -85,7 +85,7 @@ function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
 function ScrollBurgerConstructor() {
 
   const ingredients = useTypedSelector(
-    (state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.constructorIngredients
+    (state) => state.burgerIngredients.constructorIngredients
   );
  const {increase,  addIngredient,  getPrice, sortCard} = useActions();
   const [, drop] = useDrop({

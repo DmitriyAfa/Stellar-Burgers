@@ -10,7 +10,7 @@ import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function BurgerConstructor() {
   const modalIsActive = useTypedSelector(
-    (state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.orderDetailsIsActive
+    (state) => state.burgerIngredients.orderDetailsIsActive
   );
   
   const {closeModalOfOrderDetails, clearOrderDetails} = useActions();

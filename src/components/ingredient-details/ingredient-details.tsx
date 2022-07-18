@@ -9,7 +9,7 @@ function IngredientDetails() {
 
   const params = useParams<{id?: string}>();
   const ingredients = useTypedSelector(
-    (state: TStore) => state.burgerIngredients.ingredients
+    (state) => state.burgerIngredients.ingredients
   );
 
   let ingredient: IIngredient = {

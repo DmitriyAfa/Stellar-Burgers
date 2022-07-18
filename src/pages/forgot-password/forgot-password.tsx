@@ -18,7 +18,7 @@ function ForgotPassword() {
   const { forgotPassword, getUser } = useActions();
   const location = useLocation();
   const isLoggedIn = useTypedSelector(
-    (state: {user: TUserState}) => state.user.isLoggedIn
+    (state) => state.user.isLoggedIn
   );
 
   const [form, setValue] = useState<{[email: string]: string}>({ email: "" });

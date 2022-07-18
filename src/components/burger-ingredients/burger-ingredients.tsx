@@ -10,7 +10,7 @@ import { TStore } from "../../utils/types/types";
 function BurgerIngredients() {
 
 
-  const {ingredients} = useTypedSelector((state: TStore) => state.burgerIngredients);
+  const {ingredients} = useTypedSelector((state) => state.burgerIngredients);
   // Поменял условие первого аргумента ingredients на ingredients.length > 0
   const buns =
     ingredients.length > 0 &&

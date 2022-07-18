@@ -6,8 +6,14 @@
 }
 .header{
   width: 137%;
+  
 }
-
+.header h4{
+  padding: 0 45px;
+}
+.header h5{
+  margin: 0 45px 24px 45px;
+}
 .scrollBar{
   height: 310px;
   width: 619px;
@@ -42,14 +48,25 @@ overflow-y: scroll; /* прокрутка по вертикали */
 .name{
   width: 365px;
 }
+.status{
+  padding: 0 45px;
+}
 .footer{
   width: 137%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+.footer p {
+  padding: 0 45px;
+}
+
+.price{
+  display: flex;
+}
 .cost{
   display: flex;
+  padding: 0 45px;
 }
 .cost p {
   margin-right: 9px;

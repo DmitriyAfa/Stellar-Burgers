@@ -14,7 +14,8 @@ export const FeedDetails = () => {
   const {wsConnectionStart, wsConnectionStop} = useActions();
   const {id} = useParams<{id?: string}>();
   const {orders} = useTypedSelector((state) => state.feed)
-  const {ingredients} = useTypedSelector((state): TStateBurgerIngredients => state.burgerIngredients)
+  const {ingredients} = useTypedSelector((state) => state.burgerIngredients) 
+
 
   // открытие соединения сокетов при первом рендере страницы
   useEffect(() => {
@@ -75,11 +76,7 @@ export const FeedDetails = () => {
     }
   }, [findIngredeints, ingredients]);
 
-  console.log('findIngredeints используется внутри scroll', findIngredeints)
-  console.log('order используется для имени и статуса, а так же ', order)
-
-
-  if( order == undefined){
+  if( order === undefined || !ingredients.length){
     return null;
   }
 
@@ -89,11 +86,11 @@ export const FeedDetails = () => {
       <div className={styles.header}>
         <h4 className="mt-2 text text_type_main-medium">{order.name}</h4>
         <p
-          className={` mb-15 text text_type_main-default ${styles.status} ${order.status === 'done' ? styles.done : ''}`}
+          className={` mb-15 text text_type_main-default ${styles.status}`}
         >
           {getStatus(order.status)}
         </p>
-          <h2 className="text text_type_main-medium mb-6">Состав:</h2>
+          <h5 className="text text_type_main-medium mb-6">Состав:</h5>
         </div>
         <div
           className={`mb-10 ${styles.scrollBar}`}
@@ -104,14 +101,12 @@ export const FeedDetails = () => {
                 className={`mb-4 ${styles.ingredientCard}`}
                 key={`${index}_${ingredient!.ingredient._id}`}
               >
-                {/* <div className={`${styles.img} mr-4`}> */}
                   <img className={`${styles.img} mr-4`} src={ingredient!.ingredient.image_mobile} alt="" />
-                {/* </div> */}
                 <div className={`text text_type_main-default mr-6 ${styles.name}`}>
                   {ingredient!.ingredient.name}
                 </div>
                 <div
-                  className={`${styles.cost}`}
+                  className={`${styles.price}`}
                 >
                   <p className="mr-4 text text_type_digits-default">{`${ingredient!.qty} x ${ingredient!.ingredient.price}`}</p>
                   <CurrencyIcon type="primary" />

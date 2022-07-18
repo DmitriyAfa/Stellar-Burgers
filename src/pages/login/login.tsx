@@ -22,7 +22,7 @@ function LoginPage() {
   );
 
   const [isLoading, setIsLoading] = useState(false);
-  const [form, setValue] = useState<ILoginForm>({ email: "", password: "" });
+  const [form, setValue] = useState<ILoginForm>({ name: "", email: "", password: "" });
 
   useEffect(() => {
     getUser()

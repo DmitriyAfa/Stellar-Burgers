@@ -39,14 +39,8 @@ function ProfilePage({children, text}: {children?: React.ReactNode, text: React.
             to="/login"
             className={`${styles.link} ${styles.button} ${styles.linkActive}`}
           >
-            войти
+            Профиль
           </Link>
-          {/* <Link
-            to="/profile/orders"
-            className={`${styles.link} ${styles.button}`}
-          >
-            История заказов
-          </Link> */}
           <Button onClick={() => history.push("/profile/orders")} type="secondary" size="large">
                     История заказов
           </Button>

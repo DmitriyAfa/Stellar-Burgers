@@ -22,7 +22,7 @@ const FeedCard: FC<{order: IOrder}> = ({ order }) => {
   const isProfileOrders = useRouteMatch('/profile/orders');
   const isOrderPage = isProfileOrders && isProfileOrders.isExact;
   const { ingredients }  = useTypedSelector(
-    (state): TStateBurgerIngredients => state.burgerIngredients
+    (state) => state.burgerIngredients
   );
     // console.log(ingredients)
   // # Создадим карточку с заказом

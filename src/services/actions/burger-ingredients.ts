@@ -13,6 +13,8 @@ export const DECREASE: "DECREASE" = "DECREASE";
 
 interface IGetIngredientsRequest{
   readonly type: typeof GET_INGREDIENTS_REQUEST;
+  readonly ingredientsFailed?: boolean;
+  readonly ingredientsRequest?: boolean,
 }
 interface IGetIngredientsSuccess{
   readonly type: typeof GET_INGREDIENTS_SUCCESS;

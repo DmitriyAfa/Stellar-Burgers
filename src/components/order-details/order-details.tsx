@@ -4,7 +4,7 @@ import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredie
 import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function OrderDetails() {
-  const number = useTypedSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.order.number);
+  const number = useTypedSelector((state) => state.burgerIngredients.order.number);
   return (
     <>
       <div className={styles.orderDetails}>

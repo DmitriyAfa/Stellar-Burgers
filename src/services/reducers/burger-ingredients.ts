@@ -31,7 +31,9 @@ type AllActions = TBurgerIngredientsActions | TBurgerConstructor | TModal;
 
 export type TStateBurgerIngredients = { 
   ingredients: Array<{qty: number, ingredient: IIngredient}>;
-  currentIngredient: boolean | IIngredient;
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  currentIngredient: boolean | IIngredient | undefined;
   bun: IIngredient;
   bunId: IIngredient | null | any;
   constructorIngredients: Array<IIngredient> | [] | any ;
@@ -47,8 +49,8 @@ export type TStateBurgerIngredients = {
 export const initialState: TStateBurgerIngredients = {
   //!!! Изменил ingredients: false на ingredients: [] ---> найти где используется и исправить ошибки
   ingredients: [],
-  // ingredientsRequest: false,
-  // ingredientsFailed: false,
+  ingredientsRequest: false,
+  ingredientsFailed: false,
 
   currentIngredient: false,
 
@@ -79,7 +81,7 @@ export const initialState: TStateBurgerIngredients = {
   orderDetailsIsActive: false,
 };
 
-export const burgerIngredientsReducer = (state: TStateBurgerIngredients = initialState, action: AllActions) => {
+export const burgerIngredientsReducer = (state = initialState, action: AllActions): TStateBurgerIngredients => {
   switch (action.type) {
     case CLEAR_ORDER_DETAILS: {
       return {
@@ -91,7 +93,7 @@ export const burgerIngredientsReducer = (state: TStateBurgerIngredients = initia
           };
         }),
         bun: {
-          _id: false,
+          _id: 'null',
           name: "Выберите булку",
           type: "bun",
           proteins: 80,

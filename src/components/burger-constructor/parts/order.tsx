@@ -13,7 +13,7 @@ import { useTypedSelector } from "../../../utils/useTypedSelector";
 function Order() {
   const history = useHistory();
   const {ingredients} = useTypedSelector(
-    (state: TStore) => state.burgerIngredients.order
+    (state) => state.burgerIngredients.order
   );
   const isLoggedIn = useTypedSelector(
     (state: {user: TUserState}) => state.user.isLoggedIn
