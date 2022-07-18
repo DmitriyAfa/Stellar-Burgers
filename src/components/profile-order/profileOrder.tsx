@@ -28,7 +28,7 @@ export const ProfileOrder = () => {
     };
   }, []);
 
-  if(!orders.length){
+  if(orders.length === 0){
     return <h1>Загрузка</h1>
   }
 

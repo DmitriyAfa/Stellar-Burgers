@@ -26,6 +26,10 @@ function App() {
   const {feedDetails} = useTypedSelector((state) => state.feed)
   const { getIngredientsRequest, closeModal, getUser } = useActions();
 
+  const isFeedPage = useRouteMatch('/feed');
+  const isProfileOrdersPage = useRouteMatch('/profile/orders');
+  const isFeed = isFeedPage || isProfileOrdersPage;
+
   // Воспроизводим метод жизненного цикла componentDidMount 
   //При первом монтировании компонента отправим запросы на сервер
   //Получим ингредиенты и залогинен ли user
@@ -50,6 +54,8 @@ function App() {
     history.push('/profile/orders');
   };
   // console.log(history);
+
+  
   return (
     <>
       <AppHeader constr="active" lenta="" profile="" />
@@ -125,17 +131,17 @@ function App() {
       {background && (
         <>
         <Route path={`/ingredients/:id`}>
-          <Modal header={"Детали ингредиента"} onClose={closeModalIngredient}>
+          <Modal header={"Детали ингредиента"} onClose={closeModalIngredient} isFeed={isFeed}>
             <IngredientDetails />
           </Modal>
         </Route>
         <Route exact path="/feed/:id">
-          <Modal header={feedDetails ? feedDetails.number : ''} onClose={closeModalFeed}>
+          <Modal header={feedDetails ? feedDetails.number : ''} onClose={closeModalFeed} isFeed={isFeed}>
             <FeedDetails />
           </Modal>
         </Route>
         <Route exact path="/profile/orders/:id">
-          <Modal header={feedDetails ? feedDetails.number : ''} onClose={closeModalProfile}>
+          <Modal header={feedDetails ? feedDetails.number : ''} onClose={closeModalProfile} isFeed={isFeed}>
             <FeedDetails />
           </Modal>
         </Route>

@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useDrop, useDrag, XYCoord } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { IMakeDetail } from "../types";
-import {IIngredient} from '../../../utils/types/ingredient.types'
+import {IIngredient, IIngr} from '../../../utils/types/ingredient.types'
 import { useActions } from "../../../utils/useAction";
 import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
 
@@ -90,7 +90,7 @@ function ScrollBurgerConstructor() {
  const {increase,  addIngredient,  getPrice, sortCard} = useActions();
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(ingredient: {ingredient: IIngredient}) {
+    drop(ingredient: IIngr) {
       if (ingredient.ingredient.type !== "bun") {
         addIngredient(ingredient, uuidv4());
         increase(ingredient.ingredient._id);

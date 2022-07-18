@@ -26,7 +26,7 @@ function BurgerConstructor() {
         <Order />
       </section>
       {modalIsActive && (
-        <Modal header={false} onClose={onClose}>
+        <Modal header={false} onClose={onClose} isFeed={null}>
           <OrderDetails />
         </Modal>
       )}

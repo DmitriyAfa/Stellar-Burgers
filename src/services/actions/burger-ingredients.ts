@@ -1,6 +1,7 @@
 import { Store } from "redux";
 import { request } from "../api";
-import { IIngredient } from "../../utils/types/ingredient.types";
+import { IIngredient, IIngr } from "../../utils/types/ingredient.types";
+import { TDispatch } from "../store";
 
 export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS" = "GET_INGREDIENTS_SUCCESS";
@@ -13,19 +14,13 @@ export const DECREASE: "DECREASE" = "DECREASE";
 
 interface IGetIngredientsRequest{
   readonly type: typeof GET_INGREDIENTS_REQUEST;
-  readonly ingredientsFailed: boolean;
-  readonly ingredientsRequest: boolean;
 }
 interface IGetIngredientsSuccess{
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredientsFailed: boolean;
   readonly ingredients: Array<IIngredient>;
-  readonly ingredientsRequest: boolean;
 }
 interface IGetIngredientsFailed{
   readonly type: typeof GET_INGREDIENTS_FAILED;
-  readonly ingredientsFailed: boolean;
-  readonly ingredientsRequest: boolean;
 }
 interface IGetIngredient{
   readonly type: typeof GET_INGREDIENT;
@@ -48,7 +43,7 @@ export type TBurgerIngredientsActions = IGetIngredientsRequest
 | Decrease;
 
 export const IngredientsActionCreator = {
-  getIngredientsRequest: () => (dispatch: Store['dispatch']) => {
+  getIngredientsRequest: () => (dispatch: TDispatch) => {
     request("ingredients")
       .then((data) => {
         if (data.success) {
@@ -61,19 +56,19 @@ export const IngredientsActionCreator = {
       })
       .catch((e) => console.log(e));
   },
-  getIngredient: (ingredient: any) => (dispatch: Store['dispatch']) => {
+  getIngredient: (ingredient: IIngredient) => (dispatch: TDispatch) => {
     dispatch({
       type: GET_INGREDIENT,
       payload: ingredient,
     });
   },
-  increase: (id: string) => (dispatch: Store['dispatch']) => {
+  increase: (id: string) => (dispatch: TDispatch) => {
     dispatch({
       type: INCREASE,
       payload: id,
     })
   },
-  decrease: (id: string) => (dispatch: Store['dispatch']) => {
+  decrease: (id: string) => (dispatch: TDispatch) => {
     dispatch({
       type: DECREASE,
       payload: id,

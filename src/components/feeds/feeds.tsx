@@ -11,7 +11,7 @@ import { IOrder } from "../../services/reducers/feed";
 function Feeds() {
   const {wsConnectionStart, wsConnectionStop} = useActions();
   const { orders, total, totalToday } = useTypedSelector((state) => state.feed);
-
+  console.log(orders)
   useEffect(() => {
     wsConnectionStart(wsUrl);
   }, []);

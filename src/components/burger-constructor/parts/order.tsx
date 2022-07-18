@@ -8,10 +8,12 @@ import { useSelector } from "react-redux";
 import { useActions } from "../../../utils/useAction";
 import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
 import { TUserState } from "../../../services/reducers/user";
+import { TStore } from "../../../utils/types/types";
+import { IIngr } from "../../../utils/types/ingredient.types";
 function Order() {
   const history = useHistory();
-  const ingredients = useSelector(
-    (state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.order.ingredients
+  const {ingredients} = useSelector(
+    (state: TStore) => state.burgerIngredients.order
   );
   const isLoggedIn = useSelector(
     (state: {user: TUserState}) => state.user.isLoggedIn

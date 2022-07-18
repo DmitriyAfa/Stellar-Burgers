@@ -22,7 +22,7 @@ import {
   SORT_CARD,
   CLEAR_ORDER_DETAILS,
 } from "../actions/burger-constructor";
-import {IIngredient} from '../../utils/types/ingredient.types';
+import {IIngredient, IIngr} from '../../utils/types/ingredient.types';
 import {TBurgerIngredientsActions} from '../actions/burger-ingredients';
 import {TBurgerConstructor} from '../actions/burger-constructor';
 import {TModal} from '../actions/modal';
@@ -33,12 +33,12 @@ export type TStateBurgerIngredients = {
   ingredients: Array<{qty: number, ingredient: IIngredient}>;
   currentIngredient: boolean | IIngredient;
   bun: IIngredient;
-  bunId: IIngredient | any;
+  bunId: IIngredient | null | any;
   constructorIngredients: Array<IIngredient> | [] | any ;
   deleteConstructorIngredients: Array<IIngredient> | [] ;
   order: {
-    ingredients: [] | Array<IIngredient> ,
-    number: null | number,
+    ingredients:  Array<IIngr> | any;
+    number: null | number | string;
   };
   price: number;
   orderDetailsIsActive: boolean;
@@ -254,8 +254,8 @@ export const burgerIngredientsReducer = (state: TStateBurgerIngredients = initia
         order: {
           ingredients: state.constructorIngredients
             .map((ingredient: IIngredient) => ingredient._id)
-            .concat(state.bunId._id)
-            .concat(state.bunId._id),
+            .concat(state!.bunId!._id)
+            .concat(state!.bunId!._id),
           number: null,
         },
       };

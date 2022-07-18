@@ -1,4 +1,8 @@
 import { Middleware, MiddlewareAPI } from 'redux';
+import { rootStateTypes } from '../reducers';
+import {TDispatch} from '../store'
+
+
 type TwsActions = {
   WS_CONNECTION_START: string;
   WS_CONNECTION_STOP: string;

@@ -23,11 +23,12 @@ export const FeedDetails = () => {
   const {orders, feedDetails} = useTypedSelector((state) => state.feed)
   const {ingredients} = useTypedSelector((state): TStateBurgerIngredients => state.burgerIngredients)
 
-  
+  // открытие соединения сокетов при первом рендере страницы
   useEffect(() => {
     wsConnectionStart(wsUrl);
   }, []);
 
+  // закрытие соединения сокетов при покидании страницы
   useEffect(() => {
     return () => {
       wsConnectionStop();

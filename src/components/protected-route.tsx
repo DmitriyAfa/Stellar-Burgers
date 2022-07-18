@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useActions } from "../utils/useAction";
 import { useTypedSelector } from "../utils/useTypedSelector";
 
-export function ProtectedRoute({ children, path, exact }: {children: React.ReactNode, path: string, exact: boolean}) {
+export const ProtectedRoute = ({ path, exact, children }: RouteProps) =>  {
   const { getUser } = useActions();
   const {isLoggedIn} = useTypedSelector(
     (state) => state.user
@@ -18,7 +18,7 @@ export function ProtectedRoute({ children, path, exact }: {children: React.React
     <Route
       path={path}
       exact={exact}
-      render={({ location }) =>
+      render={({ location }): any =>
       isLoggedIn ? (
           children
         ) : (

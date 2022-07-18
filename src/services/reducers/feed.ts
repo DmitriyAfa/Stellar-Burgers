@@ -10,7 +10,7 @@ import { TwsActions, EwsActions } from "../actions/feed";
     _id: string;
   }
 
-type TFeedState = {
+export type TFeedState = {
   orders: Array<IOrder>;
   ordersUser: Array<IOrder>;
   isLoading: boolean;

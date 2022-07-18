@@ -24,7 +24,7 @@ const FeedCard: FC<{order: IOrder}> = ({ order }) => {
   const { ingredients }  = useTypedSelector(
     (state): TStateBurgerIngredients => state.burgerIngredients
   );
-
+    // console.log(ingredients)
   // # Создадим карточку с заказом
   
   // Получим картинки путем сравнения id ингредиентов из ордера с id ингредиентов из состояния burgerIngredients

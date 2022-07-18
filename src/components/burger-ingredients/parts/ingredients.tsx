@@ -6,7 +6,7 @@ import {
 import styles from "../burger-ingridients.module.css";
 import { useDrag } from "react-dnd";
 import { useHistory, useLocation, Link } from "react-router-dom";
-import {IIngredient} from '../../../utils/types/ingredient.types';
+import {IIngr, IIngredient} from '../../../utils/types/ingredient.types';
 import { useActions } from "../../../utils/useAction";
 
 export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, count: number}) {
@@ -44,13 +44,6 @@ export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, 
   return (
     (
       <li ref={dragRef} onClick={openModalWithIngredient} className="ml-4 mr-6">
-        {/* <Link
-          className={styles.burgerItemlink}
-          to={{
-            pathname: `/ingredients/${ingredient._id}`,
-            state: { background: location },
-          }}
-        > */}
         {count > 0 && <Counter count={count} size="default" />}
         <img
           className={`mr-4 ml-4 ${styles.mainImg}`}
@@ -64,13 +57,12 @@ export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, 
           </span>
         </span>
         <h4 className="mt-2 text text_type_main-default">{ingredient.name}</h4>
-        {/* </Link> */}
       </li>
     )
   );
 }
 
-function Ingredients({ head, ingredients }: {head: string, ingredients: Array<{qty: number, ingredient:IIngredient}>}) {
+function Ingredients({ head, ingredients }: {head: string, ingredients: IIngr[]}) {
   const arr = ingredients.map((ingredient) => {
     return (
       <MakeIngredient

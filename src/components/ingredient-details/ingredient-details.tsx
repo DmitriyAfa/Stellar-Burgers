@@ -1,26 +1,31 @@
-import { useEffect } from "react";
+
 import styles from "./ingridient-details.module.css";
-import { useSelector } from "react-redux";
 import {useParams } from "react-router-dom";
 import {IIngredient} from '../../utils/types/ingredient.types';
-import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
 import { useTypedSelector } from "../../utils/useTypedSelector";
+import { TStore } from "../../utils/types/types";
 
 function IngredientDetails() {
 
   const params = useParams<{id?: string}>();
   const ingredients = useTypedSelector(
-    (state: any) => state.burgerIngredients.ingredients
+    (state: TStore) => state.burgerIngredients.ingredients
   );
 
-  let ingredient = {
-    id: "",
-    image: "",
-    name: "",
-    calories: "",
-    fat: "",
-    carbohydrates: "",
-    proteins: ""
+  let ingredient: IIngredient = {
+    calories: 0,
+    carbohydrates: 0,
+    fat: 0,
+    image: '',
+    image_large: '',
+    image_mobile: '',
+    name: '',
+    price: 0,
+    proteins: 0,
+    type: '',
+    __v: 0,
+    _id: '',
+    id: '',
   };
 
   if (ingredients.length > 0) {

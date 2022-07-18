@@ -1,6 +1,7 @@
 import { Store } from "redux";
 import { IOrders } from "../../utils/types/types";
 import { IOrder } from "../reducers/feed";
+import { TDispatch } from "../store";
 
 export enum EwsActions {
   WS_CONNECTION_START = 'WS_CONNECTION_START',
@@ -78,7 +79,7 @@ export const FeedActionCreator = {
     type: EwsActions.WS_SEND_MESSAGE,
     payload: message
   }),
-  getFeedDetails: (order: IOrder) => (dispatch: Store['dispatch']) => {
+  getFeedDetails: (order: IOrder) => (dispatch: TDispatch) => {
     dispatch({
       type: EwsActions.GET_FEED_DETAILS,
       payload: order,

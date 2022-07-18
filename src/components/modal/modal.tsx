@@ -3,13 +3,14 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
-import { useRouteMatch } from "react-router";
+import { match, useRouteMatch } from "react-router";
 const modalRoot: any = document.getElementById("react-modals");
 
-const Modal = ({ children, header, onClose }: {children: React.ReactNode, header: string | number | boolean | undefined, onClose: Function}) => {
-  const isFeedPage = useRouteMatch('/feed');
-  const isProfileOrdersPage = useRouteMatch('/profile/orders');
-  const isFeed = isFeedPage || isProfileOrdersPage;
+const Modal = ({ children, header, onClose, isFeed }: {children: React.ReactNode, header: string | number | boolean | undefined, onClose: Function, isFeed: match | null}) => {
+  // const isFeedPage = useRouteMatch('/feed');
+  // const isProfileOrdersPage = useRouteMatch('/profile/orders');
+  // const isFeed = isFeedPage || isProfileOrdersPage;
+
   const closeModal = () => {
     onClose();
   };

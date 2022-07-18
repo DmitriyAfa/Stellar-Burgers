@@ -3,7 +3,7 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useActions } from "../../../utils/useAction";
-import {IIngredient} from '../../../utils/types/ingredient.types';
+import { IIngr} from '../../../utils/types/ingredient.types';
 import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
 
 function Buns() {
@@ -12,7 +12,7 @@ function Buns() {
 
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(ingredient: {ingredient: IIngredient}) {
+    drop(ingredient: IIngr) {
       if (ingredient.ingredient.type === "bun") {
         addBun(ingredient);
         makeBunQtyZero();

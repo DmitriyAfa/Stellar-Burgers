@@ -1,6 +1,7 @@
 import { Store } from "redux";
 import { post, get, patch } from "../api";
 import {IRegistrationForm, IResetPasswordForm, ILoginForm} from '../../pages/index'
+import { TDispatch } from "../store";
 
 export const RESET_FORGOT_PASSWORD: 'RESET_FORGOT_PASSWORD' = "RESET_FORGOT_PASSWORD";
 export const RESET_PASSWORD: 'RESET_PASSWORD' = "RESET_PASSWORD";
@@ -22,11 +23,9 @@ interface IGetUser{
 }
 interface IResetUser{
   readonly type: typeof RESET_USER;
-  readonly user: Readonly<ILoginForm>;
 }
 interface IResetIsLoggedIn{
   readonly type: typeof RESET_ISLOGGEDIN;
-  readonly user: Readonly<boolean>;
 }
 
 export type TUserActions = IResetForgotPassword | IResetPassword | IGetUser | IResetUser | IResetIsLoggedIn; 
@@ -34,7 +33,7 @@ export type TUserActions = IResetForgotPassword | IResetPassword | IGetUser | IR
 
 
 export const userActionsCreator = {
-  forgotPassword: (form: {[email: string]: string}) => (dispatch: Store['dispatch']) => {
+  forgotPassword: (form: {[email: string]: string}) => (dispatch: TDispatch) => {
     return post("password-reset", form).then((data) => {
       if (data.success) {
         dispatch({ type: RESET_FORGOT_PASSWORD, payload: data });
@@ -42,7 +41,7 @@ export const userActionsCreator = {
       }
     });
   },
-  resetPassword: (form: IResetPasswordForm) => (dispatch: Store['dispatch']) => {
+  resetPassword: (form: IResetPasswordForm) => (dispatch: TDispatch) => {
     return post("password-reset/reset", form).then((data) => {
       if (data.success) {
         dispatch({ type: RESET_PASSWORD, payload: data });
@@ -50,7 +49,7 @@ export const userActionsCreator = {
       }
     });
   },
-  registration: (form: IRegistrationForm) => (dispatch: Store['dispatch']) => {
+  registration: (form: IRegistrationForm) => (dispatch: TDispatch) => {
     return post("auth/register", form).then((data) => {
       if (data.success) {
         localStorage.setItem("accessToken", data.accessToken);
@@ -61,7 +60,7 @@ export const userActionsCreator = {
       return false;
     });
   },
-  login: (form: ILoginForm) => (dispatch: Store['dispatch']) => {
+  login: (form: ILoginForm) => (dispatch: TDispatch) => {
     return post("auth/login", form).then((data) => {
       if (data.success) {
         localStorage.setItem("accessToken", data.accessToken);
@@ -72,7 +71,7 @@ export const userActionsCreator = {
       return false;
     });
   },
-  logout: () => (dispatch: Store['dispatch']) => {
+  logout: () => (dispatch: TDispatch) => {
     const refreshToken = {
       token: localStorage.getItem("refreshToken"),
     };
@@ -95,7 +94,7 @@ export const userActionsCreator = {
         return err;
       });
   },
-  getUser: () => async (dispatch: Store['dispatch']) => {
+  getUser: () => async (dispatch: TDispatch) => {
     return await userActionsCreator
       .authUser()
       .then(async (data) => {
@@ -132,7 +131,7 @@ export const userActionsCreator = {
         return await console.log("ERROR ", err);
       });
   },
-  changeAuthUser: (form: IRegistrationForm) => async (dispatch: Store['dispatch']) => {
+  changeAuthUser: (form: IRegistrationForm) => async (dispatch: TDispatch) => {
     const res = await userActionsCreator.refreshTokenFunc();
     if (res) {
       return await patch("auth/user", form)

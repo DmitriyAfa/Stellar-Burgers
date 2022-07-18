@@ -5,12 +5,12 @@ import Tabs from "./parts/tabs";
 import Ingredients from "./parts/ingredients";
 import {IIngredient, IIngr} from '../../utils/types/ingredient.types';
 import { useTypedSelector } from "../../utils/useTypedSelector";
-import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
+import { TStore } from "../../utils/types/types";
 
 function BurgerIngredients() {
 
-  // не получается применить типизацию т.к ругается на length и filter в buns sauce main
-  const { ingredients }: any = useTypedSelector((state) => state.burgerIngredients);
+
+  const {ingredients} = useTypedSelector((state: TStore) => state.burgerIngredients);
   // Поменял условие первого аргумента ingredients на ingredients.length > 0
   const buns =
     ingredients.length > 0 &&
@@ -45,6 +45,10 @@ function BurgerIngredients() {
       setActiveTab("one");
     }
   };
+
+  if(!buns || !sauce || !main){
+    return null;
+  }
 
   return (
     <section className={`mt-10 ${styles.burgerIngridients}`}>
