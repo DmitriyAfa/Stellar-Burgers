@@ -27,7 +27,11 @@ import {TBurgerIngredientsActions} from '../actions/burger-ingredients';
 import {TBurgerConstructor} from '../actions/burger-constructor';
 import {TModal} from '../actions/modal';
 
-type AllActions = TBurgerIngredientsActions | TBurgerConstructor | TModal;
+
+
+
+
+type AllActions = TBurgerIngredientsActions | TBurgerConstructor | TModal ;
 
 export type TStateBurgerIngredients = { 
   ingredients: Array<{qty: number, ingredient: IIngredient}>;
@@ -108,7 +112,8 @@ export const burgerIngredientsReducer = (state = initialState, action: AllAction
           __v: 0,
         },
         order: {
-          ingredients: false,
+          //!!! поменял с ingredients: false на  ingredients: [] 
+          ingredients: [],
           number: null,
         },
         constructorIngredients: [],
@@ -121,6 +126,7 @@ export const burgerIngredientsReducer = (state = initialState, action: AllAction
         constructorIngredients: action.payload,
       };
     }
+    // !!!!
     case GET_INGREDIENTS_REQUEST: {
       return {
         ...state,
@@ -141,6 +147,7 @@ export const burgerIngredientsReducer = (state = initialState, action: AllAction
         ingredientsRequest: false,
       };
     }
+    // !!!!
     case GET_INGREDIENTS_FAILED: {
       return {
         ...state,
@@ -295,7 +302,6 @@ export const burgerIngredientsReducer = (state = initialState, action: AllAction
         orderDetailsIsActive: false,
       };
     }
-
     default: {
       return state;
     }

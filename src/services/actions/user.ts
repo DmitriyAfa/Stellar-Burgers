@@ -10,15 +10,23 @@ export const RESET_ISLOGGEDIN: 'RESET_ISLOGGEDIN' = "RESET_ISLOGGEDIN";
 
 interface IResetForgotPassword{
   readonly type: typeof RESET_FORGOT_PASSWORD;
-  readonly payload: Readonly<{[email: string]: string}>;
+  readonly payload: Readonly<{ success: boolean, message: string,}>;
 }
 interface IResetPassword{
   readonly type: typeof RESET_PASSWORD;
-  readonly payload: Readonly<IResetPasswordForm>;
+  readonly payload: Readonly<{ success: boolean, message: string}>;
 }
 interface IGetUser{
   readonly type: typeof GET_USER;
-  readonly payload: Readonly<ILoginForm>;
+  readonly payload: Readonly<{
+    success: boolean,
+    user: {
+        email: string,
+        name: string
+    },
+    accessToken: string,
+    refreshToken: string
+  }>;
 }
 interface IResetUser{
   readonly type: typeof RESET_USER;

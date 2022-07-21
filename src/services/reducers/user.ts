@@ -9,12 +9,20 @@ import {
 import { TUserActions } from "../actions/user";
 
 export type TUserState = {
-  passwordReset: {success: boolean} | Readonly<{ [email: string]: string; }>;
-  user: null | {email: string, name: string} | Readonly<ILoginForm>;
+  passwordReset: {success: boolean} | Readonly<{ success: boolean, message: string}>;
+  user: null | {email: string, name: string} | Readonly<{
+    success: boolean,
+    user: {
+        email: string,
+        name: string
+    },
+    accessToken: string,
+    refreshToken: string
+  }>;
   isLoggedIn: boolean;
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   passwordReset: { success: false },
   user: null,
   isLoggedIn: false,

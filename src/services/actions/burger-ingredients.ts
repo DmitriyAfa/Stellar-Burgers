@@ -11,6 +11,7 @@ export const GET_INGREDIENT: "GET_INGREDIENT" = "GET_INGREDIENT";
 export const INCREASE: "INCREASE" = "INCREASE";
 export const DECREASE: "DECREASE" = "DECREASE";
 
+// !!!!
 interface IGetIngredientsRequest{
   readonly type: typeof GET_INGREDIENTS_REQUEST;
   readonly ingredientsFailed?: boolean;
@@ -20,6 +21,7 @@ interface IGetIngredientsSuccess{
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
   readonly ingredients: Array<IIngredient>;
 }
+// !!!!
 interface IGetIngredientsFailed{
   readonly type: typeof GET_INGREDIENTS_FAILED;
 }
@@ -36,8 +38,9 @@ interface Decrease{
   readonly payload: string;
 }
 
-export type TBurgerIngredientsActions = IGetIngredientsRequest 
-| IGetIngredientsSuccess
+// !!!!
+export type TBurgerIngredientsActions = IGetIngredientsSuccess
+ | IGetIngredientsRequest 
 | IGetIngredientsFailed 
 | IGetIngredient
 | IIncrease
@@ -74,6 +77,12 @@ export const IngredientsActionCreator = {
       type: DECREASE,
       payload: id,
     })
-  }
+  },
+
+  // TEST
+  getIngredientsSuccess: (ingredients: IIngredient[]): IGetIngredientsSuccess => ({
+    type: GET_INGREDIENTS_SUCCESS,
+    ingredients: ingredients,
+  }),
 
 };

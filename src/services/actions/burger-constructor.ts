@@ -177,5 +177,11 @@ export const BurgerConstructorActionCreator = {
       type: SORT_CARD,
       payload: newCards
     })
-  }
+  },
+
+  // TEST
+  getOrderNumberSuccess: (data: {order: {ingredients: [] | Array<IIngr>; number: null | number | string;}}): IGetOrderNumberSuccess => ({
+    type: GET_ORDER_NUMBER_SUCCESS,
+    number: data,
+  }),
 };

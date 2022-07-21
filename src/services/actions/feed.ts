@@ -54,31 +54,35 @@ export type TwsActions =
 
 
 export const FeedActionCreator = {
-  wsConnectionStart: (url: string) => ({
+  wsConnectionStart: (url: string): TwsActions => ({
     type: EwsActions.WS_CONNECTION_START,
     payload: url
   }),
-  wsConnectionStop: () => ({
+  wsConnectionStop: (): TwsActions => ({
     type: EwsActions.WS_CONNECTION_STOP,
   }),
-  wsConnectionSuccess: () =>  ({
+  wsConnectionSuccess: (): TwsActions =>  ({
     type: EwsActions.WS_CONNECTION_SUCCESS,
   }),
-  wsConnectionError: () =>  ({
+  wsConnectionError: (): TwsActions =>  ({
     type: EwsActions.WS_CONNECTION_ERROR,
   }),
-  wsConnectionClosed: () =>  ({
+  wsConnectionClosed: (): TwsActions =>  ({
     type: EwsActions.WS_CONNECTION_CLOSED,
   }),
-  wsGetMessage: (message: string) => ({
+  wsGetMessage: (payload: {
+    orders: IOrder[];
+    total: number;
+    totalToday: number;
+  }): TwsActions => ({
     type: EwsActions.WS_GET_MESSAGE,
-    payload: message
+    payload: payload
   }),
-  wsSendMessage: (message: string) =>  ({
+  wsSendMessage: (message: string): TwsActions =>  ({
     type: EwsActions.WS_SEND_MESSAGE,
     payload: message
   }),
-  getFeedDetails: (order: IOrder) => (dispatch: TDispatch) => {
+  getFeedDetails: (order: IOrder)=> (dispatch: TDispatch) => {
     dispatch({
       type: EwsActions.GET_FEED_DETAILS,
       payload: order,
