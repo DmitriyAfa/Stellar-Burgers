@@ -22,13 +22,13 @@ const Modal = ({ children, header, onClose, isFeed }: {children: React.ReactNode
 
   return ReactDOM.createPortal(
     <>
-      <section className={`${styles.modal} ${styles.active}`}>
+      <section className={`${styles.modal} ${styles.active}`} data-modal="modal">
         <div className={styles.content}>
           <div className={`mt-10 mr-10 ml-10 ${styles.header}`}>
             <h2 className={`text ${isFeed ? `${styles.feedPage} text_type_digits-default` : 'text_type_main-large'}`}>
               {isFeed ? `#${header}` : header}
             </h2>
-            <button onClick={closeModal}>
+            <button onClick={closeModal} name="btnModalClose">
               <CloseIcon type="primary" />
             </button>
           </div>

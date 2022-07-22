@@ -109,7 +109,7 @@ function ScrollBurgerConstructor() {
   };
 
   return (
-    <ul ref={drop} className={styles.scrollBar}>
+    <ul ref={drop} className={styles.scrollBar} data-cypress="constructor">
       {ingredients &&
         ingredients.map((ingredient:{id: number, ingr: IIngredient}, i: number) => (
           <MakeDetail

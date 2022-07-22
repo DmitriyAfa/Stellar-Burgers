@@ -31,7 +31,7 @@ export const ProfileForm = () => {
 
   const backForm = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    setValue({ ...form, name: user!.name, email: user!.email, password: "" });
+    setValue({ ...form, name: user?.name, email: user!.email, password: "" });
   };
 
   const submit = async (e: React.SyntheticEvent) => {

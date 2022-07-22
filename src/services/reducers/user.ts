@@ -18,7 +18,7 @@ export type TUserState = {
     },
     accessToken: string,
     refreshToken: string
-  }>;
+  }> | any;
   isLoggedIn: boolean;
 }
 

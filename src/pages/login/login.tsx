@@ -74,7 +74,7 @@ function LoginPage() {
               {isLoading ? (
                 "Ожидание ответа сервера"
               ) : (
-                <Button type="primary" size="medium">
+                <Button name="btnLogin" type="primary" size="medium">
                   Войти
                 </Button>
               )}

@@ -45,7 +45,7 @@ function Order() {
       </span>
       <span>
         <span onClick={addOrder} className={styles.bottomButton}>
-          <Button type="primary" size="small">
+          <Button type="primary" size="small" name="open order modal">
             Оформить заказ
           </Button>
         </span>
