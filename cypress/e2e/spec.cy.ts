@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 describe("Провекра компонента BurgerConstructor", () => {
-  // используем хук before с помощью которого перед каждым тестом ниже  сначала откроем страницу (по адресу http://localhost:3000)
-  before( function () {
+  // используем хук beforeEach с помощью которого перед каждым тестом ниже  сначала откроем страницу (по адресу http://localhost:3000)
+  beforeEach( function () {
     cy.visit("http://localhost:3000");
   });
 
@@ -42,13 +42,12 @@ describe("Провекра компонента BurgerConstructor", () => {
     });
 
       //Открытие модального окна с заказом по клику на кнопку 'оформитт заказ'
-  //  it("Открытие модального окна с заказом", () => {
-  //   cy.visit("http://localhost:3000");
-  //   cy.get('[name="open order modal"]').click();
-  // //   cy.get('[data-cypress="closeModalButton"]').should('exist');
-  // //   cy.get('[data-cypress="closeModalButton"]').click();
-  // //   cy.get('[data-cypress="closeModalButton"]').should('not.exist');
-  //  });
+   it("Открытие модального окна с заказом", () => {
+    cy.get('[name="open order modal"]').click();
+    cy.get('[name="open order modal"]').should('exist');
+    cy.get('[name="open order modal"]').click();
+    cy.get('[name="open order modal"]').should('not.exist');
+   });
 
 
 });
