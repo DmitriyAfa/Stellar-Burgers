@@ -44,9 +44,9 @@ describe("Провекра компонента BurgerConstructor", () => {
       //Открытие модального окна с заказом по клику на кнопку 'оформитт заказ'
    it("Открытие модального окна с заказом", () => {
     cy.get('[name="open order modal"]').click();
-    cy.get('[name="open order modal"]').should('exist');
-    cy.get('[name="open order modal"]').click();
-    cy.get('[name="open order modal"]').should('not.exist');
+    cy.get('name="btnModalClose"]').should('exist');
+    cy.get('name="btnModalClose"]').click();
+    cy.get('name="btnModalClose"]').should('not.exist');
    });
 
 
