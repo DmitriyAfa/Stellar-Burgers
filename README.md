@@ -1,5 +1,9 @@
 # Stellar Burgers
 
+Проект курса Яндекс-React
+
+https://dmitriyafa.github.io/Stellar-Burgers/
+
 ## Стэк
 
 React
