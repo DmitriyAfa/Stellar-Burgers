@@ -41,13 +41,13 @@ const  AppHeader = ({ constr, lenta, profile } : IAppHeader) => {
       <nav className={styles.nav}>
           <ul className="">
             {constr == "active" ? (
-              <li onClick={goToMain}>
+              <li onClick={goToMain} data-btn="mainPage">
                 <AppHeaderButton typeButton="active" text="Конструктор">
                   <BurgerIcon type="primary" />
                 </AppHeaderButton>
               </li>
             ) : (
-              <li onClick={goToMain}>
+              <li onClick={goToMain} data-btn="mainPage">
                 <AppHeaderButton typeButton="" text="Конструктор">
                   <BurgerIcon type="secondary" />
                 </AppHeaderButton>
