@@ -5,7 +5,7 @@ describe("Провекра компонента BurgerConstructor", () => {
     cy.visit("http://localhost:3000");
   });
 
-  // Что бы получить номер заказа в модальном окне пользователю нужно залогинится
+    // Что бы получить номер заказа в модальном окне пользователю нужно залогинится
   it("Заходим в личный кабинет", () => {
     // зайдем на страницу с логином
     cy.visit("http://localhost:3000/login");
@@ -41,11 +41,16 @@ describe("Провекра компонента BurgerConstructor", () => {
 
   //Открытие модального окна с заказом по клику на кнопку 'оформитт заказ'
    it("Открытие модального окна с заказом", () => {
+        cy.visit("http://localhost:3000");
+    cy.get('[name="open order modal"]').click();
+    cy.get('[name="email"]').type("est-dat@yandex.ru");
+    cy.get('[name="password"]').type("qqq111");
+    cy.get('[name="btnLogin"]').click();
+    // ставлю 35 секунд ожидания т.к. тест проходит верно если ждать от 20 до 35 сек
+    cy.wait(35000)
     cy.get('[name="open order modal"]').click();
     cy.get('[name="btnModalClose"]').should('exist');
     cy.get('[name="btnModalClose"]').click();
     cy.get('[name="btnModalClose"]').should('not.exist');
    });
-
-
 });

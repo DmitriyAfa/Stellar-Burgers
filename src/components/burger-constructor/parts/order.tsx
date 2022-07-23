@@ -26,19 +26,15 @@ function Order() {
   const addOrder = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     // isLoggedIn проверяется в App getUser()
-    // if (!isLoggedIn) {
-    //   history.push("/login");
-    //   return null;
-    // }
-    // if (isLoggedIn && bunIshere) {
-    //   getId();
-    //   getOrderNumber(ingredients);
-    //   openModalOfOrderDetails();
-    // }
-
-    getId();
-    getOrderNumber(ingredients);
-    openModalOfOrderDetails();
+    if (!isLoggedIn) {
+      history.push("/login");
+      return null;
+    }
+    if (isLoggedIn && bunIshere) {
+      getId();
+      getOrderNumber(ingredients);
+      openModalOfOrderDetails();
+    }
   };
 
   return (
