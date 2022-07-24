@@ -46,7 +46,7 @@ describe("Провекра компонента BurgerConstructor", () => {
     cy.get('[name="email"]').type("est-dat@yandex.ru");
     cy.get('[name="password"]').type("qqq111");
     cy.get('[name="btnLogin"]').click();
-    cy.wait(25000)
+    cy.wait(55000)
     cy.get('[name="open order modal"]').click();
     cy.get('[name="btnModalClose"]').should('exist');
     cy.get('[name="btnModalClose"]').click();
