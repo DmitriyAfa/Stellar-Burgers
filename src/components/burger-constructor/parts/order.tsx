@@ -26,6 +26,7 @@ function Order() {
   const addOrder = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     // isLoggedIn проверяется в App getUser()
+    //
     if (!isLoggedIn) {
       history.push("/login");
       return null;
