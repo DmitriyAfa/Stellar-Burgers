@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import styles from "../../styles/login.module.css";
 import "../../styles/styles.css";
-import AppHeader from "../../components/app-header/app-header";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IRegistrationForm } from "./types";
 
 import { useActions } from "../../utils/useAction";
 
@@ -15,7 +15,7 @@ function RegistrationPage() {
   const { registration } = useActions();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
+  const [form, setValue] = useState<IRegistrationForm>({ name: "", email: "", password: "" });
 
   const onChange = (e: React.SyntheticEvent): void => {
     let target = e.target as HTMLInputElement;
@@ -25,11 +25,13 @@ function RegistrationPage() {
   const submit = async (e:  React.SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const res: any = await registration(form);
+    const res: Function = await registration(form);
     if (res) {
       setIsLoading(false);
     }
   };
+
+  // !!!!!! исправить  
 
   if (localStorage.getItem("accessToken")) {
     return <Redirect to={"/profile"} />;

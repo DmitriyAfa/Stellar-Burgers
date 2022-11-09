@@ -1,5 +1,5 @@
-import { useState, useCallback, FC } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import {  useCallback, FC } from "react";
+import {  useHistory } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
@@ -29,6 +29,10 @@ const  AppHeader = ({ constr, lenta, profile } : IAppHeader) => {
     history.push({ pathname: "/profile" });
   }, [history]);
 
+  const goToFeed = useCallback(() => {
+    history.push({ pathname: "/feed" });
+  }, [history]);
+
   const goToMain = useCallback(() => {
     history.push({ pathname: "/" });
   }, [history]);
@@ -37,26 +41,26 @@ const  AppHeader = ({ constr, lenta, profile } : IAppHeader) => {
       <nav className={styles.nav}>
           <ul className="">
             {constr == "active" ? (
-              <li onClick={goToMain}>
+              <li onClick={goToMain} data-btn="mainPage">
                 <AppHeaderButton typeButton="active" text="Конструктор">
                   <BurgerIcon type="primary" />
                 </AppHeaderButton>
               </li>
             ) : (
-              <li onClick={goToMain}>
+              <li onClick={goToMain} data-btn="mainPage">
                 <AppHeaderButton typeButton="" text="Конструктор">
                   <BurgerIcon type="secondary" />
                 </AppHeaderButton>
               </li>
             )}
             {lenta === "active" ? (
-              <li>
+              <li onClick={goToFeed}>
                 <AppHeaderButton typeButton="active" text="Лента заказов">
                   <ListIcon type="primary" />
                 </AppHeaderButton>
               </li>
             ) : (
-              <li>
+              <li onClick={goToFeed}>
                 <AppHeaderButton typeButton="" text="Лента заказов">
                   <ListIcon type="secondary" />
                 </AppHeaderButton>

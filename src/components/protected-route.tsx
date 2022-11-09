@@ -1,26 +1,23 @@
 import { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import { useActions } from "../utils/useAction";
+import { useTypedSelector } from "../utils/useTypedSelector";
 
-export function ProtectedRoute({ children, path }: {children: React.ReactNode, path: string}) {
+export const ProtectedRoute = ({ path, exact, children }: RouteProps) =>  {
   const { getUser } = useActions();
-  const isLoggedIn = useSelector(
-    (state: any) => state.user.isLoggedIn
+  const {isLoggedIn} = useTypedSelector(
+    (state) => state.user
   );
-  const getUserFunc = async () => {
-    const res: any = await getUser();
-    console.log(res);
-  };
 
   useEffect(() => {
-    getUserFunc();
+    getUser();
   }, []);
+
   return (
     <Route
       path={path}
-      exact
-      render={({ location }) =>
+      exact={exact}
+      render={({ location }): any =>
       isLoggedIn ? (
           children
         ) : (

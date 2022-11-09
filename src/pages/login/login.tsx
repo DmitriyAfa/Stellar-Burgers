@@ -8,28 +8,25 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { ILoginForm } from "./types";
 
 import { useActions } from "../../utils/useAction";
+import { TUserState } from "../../services/reducers/user";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function LoginPage() {
   const history: any = useHistory();
   const { login, getUser } = useActions();
-  const isLoggedIn = useSelector(
-    (state: any) => state.user.isLoggedIn
+  const isLoggedIn = useTypedSelector(
+    (state: {user: TUserState}) => state.user.isLoggedIn
   );
 
   const [isLoading, setIsLoading] = useState(false);
-  const [form, setValue] = useState({ email: "", password: "" });
-
-  const getUserFunc = async () => {
-    const res: any = await getUser();
-    console.log(res);
-  };
+  const [form, setValue] = useState<ILoginForm>({ name: "", email: "", password: "" });
 
   useEffect(() => {
-    getUserFunc();
-  }, []);
+    getUser()
+  }, [getUser]);
 
   const onChange = (e: React.SyntheticEvent): void => {
     let target = e.target as HTMLInputElement;
@@ -39,7 +36,7 @@ function LoginPage() {
   const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const res: any = await login(form);
+    const res: Function = await login(form);
     if (res) {
       setIsLoading(false);
     }
@@ -77,7 +74,7 @@ function LoginPage() {
               {isLoading ? (
                 "Ожидание ответа сервера"
               ) : (
-                <Button type="primary" size="medium">
+                <Button name="btnLogin" type="primary" size="medium">
                   Войти
                 </Button>
               )}

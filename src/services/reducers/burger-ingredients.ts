@@ -3,11 +3,10 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENT,
-  OPEN_MODAL,
-  CLOSE_MODAL,
   INCREASE,
   DECREASE,
 } from "../actions/burger-ingredients";
+import {OPEN_MODAL, CLOSE_MODAL } from "../actions/modal";
 import {
   ADD_BUN,
   ADD_INGREDIENT,
@@ -23,16 +22,44 @@ import {
   SORT_CARD,
   CLEAR_ORDER_DETAILS,
 } from "../actions/burger-constructor";
+import {IIngredient, IIngr} from '../../utils/types/ingredient.types';
+import {TBurgerIngredientsActions} from '../actions/burger-ingredients';
+import {TBurgerConstructor} from '../actions/burger-constructor';
+import {TModal} from '../actions/modal';
 
-export const initialState = {
-  ingredients: false,
+
+
+
+
+type AllActions = TBurgerIngredientsActions | TBurgerConstructor | TModal ;
+
+export type TStateBurgerIngredients = { 
+  ingredients: Array<{qty: number, ingredient: IIngredient}>;
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  currentIngredient: boolean | IIngredient | undefined;
+  bun: IIngredient;
+  bunId: IIngredient | null | any;
+  constructorIngredients: Array<IIngredient> | [] | any ;
+  deleteConstructorIngredients: Array<IIngredient> | [] ;
+  order: {
+    ingredients:  Array<IIngr> | any;
+    number: null | number | string;
+  };
+  price: number;
+  orderDetailsIsActive: boolean;
+}
+
+export const initialState: TStateBurgerIngredients = {
+  //!!! Изменил ingredients: false на ingredients: [] ---> найти где используется и исправить ошибки
+  ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
 
   currentIngredient: false,
 
   bun: {
-    _id: false,
+    _id: '0',
     name: "Выберите булку",
     type: "bun",
     proteins: 80,
@@ -50,30 +77,27 @@ export const initialState = {
   deleteConstructorIngredients: [],
 
   order: {
-    ingredients: false,
+    //!!! поменял с ingredients: false на  ingredients: [] 
+    ingredients: [],
     number: null,
   },
   price: 0,
   orderDetailsIsActive: false,
-
-  // sprint 4. Pages.
-  user: { success: false },
-  tokens: { success: false },
 };
 
-export const burgerIngredientsReducer = (state: any = initialState, action: any) => {
+export const burgerIngredientsReducer = (state = initialState, action: AllActions): TStateBurgerIngredients => {
   switch (action.type) {
     case CLEAR_ORDER_DETAILS: {
       return {
         ...state,
-        ingredients: state.ingredients.map((ingredient: any) => {
+        ingredients: state.ingredients.map((ingredient: {qty: number, ingredient: IIngredient}) => {
           return {
             ingredient: ingredient.ingredient,
             qty: 0,
           };
         }),
         bun: {
-          _id: false,
+          _id: 'null',
           name: "Выберите булку",
           type: "bun",
           proteins: 80,
@@ -88,7 +112,8 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
           __v: 0,
         },
         order: {
-          ingredients: false,
+          //!!! поменял с ingredients: false на  ingredients: [] 
+          ingredients: [],
           number: null,
         },
         constructorIngredients: [],
@@ -101,6 +126,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
         constructorIngredients: action.payload,
       };
     }
+    // !!!!
     case GET_INGREDIENTS_REQUEST: {
       return {
         ...state,
@@ -112,7 +138,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: action.ingredients.map((ingredient: any) => {
+        ingredients: action.ingredients.map((ingredient: IIngredient) => {
           return {
             ingredient: ingredient,
             qty: 0,
@@ -121,6 +147,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
         ingredientsRequest: false,
       };
     }
+    // !!!!
     case GET_INGREDIENTS_FAILED: {
       return {
         ...state,
@@ -141,7 +168,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
     case INCREASE: {
       return {
         ...state,
-        ingredients: state.ingredients.map((ingredient: any) => {
+        ingredients: state.ingredients.map((ingredient: {qty: number, ingredient:IIngredient}) => {
           if (ingredient.ingredient._id === action.payload) {
             ingredient.qty = ++ingredient.qty;
           }
@@ -152,7 +179,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
     case DECREASE: {
       return {
         ...state,
-        ingredients: state.ingredients.map((ingredient: any) => {
+        ingredients: state.ingredients.map((ingredient: {qty: number, ingredient:IIngredient}) => {
           if (ingredient.ingredient._id === action.payload) {
             ingredient.qty = --ingredient.qty;
           }
@@ -170,9 +197,9 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
       return {
         ...state,
         deleteConstructorIngredients: state.constructorIngredients.map(
-          (ingredient: any, i: any) => {
+          (ingredient: IIngredient, i: string) => {
             const ind = state.constructorIngredients.findIndex(
-              (ingredient: any) => ingredient.ingr._id === action.payload
+              (ingredient: {ingr:IIngredient}) => ingredient.ingr._id === action.payload
             );
             if (i !== ind) {
               return ingredient;
@@ -185,7 +212,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
       return {
         ...state,
         constructorIngredients: state.deleteConstructorIngredients.filter(
-          (ingredient: any) => ingredient !== undefined
+          (ingredient: IIngredient) => ingredient !== undefined
         ),
       };
     }
@@ -219,7 +246,7 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
     case MAKE_BUN_QTY_ZERO: {
       return {
         ...state,
-        ingredients: state.ingredients.map((ingredient: any) => {
+        ingredients: state.ingredients.map((ingredient: {qty: number, ingredient: IIngredient}) => {
           if (ingredient.ingredient.type === "bun") {
             return {
               ingredient: ingredient.ingredient,
@@ -235,9 +262,9 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
         ...state,
         order: {
           ingredients: state.constructorIngredients
-            .map((ingredient: any) => ingredient._id)
-            .concat(state.bunId._id)
-            .concat(state.bunId._id),
+            .map((ingredient: IIngredient) => ingredient._id)
+            .concat(state!.bunId!._id)
+            .concat(state!.bunId!._id),
           number: null,
         },
       };
@@ -253,12 +280,12 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
         ...state,
         price: state.bun
           ? state.constructorIngredients.reduce(
-              (prev: any, next: any) => prev + next.ingr.price,
+              (prev: number, next:{ingr: IIngredient}) => prev + next.ingr.price,
               0
             ) +
             state.bun.price * 2
           : state.constructorIngredients.reduce(
-              (prev: any, next: any) => prev + next.ingr.price,
+              (prev: number, next:{ingr: IIngredient}) => prev + next.ingr.price,
               0
             ),
       };
@@ -275,7 +302,6 @@ export const burgerIngredientsReducer = (state: any = initialState, action: any)
         orderDetailsIsActive: false,
       };
     }
-
     default: {
       return state;
     }

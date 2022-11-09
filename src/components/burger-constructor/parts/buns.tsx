@@ -1,54 +1,29 @@
-import React from "react";
 import ScrollBurgerConstructor from "./scroll-burger-consctructor";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { INCREASE } from "../../../services/actions/burger-ingredients";
-import { GET_BUN_ID } from "../../../services/actions/burger-constructor";
-import {
-  GET_ID,
-  GET_PRICE,
-} from "../../../services/actions/burger-constructor";
-
-import {
-  addBun,
-  makeBunQtyZero,
-} from "../../../services/actions/actions-creator";
-
-import {IIngredient} from '../../../utils/types/ingredient.types';
+import { useActions } from "../../../utils/useAction";
+import { IIngr} from '../../../utils/types/ingredient.types';
+import { useTypedSelector } from "../../../utils/useTypedSelector";
 
 function Buns() {
-  const dispatch = useDispatch();
-  const bun = useSelector((state: any) => state.burgerIngredients.bun);
+  const bun = useTypedSelector((state) => state.burgerIngredients.bun);
+  const {addBun, makeBunQtyZero, increase, getBunId, getId, getPrice  } = useActions();
 
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(ingredient: {ingredient: any}) {
+    drop(ingredient: IIngr) {
       if (ingredient.ingredient.type === "bun") {
-        console.log('ingr', ingredient)
-        dispatch(addBun(ingredient));
-        dispatch(makeBunQtyZero());
-        dispatch({
-          type: INCREASE,
-          payload: ingredient.ingredient._id,
-        });
-        dispatch({
-          type: INCREASE,
-          payload: ingredient.ingredient._id,
-        });
-        dispatch({
-          type: GET_BUN_ID,
-        });
-        dispatch({
-          type: GET_ID,
-        });
-        dispatch({
-          type: GET_PRICE,
-        });
+        addBun(ingredient);
+        makeBunQtyZero();
+        increase(ingredient.ingredient._id);
+        increase(ingredient.ingredient._id);
+        getBunId();
+        getId();
+        getPrice();
       }
     },
   });
+  
   return (
     <ul ref={drop} className="mt-25 ml-4">
       <li className="ml-8 mb-4">

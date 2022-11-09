@@ -1,0 +1,31 @@
+.main{
+  display: grid;
+  height: 626px;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  margin: 100px 0 0 30px;
+}
+
+.top{
+  display: flex;
+  height: 330px;
+}
+.ready{
+  width: 270px;
+    margin: 0 37px 0 0;
+}
+.orders{
+  display: flex;
+  justify-content: space-between;
+}
+.todo{
+  width: 273px;
+}
+.ul li{
+  margin-bottom: 8px;
+}
+.center{
+  height: 150px;
+}

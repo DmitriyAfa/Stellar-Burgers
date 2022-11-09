@@ -1,9 +1,10 @@
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { TStateBurgerIngredients } from "../../services/reducers/burger-ingredients";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function OrderDetails() {
-  const number = useSelector((state: any) => state.burgerIngredients.order.number);
+  const number = useTypedSelector((state) => state.burgerIngredients.order.number);
   return (
     <>
       <div className={styles.orderDetails}>

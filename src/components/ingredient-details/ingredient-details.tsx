@@ -1,33 +1,38 @@
+
 import styles from "./ingridient-details.module.css";
-import { useSelector } from "react-redux";
-import {  useLocation, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import {IIngredient} from '../../utils/types/ingredient.types';
+import { useTypedSelector } from "../../utils/useTypedSelector";
+import { TStore } from "../../utils/types/types";
 
 function IngredientDetails() {
-  const location = useLocation();
+
   const params = useParams<{id?: string}>();
-  console.log(params)
-  const ingredients = useSelector(
-    (state: any) => state.burgerIngredients.ingredients
+  const ingredients = useTypedSelector(
+    (state) => state.burgerIngredients.ingredients
   );
 
-  let ingredient = {
-    id: "",
-    image: "",
-    name: "",
-    calories: "",
-    fat: "",
-    carbohydrates: "",
-    proteins: ""
+  let ingredient: IIngredient = {
+    calories: 0,
+    carbohydrates: 0,
+    fat: 0,
+    image: '',
+    image_large: '',
+    image_mobile: '',
+    name: '',
+    price: 0,
+    proteins: 0,
+    type: '',
+    __v: 0,
+    _id: '',
+    id: '',
   };
 
-  if (ingredients) {
+  if (ingredients.length > 0) {
     const ingr = ingredients.find(
       (ingredient: {qty: number, ingredient: IIngredient}) => ingredient.ingredient._id === params.id
     );
-    ingredient = ingr.ingredient;
-  } else {
-    return <h1>Перезагрузите страницу</h1>;
+    ingredient = ingr ? ingr.ingredient : ingredient;
   }
 
   return (

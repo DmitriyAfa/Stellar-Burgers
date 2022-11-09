@@ -1,0 +1,44 @@
+.right{
+  display: flex;
+  flex-direction: column ;
+  margin-top: 120px;
+  width: 480px;
+}
+.title{
+  text-align: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+}
+.button{
+  color: #8585AD;
+}
+.link{
+  font-family: 'Jet Brains Mono';
+    color: #8585AD;
+    text-align: left;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.9;
+}
+.link:hover{
+  opacity: 0.9;
+}
+
+.linkActive {
+  color: white;
+}
+
+.rightBottom{
+  text-align: right;
+  
+}
+
+.color :global(button){
+  color: #4c4cff !important;
+}
+.rightBottom :global(button){
+  margin-left: 28px;
+  color: white;
+}

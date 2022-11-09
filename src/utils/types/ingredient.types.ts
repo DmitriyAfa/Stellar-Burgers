@@ -10,6 +10,11 @@ export interface IIngredient {
     proteins: number;
     type: string;
     __v: number;
-    _id: string;
+    _id: string ;
+    id?: string;
 }
 
+export interface IIngr {
+  qty: number;
+  ingredient: IIngredient;
+}

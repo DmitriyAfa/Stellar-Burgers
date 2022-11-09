@@ -1,56 +1,34 @@
-import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import {  useRef } from "react";
 import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.css";
-import ingridientPropTypes from "../../../utils/constants";
-import { useSelector, useDispatch } from "react-redux";
-import { useDrop, useDrag } from "react-dnd";
-import {
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
-  DELETE_INGREDIENT_ACTION,
-  GET_ID,
-  SORT_CARD,
-  GET_PRICE,
-} from "../../../services/actions/burger-constructor";
-import {
-  INCREASE,
-  DECREASE,
-} from "../../../services/actions/burger-ingredients";
+import { useDrop, useDrag, XYCoord } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { IMakeDetail } from "../types";
-import {IIngredient} from '../../../utils/types/ingredient.types'
-function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
-  const dispatch = useDispatch();
+import {IIngredient, IIngr} from '../../../utils/types/ingredient.types'
+import { useActions } from "../../../utils/useAction";
+import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
+import { useTypedSelector } from "../../../utils/useTypedSelector";
 
-  const deleteIngredient = () => {
-    dispatch({
-      type: DECREASE,
-      payload: ingredient._id,
-    });
-    dispatch({
-      type: DELETE_INGREDIENT,
-      payload: ingredient._id,
-    });
-    dispatch({
-      type: DELETE_INGREDIENT_ACTION,
-    });
-    dispatch({
-      type: GET_ID,
-    });
-    dispatch({
-      type: GET_PRICE,
-    });
+function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
+  const {decrease, deleteIngredient, deleteIngredientAction, getId, getPrice} = useActions();
+
+  const deleteIngredientFunc = () => {
+    decrease(ingredient._id);
+    deleteIngredient(ingredient._id);
+    deleteIngredientAction();
+    getId();
+    getPrice();
   };
 
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const [, drop] = useDrop({
     accept: "card",
-    hover: (item: any, monitor) => {
+    // !!!
+    hover: (item: {id: number}, monitor) => {
       if (!ref.current) {
         return;
       }
@@ -66,8 +44,8 @@ function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
       const hoverMiddleY =
         (hoverBoundingReact.bottom - hoverBoundingReact.top) / 2; // координата середины карточки
 
-      const clientOffset: any = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingReact.top;
+      const clientOffset: XYCoord | null = monitor.getClientOffset();
+      const hoverClientY = clientOffset!.y - hoverBoundingReact.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -98,36 +76,25 @@ function MakeDetail({ ingredient, id, moveCard, index }: IMakeDetail) {
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={deleteIngredient}
+        handleClose={deleteIngredientFunc}
       />
     </li>
   );
 }
 
 function ScrollBurgerConstructor() {
-  const dispatch = useDispatch();
 
-  const ingredients = useSelector(
-    (state: any) => state.burgerIngredients.constructorIngredients
+  const ingredients = useTypedSelector(
+    (state) => state.burgerIngredients.constructorIngredients
   );
-
+ const {increase,  addIngredient,  getPrice, sortCard} = useActions();
   const [, drop] = useDrop({
     accept: "ingredient",
-    drop(ingredient: {ingredient: IIngredient}) {
+    drop(ingredient: IIngr) {
       if (ingredient.ingredient.type !== "bun") {
-        dispatch({
-          type: ADD_INGREDIENT,
-          ...ingredient,
-          payload: uuidv4(),
-        });
-        dispatch({
-          type: INCREASE,
-          payload: ingredient.ingredient._id,
-        });
-        dispatch({
-          type: GET_PRICE,
-        });
-        console.log(ingredient);
+        addIngredient(ingredient, uuidv4());
+        increase(ingredient.ingredient._id);
+        getPrice()
       }
     },
   });
@@ -138,15 +105,11 @@ function ScrollBurgerConstructor() {
     const newCards = [...ingredients];
     newCards.splice(dragIndex, 1);
     newCards.splice(hoverIndex, 0, dragCard);
-    console.log(newCards);
-    dispatch({
-      type: SORT_CARD,
-      payload: newCards,
-    });
+    sortCard(newCards);
   };
 
   return (
-    <ul ref={drop} className={styles.scrollBar}>
+    <ul ref={drop} className={styles.scrollBar} data-cypress="constructor">
       {ingredients &&
         ingredients.map((ingredient:{id: number, ingr: IIngredient}, i: number) => (
           <MakeDetail

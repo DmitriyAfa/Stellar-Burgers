@@ -4,17 +4,17 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-ingridients.module.css";
-import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
-import { GET_INGREDIENT } from "../../../services/actions/burger-ingredients";
 import { useHistory, useLocation, Link } from "react-router-dom";
-import {IIngredient} from '../../../utils/types/ingredient.types';
+import {IIngr, IIngredient} from '../../../utils/types/ingredient.types';
+import { useActions } from "../../../utils/useAction";
 
 export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, count: number}) {
-  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+  const {getIngredient} = useActions();
 
+  // добавим новую запись с id ингредиента в стек истории и заставим пользователя перейти на этот маршрут, используя метод push
   const addHistory = useCallback(() => {
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
@@ -22,13 +22,11 @@ export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, 
     });
   }, [history]);
 
-  const getIngredient = () => {
-    dispatch({
-      type: GET_INGREDIENT,
-      payload: ingredient,
-    });
+  // Откроем модальное окно с деталями выбранного ингредиента (выбор осуществляется путем сравнения id в IngredientDetails)
+  const openModalWithIngredient = () =>{
+    getIngredient(ingredient);
     addHistory();
-  };
+  }
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
@@ -45,14 +43,7 @@ export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, 
 
   return (
     (
-      <li ref={dragRef} onClick={getIngredient} className="ml-4 mr-6">
-        {/* <Link
-          className={styles.burgerItemlink}
-          to={{
-            pathname: `/ingredients/${ingredient._id}`,
-            state: { background: location },
-          }}
-        > */}
+      <li ref={dragRef} onClick={openModalWithIngredient} className="ml-4 mr-6">
         {count > 0 && <Counter count={count} size="default" />}
         <img
           className={`mr-4 ml-4 ${styles.mainImg}`}
@@ -66,13 +57,12 @@ export function MakeIngredient({ ingredient, count }: {ingredient: IIngredient, 
           </span>
         </span>
         <h4 className="mt-2 text text_type_main-default">{ingredient.name}</h4>
-        {/* </Link> */}
       </li>
     )
   );
 }
 
-function Ingredients({ head, ingredients }: {head: string, ingredients: Array<{qty: number, ingredient:IIngredient}>}) {
+function Ingredients({ head, ingredients }: {head: string, ingredients: IIngr[]}) {
   const arr = ingredients.map((ingredient) => {
     return (
       <MakeIngredient

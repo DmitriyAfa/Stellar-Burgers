@@ -4,45 +4,39 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { getOrderNumber } from "../../../services/actions/burger-constructor";
-import {
-  GET_ID,
-  OPEN_MODAL_OF_ORDER_DETAILS,
-} from "../../../services/actions/burger-constructor";
+import { useActions } from "../../../utils/useAction";
+import { TStateBurgerIngredients } from "../../../services/reducers/burger-ingredients";
+import { TUserState } from "../../../services/reducers/user";
+import { TStore } from "../../../utils/types/types";
+import { useTypedSelector } from "../../../utils/useTypedSelector";
+
 function Order() {
-  const dispatch: any = useDispatch();
   const history = useHistory();
-
-  const ingredients = useSelector(
-    (state: any) => state.burgerIngredients.order.ingredients
+  const {ingredients} = useTypedSelector(
+    (state) => state.burgerIngredients.order
   );
+  const isLoggedIn = useTypedSelector(
+    (state: {user: TUserState}) => state.user.isLoggedIn
+  );
+  const price = useTypedSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.price);
+  const bunIshere = useTypedSelector((state: {burgerIngredients: TStateBurgerIngredients}) => state.burgerIngredients.bun._id);
+  const { getId, openModalOfOrderDetails, getOrderNumber } = useActions();
 
-  const { user } = useSelector((state: any) => state.user);
-
-  const price = useSelector((state: any) => state.burgerIngredients.price);
-
-  const bunIshere = useSelector((state: any) => state.burgerIngredients.bun._id);
-
+  //Получаем идентификатор заказа
   const addOrder = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (!user) {
+    // isLoggedIn проверяется в App getUser()
+    //
+    if (!isLoggedIn) {
       history.push("/login");
       return null;
     }
-    if (user && bunIshere) {
-      dispatch({
-        type: GET_ID,
-      });
-      dispatch(getOrderNumber(ingredients));
-      dispatch({
-        type: OPEN_MODAL_OF_ORDER_DETAILS,
-      });
+    if (isLoggedIn && bunIshere) {
+      getId();
+      getOrderNumber(ingredients);
+      openModalOfOrderDetails();
     }
   };
-
-  // На данный момент вместо булки-заглушки нужно добавить булку из ингредиентов (слева)  в конструктор (справа) и тогда отправка формы будет работать корректно
-  // На данный момент используется булка заглушка в конструкторе для наглядности и по совету ревьюера. К сожалению на компонент Button нельзя навешать обработчик onClick и воспользоваться preventDefault() для создания напоминания об добавлении булки.
 
   return (
     <span className={`mt-10 ${styles.bottom}`}>
@@ -52,7 +46,7 @@ function Order() {
       </span>
       <span>
         <span onClick={addOrder} className={styles.bottomButton}>
-          <Button type="primary" size="small">
+          <Button type="primary" size="small" name="open order modal">
             Оформить заказ
           </Button>
         </span>

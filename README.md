@@ -1,30 +1,39 @@
-# Getting Started with Create React App
+# Stellar Burgers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проект курса Яндекс-React
 
-## Available Scripts
+https://dmitriyafa.github.io/Stellar-Burgers/build
+(После загрузки страницы будет 404 страница, нужно кликнуть по кнопке с надписью "конструктор" или "лента заказов")
 
-In the project directory, you can run:
+## Стэк
 
-### `npm start`
+React
+React Redux
+TypeScript
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Библиотеки
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+библиотека ya.praktikum
+CSS Modules
+библиотека react-dnd
+библиотека react-router-dom
+Redux DevTools
+библиотека uuid
+библиотека date-fns
+инструменты тестирования jest, cypress
 
-### `npm test`
+## Загрузить проект
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`git clone https://github.com/DmitriyAfa/react-burger`
 
-### `npm run build`
+## Запуск
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`npm run start` — запуск проекта на локальном порте 3000
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Сборка
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`npm run build` - мнифицированная сборка проекта для использования на локальных/удаленных серверах
+
+## Деплой на удаленный сервер.
+
+`npm run deploy-script` - сборка проекта и отправка папки build на удаленный сервер

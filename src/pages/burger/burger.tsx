@@ -1,5 +1,4 @@
 import styles from "./burger.module.css";
-import AppHeader from "../../components/app-header/app-header";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { DndProvider } from "react-dnd";

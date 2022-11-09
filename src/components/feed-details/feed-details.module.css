@@ -1,0 +1,73 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 520px;
+}
+.header{
+  width: 137%;
+  
+}
+.header h4{
+  padding: 0 45px;
+}
+.header h5{
+  margin: 0 45px 24px 45px;
+}
+.scrollBar{
+  height: 310px;
+  width: 619px;
+overflow: auto;
+overflow-x: hidden; /* прокрутка по горизонтали */
+overflow-y: scroll; /* прокрутка по вертикали */
+}
+
+.scrollBar::-webkit-scrollbar{
+  width: 12px;
+}
+.scrollBar::-webkit-scrollbar-track{
+  background: #2F2F37;
+}
+.scrollBar::-webkit-scrollbar-thumb{
+  background: #8585AD;
+  border: 3px solid #2F2F37;
+  border-radius: 6px;
+}
+.ingredientCard{
+  display: flex;
+  justify-content: space-around;
+}
+.img {
+  width: 56px;
+  height: 56px;
+  border: solid 2px #801ab3;
+  border-radius: 50%;
+  background: black;
+  object-fit: cover;
+}
+.name{
+  width: 365px;
+}
+.status{
+  padding: 0 45px;
+}
+.footer{
+  width: 137%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer p {
+  padding: 0 45px;
+}
+
+.price{
+  display: flex;
+}
+.cost{
+  display: flex;
+  padding: 0 45px;
+}
+.cost p {
+  margin-right: 9px;
+}

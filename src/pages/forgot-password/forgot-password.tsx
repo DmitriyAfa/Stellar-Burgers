@@ -6,16 +6,19 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+
+
 
 import { useActions } from "../../utils/useAction";
+import { TUserState } from "../../services/reducers/user";
+import { useTypedSelector } from "../../utils/useTypedSelector";
 
 function ForgotPassword() {
   const history = useHistory();
   const { forgotPassword, getUser } = useActions();
   const location = useLocation();
-  const isLoggedIn = useSelector(
-    (state: any) => state.user.isLoggedIn
+  const isLoggedIn = useTypedSelector(
+    (state) => state.user.isLoggedIn
   );
 
   const [form, setValue] = useState<{[email: string]: string}>({ email: "" });
@@ -25,18 +28,13 @@ function ForgotPassword() {
     setValue({ [target.name]: target.value });
   };
 
-  const getUserFunc = async () => {
-    const res: any = await getUser();
-    console.log(res);
-  };
-
   useEffect(() => {
-    getUserFunc();
+    getUser();
   }, []);
 
   const submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const res: any = await forgotPassword(form);
+    const res: Function = await forgotPassword(form);
 
     if (res) {
       history.push("/reset-password", { from: location });
