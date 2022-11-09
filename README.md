@@ -2,8 +2,7 @@
 
 Проект курса Яндекс-React
 
-https://dmitriyafa.github.io/Stellar-Burgers/build
-(После загрузки страницы будет 404 страница, нужно кликнуть по кнопке с надписью "конструктор" или "лента заказов")
+https://stellar-burgers-nine.vercel.app/
 
 ## Стэк
 
