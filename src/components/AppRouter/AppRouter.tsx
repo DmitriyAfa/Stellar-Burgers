@@ -10,7 +10,7 @@ import {
   Registration,
   ForgotPassword,
   ResetPassword,
-} from '../../pages/index.tsx';
+} from '../../pages';
 
 
 export const AppRouter: React.FunctionComponent = React.memo(() =>{
