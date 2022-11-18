@@ -64,5 +64,11 @@
     "fetch-mock": "^9.11.0",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
