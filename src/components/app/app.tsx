@@ -1,42 +1,33 @@
 import React, { useEffect, useState } from "react";
+
+//Router
 import { Outlet } from "react-router-dom";
+
+// Redux
+import { useDispatch } from "react-redux";
+import {
+  getIngredientsEnhance,
+  reLoginEnhance,
+} from "../../services/redux/enhances";
 
 // Styles
 import styles from "./App.module.scss";
 
+// Components
 import { Header } from "./Header/Header";
 import { MobileHeader } from "./Header/Mobile/MobileHeader";
 
 export const App: React.FunctionComponent = React.memo(() => {
-  const [isMobile, setIsMobile] = useState<undefined | boolean>();
+  const dispatch = useDispatch();
 
-  const setAdaptive = (): void => {
-    if (window.innerWidth <= 560) {
-      setIsMobile(true);
-    }
-    if (window.innerWidth > 560) {
-      setIsMobile(false);
-    }
-  };
   useEffect(() => {
-    if (window.innerWidth <= 560) {
-      setIsMobile(true);
-    }
-    if (window.innerWidth > 560) {
-      setIsMobile(false);
-    }
-  }, []);
-  useEffect(() => {
-    window.addEventListener("resize", setAdaptive);
-  }, [window.innerWidth]);
+    dispatch(getIngredientsEnhance() as any);
+    dispatch(reLoginEnhance() as any);
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
-      {isMobile === false ? (
-        <Header />
-      ) : isMobile === true ? (
-        <MobileHeader />
-      ) : null}
+      {window.innerWidth > 560 ? <Header /> : <MobileHeader />}
       <Outlet />
     </div>
   );

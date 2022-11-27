@@ -1,0 +1,72 @@
+@import '../../../styles/utils/variables.scss';
+.formContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  
+  width: 100%;
+
+  .formContainer__input{
+    display: flex;
+
+    width: 100%; height: 64px;
+
+    position: relative;
+
+
+    &:not(:last-child){
+      margin-bottom: 24px;
+    }
+
+    :global(.input__container){
+      width: 100%;
+
+      :global(.input){
+        width: 100%;
+      }
+    }
+  }  
+
+  .formContainer__controls{
+    display: flex;
+    align-items: center;
+
+
+    .controls__button{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      cursor: pointer;
+
+
+      span{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+
+      &_reset{
+        padding: 16px 8px;
+        margin-right: 20px;
+
+
+        span{
+          color: $color_accent;
+        }
+
+        // ANIMATE
+          filter: grayscale(0);
+
+          will-change: filter;
+          transition: .5s filter;
+
+          &:hover{
+            filter: grayscale(1);
+          }
+        // END
+      }
+    }  
+  }
+}
