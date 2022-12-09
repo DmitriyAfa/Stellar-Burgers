@@ -1,0 +1,89 @@
+@import '../../../styles/utils/variables.scss';
+.formContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  margin-bottom: 80px;
+
+
+
+  .formContainer__input{
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 24px;
+
+    z-index: 2;
+
+    position: relative;
+
+    // ANIMATE
+      will-change: transform;
+      transform: rotate(0deg);
+    // END
+
+    :global(.input__container){
+      width: 100%;
+
+      :global(.input){
+        width: 100%;
+      }
+    }
+  }
+  .formContainer__hint{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    margin-bottom: 16px;
+
+    span{
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5;
+
+      color: $text__color_sub;
+    }
+
+    z-index: 2;
+
+    // ANIMATE
+      height: 0px;
+      opacity: 0;
+
+      will-change: height, opacity;
+      transition: .3s height, .3s opacity;
+    // END
+  }
+
+
+  &_failed{
+    .formContainer__input{
+
+      animation: shakeInput 1s linear;
+    }
+    .formContainer__hint{
+      height: 30px;
+
+      opacity: 1;
+    }
+  }
+
+  @keyframes shakeInput {
+    from, to{
+      transform: rotate(0deg);
+    }
+    20%, 50%{
+      transform: rotate(1deg); 
+    }
+    35%, 80%{
+      transform: rotate(-1deg); 
+    }
+  }
+}

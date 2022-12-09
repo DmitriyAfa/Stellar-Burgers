@@ -1,0 +1,12 @@
+@function get-vw($fontSize, $vw-viewport) {
+  $vw-context: $vw-viewport * 0.01 * 1px;
+  
+  @return $fontSize / $vw-context * 1vw;
+}
+
+@mixin text-size-response {
+  font-size: 16px;
+  @media (max-width: 1280px){
+    font-size: 14px;
+  }
+}

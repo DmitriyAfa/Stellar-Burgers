@@ -1,0 +1,64 @@
+@import '../../styles/utils/variables.scss';
+.authContainer{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+
+  padding: 180px 0 50px;
+
+
+  .authContainer__block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 480px;
+
+
+    .block__title{
+      display: flex;
+      justify-content: center;
+
+      margin-bottom: 24px;
+
+
+      span{
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 1;
+
+        color: $text__color_prior;
+      }
+    }
+
+    .block__addInfo{
+      display: flex;
+      justify-content: center;
+
+
+      &:not(:last-child){
+        margin-bottom: 16px;
+      }
+
+
+      .addInfo__text{
+        margin-right: 8px;
+
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.5;
+
+        color: $text__color_sub;
+      }
+      .addInfo__link{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.5;
+
+        color: $color_accent;
+      }
+    }
+  }
+}

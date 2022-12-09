@@ -1,0 +1,118 @@
+@import '../../../../styles/utils/variables.scss';
+.constructorWrapper{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 0px;
+  transition: .5s margin-top, .5s margin-bottom, .5s opacity;
+  
+  z-index: 2;
+
+  &_hover_top{
+    margin-top: -60px;
+    margin-bottom: 60px;
+  }
+  &_hover_bottom{
+    margin-top: 60px;
+  }
+  &_drag{
+    opacity: .3;
+    z-index: 1;
+  }
+}
+
+.controlElement{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  width: 24px;
+
+  margin-right: 8px;
+
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+
+  // ANIMATE
+    opacity: 1;
+
+    will-change: opacity;
+    transition: .3s opacity;
+
+    &:hover{
+      opacity: .7;
+    }
+    &:active {
+      cursor: grabbing;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+  // END
+}
+.ingredient{
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+
+  border-bottom: 3px solid rgb(28, 28, 33);
+
+  &__icon{
+
+    img{
+      width: 92px;
+      height: 55px;
+    }
+
+    @media (max-width: 380px) {
+      width: 82px;
+      height: 45px;
+    }
+  }
+
+  &__text{
+    font-size: 14px;
+    width: 50%;
+  }
+
+  &__total{
+
+    position: absolute;
+    right: 0;
+
+    .total__price {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      margin-right: 41.5px;
+
+      @media (max-width: 930px) {
+        margin-right: 19px;
+      }
+
+      span {
+        margin-right: 9.5px;
+
+        font-family: 'Iceland';
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1;
+
+        color: $text__color_prior;
+      }
+
+      .total__icon {
+        margin-top: 5px;
+
+        width: 20px;
+      }
+
+    }
+  }
+}

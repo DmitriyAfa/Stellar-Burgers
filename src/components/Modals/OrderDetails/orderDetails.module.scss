@@ -1,0 +1,122 @@
+@import '../../../styles/utils/variables.scss';
+
+.offerDetails{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+
+  padding: 60px;
+
+  @media(max-width: 930px){
+    padding: 15px;
+  }
+
+  .offerDetails__id{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 32px;
+
+    width: 100%;
+
+    margin-bottom: 60px;
+
+    @media(max-width: 930px){
+      margin-bottom: 15px;
+    }
+  
+    .id__title{
+      text-align: center;
+
+      font-family: 'Iceland';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 144px;
+      line-height: .83;
+
+      @media(max-width: 930px){
+        font-size: 72px;
+      }
+
+      color: $text__color_prior;
+
+      text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+    }
+    .id__subtitle{
+      text-align: center;
+
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 30px;
+
+      @media(max-width: 930px){
+        font-size: 20px;
+      }
+
+      color: $text__color_prior;
+    }
+  }
+
+  .offerDetails__info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 60px;
+
+    width: 100%;
+    
+    @media(max-width: 930px){
+      gap: 15px;
+    }
+
+    .info__icon{
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      width: 120px;
+
+      @media(max-width: 930px){
+        width: 100px;
+      }
+    }
+    .info__message{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+
+      width: 100%;
+
+
+      .message__title{
+        text-align: center;
+
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.5;
+
+        color: $text__color_prior;
+      }
+      .message__subtitle{
+        text-align: center;
+
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.5;
+
+        color: $text__color_sub;
+      }
+    }
+
+  }
+}
