@@ -29,7 +29,6 @@ export const Main: React.FunctionComponent = React.memo(() => {
       dispatch(setCurrentComponent("BurgerIngredients"));
     }
   }, []);
-  console.log(currentComponent);
   return (
     <main className={styles.main}>
       <section className={styles.main__title}>

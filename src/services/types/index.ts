@@ -32,9 +32,21 @@ export interface ILocationType {
   };
 };
 
+export interface IOrder {
+  createdAt: string,
+  ingredients: string[],
+  name: string,
+  number: number,
+  status: string,
+  updateAt: string,
+  _id: string
+}
+
+export type TOrders = IOrder[]
+
 
 
 
 // REDUX STORE
-export type { IReduxStore, IReduxStore__App, IReduxStore__User, IReduxStore__Adaptive } from './redux';
+export type { IReduxStore, IReduxStore__App, IReduxStore__User, IReduxStore__Adaptive, IReduxStore__Feed } from './redux';
 

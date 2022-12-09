@@ -77,6 +77,10 @@
         line-height: 20px;
 
         color: #8585AD;
+
+        &_active{
+          color: $text__color_prior;
+        }
       }
     } 
   }

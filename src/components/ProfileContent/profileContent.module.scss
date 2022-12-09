@@ -1,5 +1,5 @@
 @import '../../styles/utils/variables.scss';
-.profileContainer{
+.profileContent{
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -8,14 +8,22 @@
 
   margin-top: 120px;
 
+  @media(max-width: 560px){
+    display: block;
+    margin-top: 20px;
+  }
 
-  .profileContainer__menu{
+  &__menu{
     display: flex;
     flex-direction: column;
 
     width: 320px;
 
     margin-right: 60px;
+
+    @media(max-width: 1100px){
+      margin-right: 20px;
+    }
 
 
     .menu__items{
@@ -75,13 +83,22 @@
     }
   }
 
-  .profileContainer__content{
+  &__content{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    width: 30vw;
 
-    width: 480px;
+    &_big{
+      width: 56vw;
+    }
 
-    
+    @media(max-width: 1100px){
+      width: 356px;
+    }
+    @media(max-width: 560px){
+      width: 90vw;
+    }
   }
+
 }

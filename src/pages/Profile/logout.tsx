@@ -12,7 +12,6 @@ export const Logout = React.memo(() => {
 
   React.useEffect(() => {
     dispatch(logoutEnhance() as any);
-
     navigate("/login");
   }, [dispatch, navigate]);
 

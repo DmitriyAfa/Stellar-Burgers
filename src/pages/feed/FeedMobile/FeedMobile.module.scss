@@ -1,0 +1,13 @@
+@import '../../../styles/utils/variables.scss';
+
+.feed{
+  width: 100%;
+  &__menu{
+    display: flex;
+    justify-content: center;
+  } 
+
+  &__content{
+    margin: 20px 0;
+  }
+}

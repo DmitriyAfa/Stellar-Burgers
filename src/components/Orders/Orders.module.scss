@@ -1,0 +1,23 @@
+.orders{
+  display: flex;
+  flex-direction: column;
+  height: 72vh;
+  min-height: 830px;
+
+  overflow: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+
+  // @media (max-width: 560px){
+  //   overflow-y: hidden;
+  // }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(47, 47, 55, 1);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(133, 133, 173, 1);
+  }
+}

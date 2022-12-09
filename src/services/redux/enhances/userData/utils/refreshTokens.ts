@@ -19,7 +19,6 @@ export async function refreshTokens( token : string ){
   });
 
   const result = await response.json();
-  console.log('result ', result)
   result.accessToken = result.accessToken.split("Bearer ")[1];
 
   setLocalStorageWithExpiry('refreshToken', result.refreshToken, (1440 * 7));

@@ -4,12 +4,6 @@ import React from "react";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { updateUserDataEnhance } from "./../../services/redux/enhances/";
 
-// Ya imports
-import {
-  Input,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-
 // Types
 import {
   IReduxStore,
@@ -20,14 +14,10 @@ import {
 // Components
 import EditForm from "./../../components/Forms/Edit/EditForm";
 
-// Styles
-import Styles from "./edit.module.scss";
-
 export const Edit = React.memo(() => {
   const dispatch = useDispatch();
 
   const user = useSelector((store: IReduxStore) => store.user, shallowEqual);
-  const { request } = user;
 
   const defaultValueForPassword = "**********";
 

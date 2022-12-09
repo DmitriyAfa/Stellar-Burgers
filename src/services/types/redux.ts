@@ -1,10 +1,11 @@
-import { IIngredientType } from "."
+import { IIngredientType, TOrders } from "."
 
 
 export interface IReduxStore {
   app: IReduxStore__App,
   user: IReduxStore__User,
   adaptive: IReduxStore__Adaptive,
+  feed: any
 }
 export interface IReduxStore__App {
   ingredients: {
@@ -49,8 +50,18 @@ export interface IReduxStore__User {
 }
 
 export interface IReduxStore__Adaptive {
-  innerWidth: number,
+  currentComponent: 'nonAdaptive' | 'BurgerIngredients' | 'BurgerConstructor' | "FeedOrders" | "FeedStatistic";
+}
 
-  currentComponent:'nonAdaptive' | 'BurgerIngredients' | 'BurgerConstructor';
-  
+export interface IReduxStore__Feed {
+  feed: {
+    orders: TOrders,
+    total: number,
+    totalToday: number,
+  },
+  request: {
+    pending: boolean,
+    success: boolean,
+    failed: boolean
+  }
 }

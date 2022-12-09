@@ -1,8 +1,9 @@
 // API
 import { BASE_URL } from '../../../Api';
+
 // Redux
 import { Dispatch } from 'redux';
-import { 
+import {
   logoutRequest,
   logoutRequestSuccess,
   logoutRequestFailed
@@ -17,49 +18,48 @@ import { getLocalStorageWithExpiry, deleteLocalStorageWithExpiry } from '../../.
 
 
 
-const apiUrl : string = BASE_URL + "/auth/logout"!;
+const apiUrl: string = BASE_URL + "/auth/logout"!;
 
 export const logoutEnhance = () => {
-  return async ( dispatch : Dispatch ) => {
+  return async (dispatch: Dispatch) => {
     let refreshToken = getLocalStorageWithExpiry('refreshToken');
-    
-    if(!refreshToken) return false;
+
+    if (!refreshToken) return false;
 
     dispatch(logoutRequest());
 
-    fetch( apiUrl, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'include',
+    fetch(apiUrl, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify({token: refreshToken})
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      body: JSON.stringify({ token: refreshToken })
     })
       .then(response => {
         checkApiResponse(response)
-          .then( (result : {
+          .then((result: {
             "success": boolean,
             "message": string,
           }) => {
-            if(!result.success) return Promise.reject(result);
-              
-            dispatch( logoutRequestSuccess() );
-             
+            if (!result.success) return Promise.reject(result);
+
+            dispatch(logoutRequestSuccess());
+
 
             deleteLocalStorageWithExpiry("refreshToken");
             deleteLocalStorageWithExpiry("accessToken");
           })
-          .catch( (error: Error) => {
+          .catch((error: Error) => {
             handleApiErrors(error);
 
             dispatch(logoutRequestFailed());
           })
       })
-      .catch( (error: Error) => {
+      .catch((error: Error) => {
         handleApiErrors(error);
 
         dispatch(logoutRequestFailed());

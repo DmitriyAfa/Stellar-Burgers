@@ -19,7 +19,6 @@ export const Header: React.FunctionComponent = React.memo(() => {
 
   const user = useSelector((store: IReduxStore) => store.user, shallowEqual);
 
-  const { request } = user;
   const { accessToken } = user.data;
 
   return (
@@ -90,7 +89,7 @@ export const Header: React.FunctionComponent = React.memo(() => {
             <ProfileIcon type="primary" />
           </div>
           <span className={styles.link__text}>
-            {accessToken ? "Личный кабинет" : "Войти в аккаунт"}
+            {accessToken && user.data.name ? user.data.name : "Войти в аккаунт"}
           </span>
         </Link>
       </div>

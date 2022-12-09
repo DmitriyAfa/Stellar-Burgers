@@ -49,7 +49,12 @@ export const MobileHeader: React.FunctionComponent = React.memo(() => {
 
   const { accessToken } = user.data;
 
-  return currentComponent === "BurgerIngredients" ? (
+  let isButtonActive =
+    location.pathname === "/login" ||
+    location.pathname === "/profile" ||
+    location.pathname === "/profile/orders";
+
+  return currentComponent !== "BurgerConstructor" ? (
     <header
       className={
         styles.MobileHeaderContainer +
@@ -88,17 +93,27 @@ export const MobileHeader: React.FunctionComponent = React.memo(() => {
               }
             >
               <div className={styles.content}>
-                <ProfileIcon type="primary" />
-                <span className={styles.text}>
-                  {accessToken ? "Личный кабинет" : "Войти в аккаунт"}
+                <ProfileIcon type={isButtonActive ? "primary" : "secondary"} />
+                <span
+                  className={
+                    styles.text + (isButtonActive ? "" : " text_color_inactive")
+                  }
+                >
+                  {accessToken && user.data.name
+                    ? user.data.name
+                    : "Войти в аккаунт"}
                 </span>
               </div>
               {accessToken && (
                 <span>
                   {isProfileOpen ? (
-                    <ArrowUpIcon type="primary" />
+                    <ArrowUpIcon
+                      type={isButtonActive ? "primary" : "secondary"}
+                    />
                   ) : (
-                    <ArrowDownIcon type="primary" />
+                    <ArrowDownIcon
+                      type={isButtonActive ? "primary" : "secondary"}
+                    />
                   )}
                 </span>
               )}
@@ -109,7 +124,13 @@ export const MobileHeader: React.FunctionComponent = React.memo(() => {
                   <Link
                     to="/profile"
                     state={{ from: { pathname: location.pathname } }}
-                    className={styles.item__link + " text_color_inactive"}
+                    className={
+                      styles.item__link +
+                      " " +
+                      (location.pathname === "/profile"
+                        ? styles.item__link_active
+                        : "")
+                    }
                   >
                     Профиль
                   </Link>
@@ -118,7 +139,13 @@ export const MobileHeader: React.FunctionComponent = React.memo(() => {
                   <Link
                     to="/profile/orders"
                     state={{ from: { pathname: location.pathname } }}
-                    className={styles.item__link + " text_color_inactive"}
+                    className={
+                      styles.item__link +
+                      " " +
+                      (location.pathname === "/profile/orders"
+                        ? styles.item__link_active
+                        : "")
+                    }
                   >
                     История заказов
                   </Link>
@@ -127,7 +154,7 @@ export const MobileHeader: React.FunctionComponent = React.memo(() => {
                   <Link
                     to="/profile/logout"
                     state={{ from: { pathname: location.pathname } }}
-                    className={styles.item__link + " text_color_inactive"}
+                    className={styles.item__link}
                   >
                     Выход
                   </Link>

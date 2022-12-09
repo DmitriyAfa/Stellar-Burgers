@@ -1,0 +1,33 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  height: 626px;
+  padding-left: 30px;
+}
+
+.top{
+  display: flex;
+  height: 330px;
+
+  @media (max-width: 1100px){
+    flex-direction: column;
+    height: auto;
+  }
+}
+.ready{
+  width: 270px;
+    margin: 0 37px 0 0;
+}
+.orders{
+  display: flex;
+  justify-content: space-between;
+}
+.todo{
+  width: 273px;
+}
+.ul li{
+  margin-bottom: 8px;
+}
+.center{
+  height: 150px;
+}
