@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 // Types
-import { ILocationType, IReduxStore } from "./../../services/types/";
+import { ILocationType, IReduxStore } from "../../services/types";
 
 // Styles
 import Styles from "./feed.module.scss";
@@ -24,7 +24,7 @@ import { Orders } from "../../components/Orders/Orders";
 import { FeedInfo } from "../../components/Orders/FeedInfo/FeedInfo";
 import { FeedMobile } from "./FeedMobile/FeedMobile";
 
-export const Feed = React.memo(() => {
+export const Feed1 = React.memo(() => {
   const location = useLocation() as ILocationType;
   const from = location.state?.from?.pathname || "/";
 

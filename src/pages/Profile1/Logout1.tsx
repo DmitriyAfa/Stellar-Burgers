@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { logoutEnhance } from "./../../services/redux/enhances/";
+import { logoutEnhance } from "../../services/redux/enhances";
 
-export const Logout = React.memo(() => {
+export const Logout1 = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -9,8 +9,8 @@ import App1 from "../App1/App1";
 // pages
 import {
   Home,
-  Feed,
-  Login,
+  Feed1,
+  Login1,
   Registration,
   ForgotPassword,
   ResetPassword,
@@ -36,9 +36,9 @@ export const AppRouter: React.FunctionComponent = React.memo(() => {
             path="profile/*"
             element={<ProtectedRoute outlet={<ProfileContent />} />}
           />
-          <Route path="feed" element={<Feed />} />
+          <Route path="feed" element={<Feed1 />} />
 
-          <Route path="login" element={<AuthRoute outlet={<Login />} />} />
+          <Route path="login" element={<AuthRoute outlet={<Login1 />} />} />
           <Route
             path="register"
             element={<AuthRoute outlet={<Registration />} />}

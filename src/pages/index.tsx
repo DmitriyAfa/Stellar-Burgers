@@ -1,11 +1,11 @@
 // Pages
 import { Home } from "./Home1";
-import { Feed } from "./Feed/feed";
+import { Feed1 } from "./Feed1/Feed1";
 
-import { Login } from "./auth/Login/login";
-import { Registration } from "./auth/Registration/Registration";
+import { Login1 } from "./Auth1/Login1/Login1";
+import { Registration } from "./Auth1/Registration/Registration";
 
-import { ForgotPassword } from "./auth/ForgotPassword/ForgotPassword";
-import { ResetPassword } from "./auth/ResetPassword/ResetPassword";
+import { ForgotPassword } from "./Auth1/ForgotPassword/ForgotPassword";
+import { ResetPassword } from "./Auth1/ResetPassword/ResetPassword";
 
-export { Home, Feed, Login, Registration, ForgotPassword, ResetPassword };
+export { Home, Feed1, Login1, Registration, ForgotPassword, ResetPassword };
