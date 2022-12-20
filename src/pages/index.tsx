@@ -1,5 +1,5 @@
 // Pages
-import { Home } from "./home";
+import { Home } from "./Home1";
 import { Feed } from "./Feed/feed";
 
 import { Login } from "./auth/Login/login";
