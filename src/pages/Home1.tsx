@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { removeClickedIngredient } from "./../services/redux/slicers/appSlice";
+import { removeClickedIngredient } from "../services/redux/slicers/appSlice";
 
 // Components
 import { Main } from "../components/App1/Main/Main";
