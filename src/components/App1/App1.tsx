@@ -17,7 +17,7 @@ import styles from "./App.module.scss";
 import { Header } from "./Header/Header";
 import { MobileHeader } from "./Header/Mobile/MobileHeader";
 
-const App: React.FunctionComponent = React.memo(() => {
+const App1: React.FunctionComponent = React.memo(() => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,4 +33,4 @@ const App: React.FunctionComponent = React.memo(() => {
   );
 });
 
-export default App;
+export default App1;

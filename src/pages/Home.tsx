@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { removeClickedIngredient } from "./../services/redux/slicers/appSlice";
 
 // Components
-import { Main } from "../components/App/Main/Main";
+import { Main } from "../components/App1/Main/Main";
 
 export const Home = React.memo(() => {
   const dispatch = useDispatch();

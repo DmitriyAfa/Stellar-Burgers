@@ -4,7 +4,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 // components
-import App from "../App/App";
+import App1 from "../App1/App1";
 
 // pages
 import {
@@ -27,7 +27,7 @@ export const AppRouter: React.FunctionComponent = React.memo(() => {
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
-        <Route path="/" element={<App />}>
+        <Route path="/" element={<App1 />}>
           <Route index element={<Home />} />
 
           <Route path="ingredients/:id" element={<IngredientDetails />} />
