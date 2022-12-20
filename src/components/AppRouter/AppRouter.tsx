@@ -4,7 +4,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 // components
-import { App } from "../App/App";
+import App from "../App/App";
 
 // pages
 import {
