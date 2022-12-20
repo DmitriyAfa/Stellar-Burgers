@@ -2,19 +2,19 @@ import React from "react";
 
 // Redux
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { updateUserDataEnhance } from "./../../services/redux/enhances/";
+import { updateUserDataEnhance } from "../../services/redux/enhances";
 
 // Types
 import {
   IReduxStore,
   TFormDataType,
   IInputDataType,
-} from "./../../services/types/";
+} from "../../services/types";
 
 // Components
-import EditForm from "./../../components/Forms/Edit/EditForm";
+import EditForm from "../../components/Forms/Edit/EditForm";
 
-export const Edit = React.memo(() => {
+export const Edit1 = React.memo(() => {
   const dispatch = useDispatch();
 
   const user = useSelector((store: IReduxStore) => store.user, shallowEqual);

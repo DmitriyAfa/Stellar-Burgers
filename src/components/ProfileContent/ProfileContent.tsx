@@ -4,9 +4,9 @@ import React from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 
 // Components
-import { OrdersPage } from "./../../pages/Profile/orders";
-import { Edit } from "./../../pages/Profile/edit";
-import { Logout } from "./../../pages/Profile/logout";
+import { OrdersPage } from "../../pages/Profile1/Orders1";
+import { Edit1 } from "../../pages/Profile1/Edit1";
+import { Logout1 } from "../../pages/Profile1/Logout1";
 
 // Styles
 import Styles from "./profileContent.module.scss";
@@ -81,9 +81,9 @@ const ProfileContent: React.FunctionComponent = React.memo(() => {
         }
       >
         <Routes>
-          <Route path="/" element={<Edit />} />
+          <Route path="/" element={<Edit1 />} />
           <Route path="orders" element={<OrdersPage />} />
-          <Route path="logout" element={<Logout />} />
+          <Route path="logout" element={<Logout1 />} />
         </Routes>
       </div>
     </section>

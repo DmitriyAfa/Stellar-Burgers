@@ -3,17 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { loginEnhance } from "./../../../services/redux/enhances/";
+import { loginEnhance } from "../../../services/redux/enhances";
 
-import { ILocationType, TFormDataType } from "./../../../services/types/";
+import { ILocationType, TFormDataType } from "../../../services/types";
 
 // Components
-import AuthForm from "./../../../components/Forms/Auth/AuthForm";
+import AuthForm from "../../../components/Forms/Auth/AuthForm";
 
 // Styles
 import Styles from "./../auth.module.scss";
 
-export const Login = React.memo(() => {
+export const Login1 = React.memo(() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
